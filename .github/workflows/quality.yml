@@ -1,0 +1,63 @@
+name: Quality
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: astral-sh/setup-uv@v10.0.1
+        with:
+          python-version: 3.14.7
+          enable-cache: true
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: src/pipecat_voice_studio/ui/frontend/package-lock.json
+      - name: Install Python dependencies
+        run: uv sync --frozen
+      - name: Verify lockfile
+        run: uv lock --check
+      - name: Lint
+        run: uv run ruff check .
+      - name: Type-check Python
+        run: uv run ty check
+      - name: Test Python
+        run: uv run pytest
+      - name: Install frontend dependencies
+        working-directory: src/pipecat_voice_studio/ui/frontend
+        run: npm ci
+      - name: Type-check and build frontend
+        working-directory: src/pipecat_voice_studio/ui/frontend
+        run: npm run build
+      - name: Validate Windows launcher
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path launch.ps1),
+            [ref]$null,
+            [ref]$errors
+          ) | Out-Null
+          if ($errors.Count) { throw ($errors | Out-String) }
+          .\launch.ps1 -SetupOnly
+      - name: Validate Linux launcher
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          bash -n launch.sh
+          ./launch.sh --setup-only
+      - name: Build Python package
+        run: uv build

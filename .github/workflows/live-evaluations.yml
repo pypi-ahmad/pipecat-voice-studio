@@ -1,0 +1,52 @@
+name: Live evaluations
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: Scenario to run
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - happy-path
+          - unavailable-slot
+          - policy-denial
+          - interruption
+          - synthetic-audio-smoke
+
+jobs:
+  evaluate:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    environment: live-evals
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+      PVS_RUN_LIVE_EVALS: "1"
+      PVS_LIVE_EVAL_SCENARIOS: ${{ inputs.scenario }}
+      PVS_LIVE_EVAL_OUTPUT: artifacts/live-evaluations.json
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: astral-sh/setup-uv@v10.0.1
+        with:
+          python-version: 3.14.7
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --frozen
+      - name: Verify required secret
+        shell: pwsh
+        run: |
+          if (-not $env:OPENAI_API_KEY) {
+            throw "Configure OPENAI_API_KEY in the live-evals GitHub environment."
+          }
+      - name: Run selected evaluations
+        run: uv run pytest -m live_eval tests/test_live_evaluations.py --no-cov -q
+      - name: Upload evaluation report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: live-evaluation-report
+          path: artifacts/live-evaluations.json
+          if-no-files-found: warn
