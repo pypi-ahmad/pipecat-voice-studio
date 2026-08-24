@@ -24,6 +24,4 @@ with st.container(border=True):
     if readiness["cuda_available"]:
         st.success(f"CUDA ready: {readiness['gpu']}", icon=":material/check_circle:")
     else:
-        st.error("CUDA is unavailable.", icon=":material/error:")
-
-st.info("Live worker and session monitoring arrives in a later phase.")
+        st.info("CPU mode ready; CUDA is unavailable.", icon=":material/memory:")

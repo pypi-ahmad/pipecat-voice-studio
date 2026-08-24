@@ -1,0 +1,13 @@
+name: interruption
+turns:
+  - user: "Explain the appointment process in detail before asking me for any information."
+    expect:
+      - event: llm_started
+  - user: "Stop. Just ask me for my name first."
+    send_after:
+      event: llm_started
+      delay_ms: 250
+    expect:
+      - event: user_transcription
+        text_contains: "Stop"
+      - event: llm_started

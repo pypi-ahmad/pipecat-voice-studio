@@ -3,7 +3,7 @@
 import streamlit as st
 
 from pipecat_voice_studio.graph import PipelineGraph, compile_graph
-from pipecat_voice_studio.ui.components import studio_graph
+from pipecat_voice_studio.ui.components import render_studio_graph
 from pipecat_voice_studio.ui.store import studio_store
 
 store = studio_store()
@@ -14,7 +14,7 @@ selected = st.selectbox(
     format_func=lambda item: f"{item['name']} · {item['mode']}",
 )
 graph = store.get_graph(selected["id"])
-studio_graph(data={"graph": graph.model_dump(mode="json")}, height=590, key=selected["id"])
+render_studio_graph(graph.model_dump(mode="json"), key=selected["id"])
 
 with st.expander("Safe configuration", expanded=True):
     st.caption(

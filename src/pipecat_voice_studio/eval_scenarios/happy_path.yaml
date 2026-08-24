@@ -1,0 +1,18 @@
+name: happy-path
+turns:
+  - user: "Book a 30-minute appointment for Ada Lovelace about a product demo at 2030-01-02T10:00:00+05:30."
+    expect:
+      - event: function_call
+        calls:
+          - name: check_availability
+            args:
+              attendee_name: Ada Lovelace
+              purpose: product demo
+              starts_at: "2030-01-02T10:00:00+05:30"
+  - user: "Yes, I explicitly confirm all of those appointment details."
+    expect:
+      - event: function_call
+        calls:
+          - name: confirm_appointment
+            args:
+              confirmed: true

@@ -12,12 +12,19 @@ if TYPE_CHECKING:
 def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig:
     """Build a confirmation-gated appointment flow for one session."""
 
+    def record_node(node: str, *, outcome: str | None = None) -> None:
+        payload = {"node": node}
+        if outcome is not None:
+            payload["outcome"] = outcome
+        book.store.append_event(session_id, "flow.node", payload)
+
     async def confirm_appointment(
         flow_manager: FlowManager, confirmed: bool
     ) -> tuple[dict[str, Any], NodeConfig]:
         """Create the proposed appointment only after the user explicitly confirms it."""
         proposal = flow_manager.state.get("proposal", {})
         if not confirmed:
+            record_node("finish", outcome="denied")
             return {"status": "cancelled"}, finish_node("The user cancelled the appointment.")
         appointment_id = book.create(
             session_id=session_id,
@@ -27,6 +34,7 @@ def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig
             confirmed=True,
             flow_node="confirmation",
         )
+        record_node("finish", outcome="confirmed")
         return {"status": "confirmed", "appointment_id": appointment_id}, finish_node(
             "Confirm the appointment details and end politely."
         )
@@ -56,6 +64,7 @@ def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig
         start = datetime.fromisoformat(starts_at)
         if not book.is_available(start):
             suggestions = [slot.isoformat() for slot in book.suggest(start)]
+            record_node("collect", outcome="unavailable")
             return {"status": "unavailable", "suggestions": suggestions}, collect_node()
         flow_manager.state["proposal"] = {
             "attendee_name": attendee_name,
@@ -63,6 +72,7 @@ def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig
             "starts_at": start.isoformat(),
             "duration_minutes": 30,
         }
+        record_node("confirmation", outcome="available")
         return {"status": "available", "duration_minutes": 30}, confirmation_node()
 
     def collect_node() -> NodeConfig:

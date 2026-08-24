@@ -221,6 +221,7 @@ async def bot(runner_args: RunnerArguments) -> None:
         )
         book = AppointmentBook(store, settings.pvs_timezone)
         await flow.initialize(build_appointment_flow(book, session_id))
+        store.append_event(session_id, "flow.node", {"node": "collect"})
     try:
         store.append_event(session_id, "transport.connected", {"transport": compiled.transport})
         await WorkerRunner(handle_sigint=False).run(worker)

@@ -198,3 +198,39 @@ class StudioStore:
                 "UPDATE sessions SET status = ?, failure = ?, ended_at = ? WHERE id = ?",
                 (status, failure, _now(), session_id),
             )
+
+    def create_eval_run(self, pipeline_id: str, scenario: str) -> str:
+        """Create a pending evaluation record for an allowlisted scenario."""
+        run_id = uuid4().hex
+        with self.connect() as connection:
+            connection.execute(
+                "INSERT INTO eval_runs VALUES (?, ?, ?, 'running', '{}', ?)",
+                (run_id, pipeline_id, scenario, _now()),
+            )
+        return run_id
+
+    def finish_eval_run(
+        self,
+        run_id: str,
+        *,
+        status: str,
+        result: dict[str, Any],
+    ) -> None:
+        """Persist the terminal status and serializable result for one evaluation."""
+        with self.connect() as connection:
+            cursor = connection.execute(
+                "UPDATE eval_runs SET status = ?, result_json = ? WHERE id = ?",
+                (status, json.dumps(result, default=str), run_id),
+            )
+            if cursor.rowcount != 1:
+                raise KeyError(run_id)
+
+    def list_eval_runs(self, *, limit: int = 25) -> list[dict[str, Any]]:
+        """Return recent evaluation runs with decoded result payloads."""
+        with self.connect() as connection:
+            rows = connection.execute(
+                "SELECT id, pipeline_id, scenario, status, result_json, created_at "
+                "FROM eval_runs ORDER BY created_at DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+        return [{**dict(row), "result": json.loads(row["result_json"])} for row in rows]

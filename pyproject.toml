@@ -11,7 +11,7 @@ license = "MIT"
 requires-python = ">=3.13,<3.15"
 dependencies = [
     "fastapi>=0.141.1",
-    "pipecat-ai[cli,webrtc]==1.7.0",
+    "pipecat-ai[cli,evals,runner,webrtc]==1.7.0",
     "pydantic-settings>=2.15.0",
     "streamlit==1.62.0",
     "torch==2.13.0+cu132",
@@ -22,10 +22,15 @@ dependencies = [
 [tool.uv.build-backend]
 module-name = "pipecat_voice_studio"
 
-[tool.streamlit.component]
-components = [
-    { name = "studio_graph", asset_dir = "ui/frontend/build" },
+[tool.uv]
+required-environments = [
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
 ]
+
+[[tool.streamlit.component.components]]
+name = "studio_graph"
+asset_dir = "src/pipecat_voice_studio/ui/frontend/build"
 
 [tool.uv.sources]
 torch = { index = "pytorch-cu132" }
@@ -49,6 +54,7 @@ dev = [
 [tool.pytest.ini_options]
 addopts = "--cov=pipecat_voice_studio --cov-report=term-missing --cov-fail-under=80"
 testpaths = ["tests"]
+markers = ["live_eval: runs paid Pipecat evaluations against configured models"]
 
 [tool.ruff]
 line-length = 100
@@ -64,6 +70,9 @@ ignore = ["COM812", "CPY001", "D", "ISC001"]
 "src/pipecat_voice_studio/storage.py" = ["EM101", "TRY003"]
 "src/pipecat_voice_studio/voice/bot.py" = ["ANN401"]
 "src/pipecat_voice_studio/voice/appointment_flow.py" = ["FBT001"]
+"src/pipecat_voice_studio/evaluations.py" = ["BLE001", "TRY003"]
+"src/pipecat_voice_studio/voice/timeline.py" = ["C901"]
+"tests/test_evaluations.py" = ["SLF001"]
 "tests/**" = ["PLR2004", "PT018", "S101", "TC003"]
 
 [tool.ty.environment]

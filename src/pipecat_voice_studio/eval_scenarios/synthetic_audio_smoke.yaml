@@ -1,0 +1,15 @@
+name: synthetic-audio-smoke
+user:
+  modality: audio
+  speech:
+    service: kokoro
+    voice: af_heart
+    sample_rate: 16000
+judge:
+  modality: text
+turns:
+  - user: "Hello, can you hear this generated audio clearly?"
+    expect:
+      - event: user_transcription
+        text_contains: "Hello"
+      - event: llm_started

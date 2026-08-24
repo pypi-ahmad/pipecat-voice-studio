@@ -2,7 +2,6 @@
 name = "pipecat-voice-studio"
 version = "0.1.0"
 
-[tool.streamlit.component]
-components = [
-    { name = "studio_graph", asset_dir = "ui/frontend/build" },
-]
+[[tool.streamlit.component.components]]
+name = "studio_graph"
+asset_dir = "ui/frontend/build"

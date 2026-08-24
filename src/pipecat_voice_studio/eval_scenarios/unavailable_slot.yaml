@@ -1,0 +1,11 @@
+name: unavailable-slot
+turns:
+  - user: "Book a 30-minute appointment for Grace Hopper about technical support at 2030-01-02T10:00:00+05:30."
+    expect:
+      - event: function_call
+        calls:
+          - name: check_availability
+            args:
+              attendee_name: Grace Hopper
+              purpose: technical support
+              starts_at: "2030-01-02T10:00:00+05:30"

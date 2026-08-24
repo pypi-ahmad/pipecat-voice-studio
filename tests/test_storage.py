@@ -41,3 +41,16 @@ def test_delete_session_cascades_events(store: StudioStore) -> None:
     store.delete_session(session_id)
 
     assert store.list_events(session_id) == []
+
+
+def test_evaluation_results_are_persisted(store: StudioStore) -> None:
+    pipeline_id = store.list_graphs()[0]["id"]
+
+    run_id = store.create_eval_run(pipeline_id, "happy-path")
+    store.finish_eval_run(run_id, status="passed", result={"passed": True})
+
+    run = store.list_eval_runs(limit=1)[0]
+    assert run["id"] == run_id
+    assert run["result"] == {"passed": True}
+    with pytest.raises(KeyError):
+        store.finish_eval_run("missing", status="failed", result={})

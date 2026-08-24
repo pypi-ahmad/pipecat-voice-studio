@@ -4,20 +4,28 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "build": "tsc -b && vite build --outDir build",
-    "typecheck": "tsc -b --pretty false"
+    "build": "npm run clean && npm run typecheck && npm run build:frontend:production",
+    "build:frontend:production": "cross-env NODE_ENV=production vite build",
+    "clean": "rimraf build",
+    "typecheck": "tsc --noEmit --pretty false"
   },
   "dependencies": {
-    "@streamlit/component-v2-lib": "latest",
+    "@pipecat-ai/client-js": "1.13.0",
+    "@pipecat-ai/client-react": "1.8.1",
+    "@pipecat-ai/small-webrtc-transport": "1.10.6",
+    "@streamlit/component-v2-lib": "^0.2.0",
     "@xyflow/react": "^12.9.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@types/node": "^22.14.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "latest",
+    "@vitejs/plugin-react": "^6.0.1",
+    "cross-env": "^10.1.0",
+    "rimraf": "^6.1.0",
     "typescript": "^5.9.2",
-    "vite": "latest"
+    "vite": "^8.0.10"
   }
 }
