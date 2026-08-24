@@ -26,10 +26,11 @@ The live command additionally requires `PVS_RUN_LIVE_EVALS=1` and `OPENAI_API_KE
 
 | Scope | Covered? | Typical target | Notes |
 |---|---|---|---|
-| Unit | Yes | Graph validation, booking policy, settings, storage, evaluation helpers | Uses temporary SQLite files and mocks |
-| Integration | Yes | FastAPI ASGI contracts, Streamlit page loading, store/schema behavior | Local and deterministic |
+| Unit | Yes | Graph validation, booking policy, settings, security primitives, extended storage, evaluation helpers | Uses temporary SQLite files and mocks |
+| Integration | Yes | FastAPI ASGI contracts, Streamlit page loading, schema v2/provider records | Local and deterministic |
 | End-to-end | Opt-in | Real Pipecat worker, models, RTVI scenarios | Paid, credential-gated, manual CI workflow |
 | Browser media E2E | No | Microphone/WebRTC UI | [TODO] No automated browser/device suite exists |
+| Live provider contracts | No | Twilio, Vonage, Google, HubSpot, Simli | Requires external accounts and callback infrastructure |
 
 ## Mocking and Isolation Strategy
 
@@ -42,7 +43,9 @@ The live command additionally requires `PVS_RUN_LIVE_EVALS=1` and `OPENAI_API_KE
 ## Coverage and Quality Signals
 
 - pytest-cov enforces 80% minimum Python coverage.
-- `src/pipecat_voice_studio/ui/*` and `src/pipecat_voice_studio/voice/*` are omitted from measured coverage.
+- UI, voice runtime, callback gateway, calendar loop, and external provider adapters are omitted from
+  measured coverage; graph, storage, configuration, encryption, signatures, API, and policy remain
+  measured.
 - The Quality workflow runs lockfile validation, Ruff, ty, pytest, frontend type-check/build, launcher setup checks, and `uv build` on Windows and Ubuntu.
 - The separate Live evaluations workflow is manually dispatched and uploads a JSON report.
 - [TODO] No flaky-test history or test-duration budget is recorded.
@@ -54,4 +57,6 @@ The live command additionally requires `PVS_RUN_LIVE_EVALS=1` and `OPENAI_API_KE
 - `tests/test_evaluations.py`
 - `tests/test_streamlit_app.py`
 - `tests/test_live_evaluations.py`
+- `tests/test_security.py`
+- `tests/test_extended_storage.py`
 - `.github/workflows/quality.yml`

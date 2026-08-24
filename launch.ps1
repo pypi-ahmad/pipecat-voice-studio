@@ -4,7 +4,8 @@ param(
     [switch]$SetupOnly,
     [ValidateRange(1, 65535)][int]$WorkerPort = 7860,
     [ValidateRange(1, 65535)][int]$StreamlitPort = 8501,
-    [ValidateRange(1, 65535)][int]$ApiPort = 8000
+    [ValidateRange(1, 65535)][int]$ApiPort = 8000,
+    [ValidateRange(1, 65535)][int]$GatewayPort = 8080
 )
 
 $ErrorActionPreference = "Stop"
@@ -15,6 +16,8 @@ $PrimaryPython = "3.14.7"
 $FallbackPython = "3.13.13"
 $WorkerProcess = $null
 $ApiProcess = $null
+$GatewayProcess = $null
+$CalendarProcess = $null
 
 Set-Location -LiteralPath $ProjectRoot
 
@@ -212,7 +215,7 @@ if ($SetupOnly) {
     exit 0
 }
 
-$Ports = @($WorkerPort, $StreamlitPort)
+$Ports = @($WorkerPort, $StreamlitPort, $GatewayPort)
 if ($WithApi) { $Ports += $ApiPort }
 if (($Ports | Sort-Object -Unique).Count -ne $Ports.Count) {
     throw "Worker, Streamlit, and API ports must be distinct."
@@ -232,6 +235,10 @@ $WorkerOutLog = Join-Path $LogDirectory "worker.out.log"
 $WorkerErrorLog = Join-Path $LogDirectory "worker.err.log"
 $ApiOutLog = Join-Path $LogDirectory "api.out.log"
 $ApiErrorLog = Join-Path $LogDirectory "api.err.log"
+$GatewayOutLog = Join-Path $LogDirectory "gateway.out.log"
+$GatewayErrorLog = Join-Path $LogDirectory "gateway.err.log"
+$CalendarOutLog = Join-Path $LogDirectory "calendar.out.log"
+$CalendarErrorLog = Join-Path $LogDirectory "calendar.err.log"
 
 try {
     $WorkerArguments = @(
@@ -255,6 +262,34 @@ try {
         throw
     }
     Write-Host "Pipecat worker is ready."
+
+    $GatewayArguments = @(
+        "-m", "uvicorn", "pipecat_voice_studio.telephony_gateway:app",
+        "--host", "127.0.0.1", "--port", "$GatewayPort",
+        "--proxy-headers", "--forwarded-allow-ips", "127.0.0.1"
+    )
+    $GatewayProcess = Start-Process -FilePath $PythonExe -ArgumentList $GatewayArguments `
+        -PassThru -WindowStyle Hidden `
+        -RedirectStandardOutput $GatewayOutLog -RedirectStandardError $GatewayErrorLog
+    try {
+        Wait-ForEndpoint "http://127.0.0.1:$GatewayPort/health" $GatewayProcess "Telephony gateway"
+    }
+    catch {
+        Show-LogTail $GatewayOutLog
+        Show-LogTail $GatewayErrorLog
+        throw
+    }
+    Write-Host "Telephony callback gateway: http://127.0.0.1:$GatewayPort"
+
+    $CalendarEnabled = & $PythonExe -c `
+        "from pipecat_voice_studio.config import get_settings; s=get_settings(); print(int(bool(s.google_service_account_json and s.google_calendar_id)))"
+    if ($CalendarEnabled -eq "1") {
+        $CalendarProcess = Start-Process -FilePath $PythonExe `
+            -ArgumentList @("-m", "pipecat_voice_studio.calendar_worker") `
+            -PassThru -WindowStyle Hidden `
+            -RedirectStandardOutput $CalendarOutLog -RedirectStandardError $CalendarErrorLog
+        Write-Host "Google Calendar synchronization worker started."
+    }
 
     if ($WithApi) {
         $ApiArguments = @(
@@ -285,6 +320,8 @@ try {
     }
 }
 finally {
+    Stop-OwnedProcess $CalendarProcess
+    Stop-OwnedProcess $GatewayProcess
     Stop-OwnedProcess $ApiProcess
     Stop-OwnedProcess $WorkerProcess
 }

@@ -32578,6 +32578,12 @@ function RD({ data: e }) {
 					role: "alert",
 					children: x
 				}),
+				e.hasAvatar && /* @__PURE__ */ (0, H.jsx)(Br, {
+					participant: "bot",
+					fit: "contain",
+					"aria-label": "AI avatar video",
+					autoPlay: !0
+				}),
 				/* @__PURE__ */ (0, H.jsxs)("div", {
 					className: "voice-grid",
 					children: [/* @__PURE__ */ (0, H.jsxs)("div", {

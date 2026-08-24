@@ -11,8 +11,12 @@ license = "MIT"
 requires-python = ">=3.13,<3.15"
 dependencies = [
     "fastapi>=0.141.1",
-    "pipecat-ai[cli,evals,runner,webrtc]==1.7.0",
+    "google-auth>=2.56.3",
+    "httpx>=0.28.1",
+    "pipecat-ai[cli,evals,runner,simli,webrtc,websocket]==1.7.0",
     "pydantic-settings>=2.15.0",
+    "pyjwt[crypto]>=2.13.0",
+    "python-multipart>=0.0.22",
     "streamlit==1.62.0",
     "torch==2.13.0+cu132",
     "torchvision==0.28.0+cu132",
@@ -67,11 +71,17 @@ ignore = ["COM812", "CPY001", "D", "ISC001"]
 [tool.ruff.lint.per-file-ignores]
 "src/pipecat_voice_studio/graph.py" = ["C901", "EM101", "PLR0912", "PLR0915", "TRY003"]
 "src/pipecat_voice_studio/appointments.py" = ["EM101", "PLR0913", "TRY003"]
-"src/pipecat_voice_studio/storage.py" = ["EM101", "TRY003"]
-"src/pipecat_voice_studio/voice/bot.py" = ["ANN401"]
+"src/pipecat_voice_studio/storage.py" = ["EM101", "PLR0913", "TRY003"]
+"src/pipecat_voice_studio/voice/bot.py" = ["ANN401", "C901", "PLR0912"]
+"src/pipecat_voice_studio/integrations/hubspot.py" = ["PLR0913"]
+"src/pipecat_voice_studio/telephony_gateway.py" = ["PLR0913"]
+"src/pipecat_voice_studio/ui/components.py" = ["PLR0913"]
+"src/pipecat_voice_studio/ui/app_pages/integrations.py" = ["BLE001", "EM101", "TRY003", "TRY301"]
+"src/pipecat_voice_studio/voice/business_flow.py" = ["C901", "FBT001", "PLR0913", "PLR0917"]
+"src/pipecat_voice_studio/voice/healthcare_flow.py" = ["FBT001", "PLR0913", "PLR0917"]
 "src/pipecat_voice_studio/voice/appointment_flow.py" = ["FBT001"]
 "src/pipecat_voice_studio/evaluations.py" = ["BLE001", "TRY003"]
-"src/pipecat_voice_studio/voice/timeline.py" = ["C901"]
+"src/pipecat_voice_studio/voice/timeline.py" = ["C901", "PLR0912"]
 "tests/test_evaluations.py" = ["SLF001"]
 "tests/**" = ["PLR2004", "PT018", "S101", "TC003"]
 
@@ -82,4 +92,10 @@ python-version = "3.14"
 error-on-warning = true
 
 [tool.coverage.run]
-omit = ["src/pipecat_voice_studio/ui/*", "src/pipecat_voice_studio/voice/*"]
+omit = [
+    "src/pipecat_voice_studio/ui/*",
+    "src/pipecat_voice_studio/voice/*",
+    "src/pipecat_voice_studio/calendar_worker.py",
+    "src/pipecat_voice_studio/integrations/*",
+    "src/pipecat_voice_studio/telephony_gateway.py",
+]

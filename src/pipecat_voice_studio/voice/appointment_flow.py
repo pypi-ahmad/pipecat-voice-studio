@@ -26,13 +26,11 @@ def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig
         if not confirmed:
             record_node("finish", outcome="denied")
             return {"status": "cancelled"}, finish_node("The user cancelled the appointment.")
-        appointment_id = book.create(
+        appointment_id = await book.create_confirmed(
             session_id=session_id,
             attendee_name=str(proposal["attendee_name"]),
             purpose=str(proposal["purpose"]),
             starts_at=datetime.fromisoformat(str(proposal["starts_at"])),
-            confirmed=True,
-            flow_node="confirmation",
         )
         record_node("finish", outcome="confirmed")
         return {"status": "confirmed", "appointment_id": appointment_id}, finish_node(
@@ -62,7 +60,7 @@ def build_appointment_flow(book: AppointmentBook, session_id: str) -> NodeConfig
     ) -> tuple[dict[str, Any], NodeConfig]:
         """Check a timezone-aware ISO start and prepare a 30-minute appointment proposal."""
         start = datetime.fromisoformat(starts_at)
-        if not book.is_available(start):
+        if not await book.is_available_external(start):
             suggestions = [slot.isoformat() for slot in book.suggest(start)]
             record_node("collect", outcome="unavailable")
             return {"status": "unavailable", "suggestions": suggestions}, collect_node()

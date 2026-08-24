@@ -1,29 +1,43 @@
 flowchart TD
-    ui["ui<br/>Streamlit pages and component"]
-    api["api<br/>FastAPI surface"]
+    ui["ui<br/>Streamlit and React bridge"]
+    api["api<br/>management surface"]
+    gateway["telephony_gateway<br/>public callback boundary"]
+    calendar["calendar_worker<br/>incremental polling"]
     evals["evaluations<br/>isolated harness"]
-    voice["voice<br/>Pipecat runtime"]
-    graphmod["graph<br/>schema and compiler"]
+    voice["voice<br/>Pipecat runtime and Flows"]
+    integrations["integrations<br/>provider adapters"]
+    security["security<br/>signatures / tokens / encryption"]
+    graphmod["graph / seeds<br/>contracts"]
     appointments["appointments<br/>booking policy"]
     storage["storage<br/>SQLite repository"]
     config["config<br/>environment settings"]
-    pipecat["Pipecat<br/>runner, services, evals"]
+    pipecat["Pipecat<br/>runner / services / transports"]
 
     ui --> storage
     ui --> graphmod
-    ui --> evals
+    ui --> integrations
     api --> storage
     api --> graphmod
+    gateway --> voice
+    gateway --> security
+    gateway --> storage
+    calendar --> integrations
+    calendar --> storage
     voice --> storage
     voice --> graphmod
     voice --> appointments
+    voice --> integrations
+    voice --> security
     voice --> config
     voice --> pipecat
     evals --> storage
     evals --> appointments
     evals --> config
     evals --> pipecat
+    appointments --> integrations
     appointments --> storage
+    integrations --> security
+    integrations --> config
 
     classDef shared fill:#fceee8,stroke:#eb6c36,color:#2d3142
-    class storage shared
+    class storage,security shared

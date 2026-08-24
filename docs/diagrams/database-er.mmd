@@ -1,8 +1,14 @@
 erDiagram
     PIPELINE_DEFINITIONS ||--o{ SESSIONS : runs
     PIPELINE_DEFINITIONS ||--o{ EVAL_RUNS : evaluates
+    PIPELINE_DEFINITIONS ||--o{ INTEGRATION_BINDINGS : binds
     SESSIONS ||--o{ SESSION_EVENTS : contains
     SESSIONS o|--o{ APPOINTMENTS : books
+    SESSIONS o|--o{ CALLS : handles
+    CALLS ||--o{ HANDOFFS : transfers
+    SESSIONS o|--o{ CRM_RECORDS : produces
+    SESSIONS ||--o| HEALTHCARE_CONSENTS : authorizes
+    SESSIONS ||--o| HEALTHCARE_INTAKES : protects
 
     PIPELINE_DEFINITIONS {
         text id PK
@@ -11,15 +17,12 @@ erDiagram
         text graph_json
         integer revision
         integer active
-        text updated_at
     }
     SESSIONS {
         text id PK
         text pipeline_id FK
         text status
-        text graph_json
-        text models_json
-        text failure
+        integer sensitive
         text started_at
         text ended_at
     }
@@ -29,17 +32,52 @@ erDiagram
         integer sequence
         text event_type
         text payload_json
-        text created_at
     }
     APPOINTMENTS {
         text id PK
         text session_id FK
-        text attendee_name
-        text purpose
         text starts_at
-        integer duration_minutes
         text status
-        text created_at
+        text provider
+        text external_id
+        text external_status
+    }
+    CALLS {
+        text id PK
+        text session_id FK
+        text provider
+        text provider_call_id
+        text remote_last_four
+        text status
+    }
+    HANDOFFS {
+        text id PK
+        text call_id FK
+        text session_id FK
+        text status
+        text summary
+    }
+    CRM_RECORDS {
+        text id PK
+        text session_id FK
+        text contact_id
+        text deal_id
+        integer score
+        text status
+    }
+    HEALTHCARE_CONSENTS {
+        text id PK
+        text session_id FK
+        text policy_version
+        integer accepted
+    }
+    HEALTHCARE_INTAKES {
+        text id PK
+        text session_id FK
+        blob ciphertext
+        blob nonce
+        text status
+        integer escalated
     }
     EVAL_RUNS {
         text id PK
@@ -47,5 +85,21 @@ erDiagram
         text scenario
         text status
         text result_json
-        text created_at
+    }
+    INTEGRATION_BINDINGS {
+        text provider PK
+        text pipeline_id FK
+    }
+    CALENDAR_SYNC_STATE {
+        text provider PK
+        text sync_token
+        text last_synced_at
+        text last_error
+    }
+    AUDIT_EVENTS {
+        integer id PK
+        text action
+        text resource_type
+        text resource_id
+        text outcome
     }

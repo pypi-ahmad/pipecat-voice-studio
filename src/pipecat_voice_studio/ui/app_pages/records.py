@@ -5,7 +5,9 @@ import streamlit as st
 from pipecat_voice_studio.ui.store import studio_store
 
 store = studio_store()
-sessions_tab, appointments_tab = st.tabs(["Sessions", "Appointments"])
+sessions_tab, appointments_tab, calls_tab, health_tab = st.tabs(
+    ["Sessions", "Appointments", "Calls and handoffs", "Healthcare metadata"]
+)
 with sessions_tab:
     with store.connect() as connection:
         sessions = [
@@ -36,3 +38,14 @@ with appointments_tab:
             ).fetchall()
         ]
     st.dataframe(appointments, width="stretch", hide_index=True)
+with calls_tab:
+    st.caption("Telephone numbers are redacted; full numbers are never stored.")
+    st.dataframe(store.list_calls(), width="stretch", hide_index=True)
+    st.subheader("Human handoffs")
+    st.dataframe(store.list_handoffs(), width="stretch", hide_index=True)
+with health_tab:
+    st.caption(
+        "Only consent, state, and escalation metadata is shown. "
+        "Structured intake remains encrypted."
+    )
+    st.dataframe(store.list_healthcare_metadata(), width="stretch", hide_index=True)

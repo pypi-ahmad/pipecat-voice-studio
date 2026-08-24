@@ -8,7 +8,12 @@ from pipecat_voice_studio.ui.components import render_voice_session
 from pipecat_voice_studio.ui.store import studio_store
 
 settings = get_settings()
-graphs = [graph for graph in studio_store().list_graphs() if graph["mode"] != "eval"]
+store = studio_store()
+graphs = [
+    graph
+    for graph in store.list_graphs()
+    if graph["mode"] != "eval" and "small_webrtc" in store.get_graph(graph["id"]).model_dump_json()
+]
 selected = st.selectbox(
     "Active pipeline",
     graphs,
@@ -23,7 +28,7 @@ try:
     response = httpx.get(status_url, timeout=1)
     response.raise_for_status()
     worker_ready = response.json().get("status") == "ready"
-except (httpx.HTTPError, ValueError):
+except httpx.HTTPError, ValueError:
     worker_ready = False
 
 if worker_ready:
@@ -41,8 +46,7 @@ render_voice_session(
     pipeline_id=selected["id"],
     pipeline_name=selected["name"],
     mode=selected["mode"],
+    has_avatar="simli_avatar" in store.get_graph(selected["id"]).model_dump_json(),
     key=f"voice-{selected['id']}",
 )
-st.caption(
-    "Audio remains in the live WebRTC stream and is never written to the studio database."
-)
+st.caption("Audio remains in the live WebRTC stream and is never written to the studio database.")

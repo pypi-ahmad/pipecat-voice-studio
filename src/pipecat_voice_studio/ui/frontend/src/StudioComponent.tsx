@@ -1,5 +1,9 @@
 import { PipecatClient, type PipecatMetricsData, type TransportState } from "@pipecat-ai/client-js";
-import { PipecatClientAudio, PipecatClientProvider } from "@pipecat-ai/client-react";
+import {
+  PipecatClientAudio,
+  PipecatClientProvider,
+  PipecatClientVideo,
+} from "@pipecat-ai/client-react";
 import { SmallWebRTCTransport } from "@pipecat-ai/small-webrtc-transport";
 import {
   Background,
@@ -28,6 +32,7 @@ type VoiceData = {
   pipelineId: string;
   pipelineName: string;
   mode: string;
+  hasAvatar: boolean;
 };
 
 export type StudioData = GraphData | VoiceData;
@@ -245,6 +250,15 @@ function VoiceView({ data }: { data: VoiceData }) {
         </div>
 
         {error && <div className="error" role="alert">{error}</div>}
+
+        {data.hasAvatar && (
+          <PipecatClientVideo
+            participant="bot"
+            fit="contain"
+            aria-label="AI avatar video"
+            autoPlay
+          />
+        )}
 
         <div className="voice-grid">
           <div className="conversation" aria-live="polite">

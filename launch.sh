@@ -7,10 +7,13 @@ FALLBACK_PYTHON="3.13.13"
 WORKER_PORT=7860
 STREAMLIT_PORT=8501
 API_PORT=8000
+GATEWAY_PORT=8080
 WITH_API=0
 SETUP_ONLY=0
 WORKER_PID=""
 API_PID=""
+GATEWAY_PID=""
+CALENDAR_PID=""
 
 cd "$PROJECT_ROOT"
 
@@ -24,6 +27,7 @@ Options:
   --worker-port PORT        Pipecat worker port (default: 7860).
   --streamlit-port PORT     Streamlit port (default: 8501).
   --api-port PORT           Management API port (default: 8000).
+  --gateway-port PORT       Telephony callback port (default: 8080).
   -h, --help                Show this help.
 EOF
 }
@@ -36,7 +40,7 @@ while (($#)); do
     case "$1" in
         --with-api) WITH_API=1; shift ;;
         --setup-only) SETUP_ONLY=1; shift ;;
-        --worker-port|--streamlit-port|--api-port)
+        --worker-port|--streamlit-port|--api-port|--gateway-port)
             option="$1"
             [[ $# -ge 2 ]] || { echo "Missing value for $option." >&2; exit 2; }
             valid_port "$2" || { echo "Invalid port for $option: $2" >&2; exit 2; }
@@ -44,6 +48,7 @@ while (($#)); do
                 --worker-port) WORKER_PORT="$2" ;;
                 --streamlit-port) STREAMLIT_PORT="$2" ;;
                 --api-port) API_PORT="$2" ;;
+                --gateway-port) GATEWAY_PORT="$2" ;;
             esac
             shift 2
             ;;
@@ -150,7 +155,7 @@ if ((SETUP_ONLY)); then
     exit 0
 fi
 
-ports=("$WORKER_PORT" "$STREAMLIT_PORT")
+ports=("$WORKER_PORT" "$STREAMLIT_PORT" "$GATEWAY_PORT")
 ((WITH_API)) && ports+=("$API_PORT")
 if [[ "$(printf '%s\n' "${ports[@]}" | sort -u | wc -l)" -ne "${#ports[@]}" ]]; then
     echo "Worker, Streamlit, and API ports must be distinct." >&2
@@ -186,10 +191,14 @@ worker_out_log="$log_directory/worker.out.log"
 worker_error_log="$log_directory/worker.err.log"
 api_out_log="$log_directory/api.out.log"
 api_error_log="$log_directory/api.err.log"
+gateway_out_log="$log_directory/gateway.out.log"
+gateway_error_log="$log_directory/gateway.err.log"
+calendar_out_log="$log_directory/calendar.out.log"
+calendar_error_log="$log_directory/calendar.err.log"
 
 cleanup() {
     local pid
-    for pid in "$API_PID" "$WORKER_PID"; do
+    for pid in "$CALENDAR_PID" "$GATEWAY_PID" "$API_PID" "$WORKER_PID"; do
         if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
             kill "$pid" 2>/dev/null || true
             wait "$pid" 2>/dev/null || true
@@ -238,6 +247,24 @@ if ! wait_for_endpoint "http://127.0.0.1:$WORKER_PORT/status" "$WORKER_PID" "Pip
     exit 1
 fi
 echo "Pipecat worker is ready."
+
+"$python_exe" -m uvicorn pipecat_voice_studio.telephony_gateway:app \
+    --host 127.0.0.1 --port "$GATEWAY_PORT" \
+    --proxy-headers --forwarded-allow-ips 127.0.0.1 \
+    >"$gateway_out_log" 2>"$gateway_error_log" &
+GATEWAY_PID=$!
+if ! wait_for_endpoint "http://127.0.0.1:$GATEWAY_PORT/health" "$GATEWAY_PID" "Telephony gateway"; then
+    tail -n 40 "$gateway_out_log" "$gateway_error_log" 2>/dev/null || true
+    exit 1
+fi
+echo "Telephony callback gateway: http://127.0.0.1:$GATEWAY_PORT"
+
+if [[ "$("$python_exe" -c 'from pipecat_voice_studio.config import get_settings; s=get_settings(); print(int(bool(s.google_service_account_json and s.google_calendar_id)))')" == "1" ]]; then
+    "$python_exe" -m pipecat_voice_studio.calendar_worker \
+        >"$calendar_out_log" 2>"$calendar_error_log" &
+    CALENDAR_PID=$!
+    echo "Google Calendar synchronization worker started."
+fi
 
 if ((WITH_API)); then
     "$python_exe" -m uvicorn pipecat_voice_studio.api.app:app \

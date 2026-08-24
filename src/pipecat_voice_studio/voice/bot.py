@@ -29,14 +29,19 @@ from pipecat.services.openai.realtime.llm import OpenAIRealtimeLLMService
 from pipecat.services.openai.responses.llm import OpenAIResponsesLLMService
 from pipecat.services.openai.stt import OpenAIRealtimeSTTService
 from pipecat.services.openai.tts import OpenAITTSService
+from pipecat.services.simli.video import SimliVideoService
 from pipecat.transports.base_transport import TransportParams
 from pipecat.workers.runner import WorkerRunner
 
 from pipecat_voice_studio.appointments import AppointmentBook
 from pipecat_voice_studio.config import Settings, get_settings
 from pipecat_voice_studio.graph import NodeKind, PipelineMode, compile_graph
+from pipecat_voice_studio.integrations.google_calendar import GoogleCalendar
+from pipecat_voice_studio.security import HealthcareCipher
 from pipecat_voice_studio.storage import StudioStore
 from pipecat_voice_studio.voice.appointment_flow import build_appointment_flow
+from pipecat_voice_studio.voice.business_flow import build_business_flow
+from pipecat_voice_studio.voice.healthcare_flow import build_healthcare_flow
 from pipecat_voice_studio.voice.timeline import SemanticTimelineObserver
 
 
@@ -109,7 +114,10 @@ async def _realtime_processors(
 
 
 async def _cascade_processors(
-    transport: Any, settings: Settings, graph_settings: dict[str, Any]
+    transport: Any,
+    settings: Settings,
+    graph_settings: dict[str, Any],
+    kinds: set[NodeKind],
 ) -> tuple[list[Any], OpenAIResponsesLLMService, LLMContextAggregatorPair]:
     api_key = _api_key(settings)
     prompt = str(
@@ -147,6 +155,17 @@ async def _cascade_processors(
         context,
         user_params=LLMUserAggregatorParams(vad_analyzer=SileroVADAnalyzer()),
     )
+    output_processors: list[Any] = []
+    if NodeKind.AVATAR in kinds:
+        if settings.simli_api_key is None or settings.simli_face_id is None:
+            message = "SIMLI_API_KEY and SIMLI_FACE_ID are required for avatar pipelines"
+            raise RuntimeError(message)
+        output_processors.append(
+            SimliVideoService(
+                api_key=settings.simli_api_key.get_secret_value(),
+                face_id=settings.simli_face_id,
+            )
+        )
     return (
         [
             transport.input(),
@@ -154,6 +173,7 @@ async def _cascade_processors(
             aggregators.user(),
             llm,
             tts,
+            *output_processors,
             transport.output(),
             aggregators.assistant(),
         ],
@@ -169,10 +189,43 @@ async def bot(runner_args: RunnerArguments) -> None:
     store.initialize()
     pipeline_id = _pipeline_id(runner_args)
     graph = store.get_graph(pipeline_id)
-    compiled = compile_graph(graph)
+    compile_graph(graph)
     if isinstance(runner_args, EvalRunnerArguments) != (graph.mode == PipelineMode.EVAL):
         message = "The selected graph mode does not match the runner transport"
         raise ValueError(message)
+    transport = await create_transport(
+        runner_args,
+        {
+            "webrtc": lambda: TransportParams(
+                audio_in_enabled=True,
+                audio_out_enabled=True,
+                video_out_enabled=NodeKind.AVATAR in {node.kind for node in graph.nodes},
+            ),
+            "eval": lambda: TransportParams(
+                audio_in_enabled=True,
+                audio_out_enabled=True,
+            ),
+        },
+    )
+    await run_pipeline(transport, pipeline_id, settings=settings, store=store)
+
+
+async def run_pipeline(
+    transport: Any,
+    pipeline_id: str,
+    *,
+    settings: Settings | None = None,
+    store: StudioStore | None = None,
+    call_id: str | None = None,
+) -> None:
+    """Run a stored pipeline over an already-created Pipecat transport."""
+    settings = settings or get_settings()
+    store = store or StudioStore(settings.pvs_database_path)
+    store.initialize()
+    graph = store.get_graph(pipeline_id)
+    compiled = compile_graph(graph)
+    kinds = {node.kind for node in graph.nodes}
+    sensitive = NodeKind.HEALTHCARE in kinds
     session_id = store.create_session(
         pipeline_id,
         graph,
@@ -182,36 +235,32 @@ async def bot(runner_args: RunnerArguments) -> None:
             "llm": settings.pvs_cascade_llm_model,
             "tts": settings.pvs_cascade_tts_model,
         },
+        sensitive=sensitive,
     )
+    if call_id is not None:
+        store.update_call(call_id, status="in-progress", session_id=session_id)
     store.append_event(session_id, "transport.connecting", {"transport": compiled.transport})
-    transport = await create_transport(
-        runner_args,
-        {
-            "webrtc": lambda: TransportParams(
-                audio_in_enabled=True,
-                audio_out_enabled=True,
-            ),
-            "eval": lambda: TransportParams(
-                audio_in_enabled=True,
-                audio_out_enabled=True,
-            ),
-        },
-    )
     flow_parts = None
     if graph.mode == PipelineMode.REALTIME:
         processors = await _realtime_processors(transport, settings, compiled.settings)
     else:
         processors, llm, aggregators = await _cascade_processors(
-            transport, settings, compiled.settings
+            transport, settings, compiled.settings, kinds
         )
         flow_parts = (llm, aggregators)
     worker = PipelineWorker(
         Pipeline(processors),
         conversation_id=session_id,
-        observers=[SemanticTimelineObserver(store, session_id)],
+        observers=[SemanticTimelineObserver(store, session_id, persist_conversation=not sensitive)],
         params=PipelineParams(enable_metrics=True, enable_usage_metrics=True),
     )
-    if NodeKind.APPOINTMENT in {node.kind for node in graph.nodes} and flow_parts is not None:
+    if flow_parts is not None and kinds & {
+        NodeKind.APPOINTMENT,
+        NodeKind.MULTI_AGENT,
+        NodeKind.CRM,
+        NodeKind.HANDOFF,
+        NodeKind.HEALTHCARE,
+    }:
         llm, aggregators = flow_parts
         flow = FlowManager(
             llm=llm,  # ty: ignore[invalid-argument-type]
@@ -219,17 +268,48 @@ async def bot(runner_args: RunnerArguments) -> None:
             worker=worker,
             transport=transport,
         )
-        book = AppointmentBook(store, settings.pvs_timezone)
-        await flow.initialize(build_appointment_flow(book, session_id))
-        store.append_event(session_id, "flow.node", {"node": "collect"})
+        if NodeKind.HEALTHCARE in kinds:
+            if (
+                not settings.pvs_healthcare_enabled
+                or settings.pvs_healthcare_data_key is None
+                or "openai" not in settings.healthcare_approved_services
+            ):
+                message = "Healthcare requires enablement, an encryption key, and openai approval"
+                raise RuntimeError(message)
+            initial_node = build_healthcare_flow(
+                store,
+                HealthcareCipher(settings.pvs_healthcare_data_key.get_secret_value()),
+                session_id,
+            )
+        elif kinds & {NodeKind.MULTI_AGENT, NodeKind.CRM, NodeKind.HANDOFF}:
+            initial_node = build_business_flow(store, settings, session_id, call_id=call_id)
+        else:
+            calendar = None
+            if (
+                NodeKind.CALENDAR in kinds
+                and settings.google_service_account_json is not None
+                and settings.google_calendar_id is not None
+            ):
+                calendar = GoogleCalendar(
+                    settings.google_service_account_json.get_secret_value(),
+                    settings.google_calendar_id,
+                )
+            book = AppointmentBook(store, settings.pvs_timezone, calendar)
+            initial_node = build_appointment_flow(book, session_id)
+        await flow.initialize(initial_node)
+        store.append_event(session_id, "flow.node", {"node": initial_node["name"]})
     try:
         store.append_event(session_id, "transport.connected", {"transport": compiled.transport})
         await WorkerRunner(handle_sigint=False).run(worker)
     except Exception as error:
         store.finish_session(session_id, failure=type(error).__name__)
+        if call_id is not None:
+            store.update_call(call_id, status="failed", failure=type(error).__name__, ended=True)
         raise
     else:
         store.finish_session(session_id)
+        if call_id is not None:
+            store.update_call(call_id, status="completed", ended=True)
 
 
 if __name__ == "__main__":

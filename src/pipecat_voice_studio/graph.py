@@ -20,6 +20,7 @@ class NodeKind(StrEnum):
     """Audited node implementations available to saved graphs."""
 
     WEBRTC = "small_webrtc"
+    TELEPHONY = "telephony_websocket"
     EVAL_TRANSPORT = "eval_transport"
     REALTIME = "openai_realtime"
     STT = "openai_realtime_stt"
@@ -28,6 +29,12 @@ class NodeKind(StrEnum):
     LLM = "openai_responses"
     TTS = "openai_tts"
     APPOINTMENT = "appointment_flow"
+    CALENDAR = "google_calendar"
+    CRM = "hubspot_crm"
+    HANDOFF = "human_handoff"
+    MULTI_AGENT = "multi_agent_router"
+    HEALTHCARE = "healthcare_intake"
+    AVATAR = "simli_avatar"
     POLICY = "policy_gate"
     TIMELINE = "timeline"
     METRICS = "metrics"
@@ -36,6 +43,7 @@ class NodeKind(StrEnum):
 
 PATH_KINDS = {
     NodeKind.WEBRTC,
+    NodeKind.TELEPHONY,
     NodeKind.EVAL_TRANSPORT,
     NodeKind.REALTIME,
     NodeKind.STT,
@@ -44,6 +52,12 @@ PATH_KINDS = {
     NodeKind.LLM,
     NodeKind.TTS,
     NodeKind.APPOINTMENT,
+    NodeKind.CALENDAR,
+    NodeKind.CRM,
+    NodeKind.HANDOFF,
+    NodeKind.MULTI_AGENT,
+    NodeKind.HEALTHCARE,
+    NodeKind.AVATAR,
     NodeKind.POLICY,
 }
 OPERATIONAL_KINDS = {NodeKind.TIMELINE, NodeKind.METRICS, NodeKind.PERSISTENCE}
@@ -104,14 +118,24 @@ class PipelineGraph(BaseModel):
         if required_ops:
             raise ValueError("Timeline, metrics, and persistence nodes are mandatory")
 
-        transport = NodeKind.EVAL_TRANSPORT if self.mode == PipelineMode.EVAL else NodeKind.WEBRTC
-        if sum(node.kind == transport for node in self.nodes) != 1:
+        if self.mode == PipelineMode.EVAL:
+            transport = NodeKind.EVAL_TRANSPORT
+            if NodeKind.EVAL_TRANSPORT not in kinds:
+                raise ValueError("Evaluation graphs require the evaluation transport")
+        else:
+            transport = next(
+                (kind for kind in (NodeKind.WEBRTC, NodeKind.TELEPHONY) if kind in kinds),
+                None,
+            )
+        if (
+            transport is None
+            or sum(
+                node.kind in {NodeKind.WEBRTC, NodeKind.TELEPHONY, NodeKind.EVAL_TRANSPORT}
+                for node in self.nodes
+            )
+            != 1
+        ):
             raise ValueError("The graph must contain exactly one transport for its mode")
-        other_transport = (
-            NodeKind.WEBRTC if transport == NodeKind.EVAL_TRANSPORT else NodeKind.EVAL_TRANSPORT
-        )
-        if other_transport in kinds:
-            raise ValueError("The graph contains a transport for another mode")
 
         if self.mode == PipelineMode.REALTIME:
             if NodeKind.REALTIME not in kinds or kinds & {
@@ -120,12 +144,31 @@ class PipelineGraph(BaseModel):
                 NodeKind.LLM,
                 NodeKind.TTS,
                 NodeKind.APPOINTMENT,
+                NodeKind.CALENDAR,
+                NodeKind.CRM,
+                NodeKind.HANDOFF,
+                NodeKind.MULTI_AGENT,
+                NodeKind.HEALTHCARE,
+                NodeKind.AVATAR,
             }:
                 raise ValueError("Realtime graphs require the combined realtime service only")
         else:
             required = {NodeKind.STT, NodeKind.CONTEXT, NodeKind.TURN, NodeKind.LLM, NodeKind.TTS}
             if NodeKind.REALTIME in kinds or not required <= kinds:
                 raise ValueError("Cascade and eval graphs require the complete cascaded stack")
+        if transport == NodeKind.TELEPHONY and self.mode != PipelineMode.CASCADE:
+            raise ValueError("Telephony graphs require cascade mode")
+        if NodeKind.AVATAR in kinds and (
+            transport != NodeKind.WEBRTC or self.mode != PipelineMode.CASCADE
+        ):
+            raise ValueError("Avatar graphs require browser cascade mode")
+        if NodeKind.HEALTHCARE in kinds and kinds & {
+            NodeKind.CRM,
+            NodeKind.CALENDAR,
+            NodeKind.APPOINTMENT,
+            NodeKind.MULTI_AGENT,
+        }:
+            raise ValueError("Healthcare graphs must remain isolated from business tools")
 
         path_ids = {node.id for node in self.nodes if node.kind in PATH_KINDS}
         path_edges = [
@@ -173,7 +216,7 @@ class CompiledPipeline(BaseModel):
     mode: PipelineMode
     ordered_nodes: list[NodeKind]
     settings: dict[str, Any]
-    transport: Literal["webrtc", "eval"]
+    transport: Literal["webrtc", "telephony", "eval"]
 
 
 def compile_graph(graph: PipelineGraph) -> CompiledPipeline:
@@ -205,5 +248,11 @@ def compile_graph(graph: PipelineGraph) -> CompiledPipeline:
         mode=graph.mode,
         ordered_nodes=ordered,
         settings=settings,
-        transport="eval" if graph.mode == PipelineMode.EVAL else "webrtc",
+        transport=(
+            "eval"
+            if graph.mode == PipelineMode.EVAL
+            else "telephony"
+            if any(node.kind == NodeKind.TELEPHONY for node in graph.nodes)
+            else "webrtc"
+        ),
     )

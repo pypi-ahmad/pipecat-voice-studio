@@ -24,6 +24,7 @@ def render_voice_session(
     pipeline_id: str,
     pipeline_name: str,
     mode: str,
+    has_avatar: bool,
     key: str,
 ) -> None:
     """Render the browser-owned Pipecat WebRTC session UI."""
@@ -34,6 +35,7 @@ def render_voice_session(
             "pipelineId": pipeline_id,
             "pipelineName": pipeline_name,
             "mode": mode,
+            "hasAvatar": has_avatar,
         },
         height=720,
         key=key,

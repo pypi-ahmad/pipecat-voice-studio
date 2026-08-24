@@ -1,5 +1,7 @@
 """Built-in editable pipeline definitions."""
 
+from itertools import pairwise
+
 from pipecat_voice_studio.graph import GraphEdge, GraphNode, NodeKind, PipelineGraph, PipelineMode
 
 
@@ -12,7 +14,7 @@ def _operational_nodes() -> list[GraphNode]:
 
 
 def seed_graphs() -> list[PipelineGraph]:
-    """Return fresh copies of the three starter graphs."""
+    """Return fresh copies of all supported starter graphs."""
     realtime_nodes = [
         GraphNode(id="transport", kind=NodeKind.WEBRTC, label="Browser WebRTC"),
         GraphNode(id="context", kind=NodeKind.CONTEXT, label="Conversation context"),
@@ -42,7 +44,7 @@ def seed_graphs() -> list[PipelineGraph]:
     ]
     eval_nodes = [node.model_copy(deep=True) for node in cascade_nodes]
     eval_nodes[0] = GraphNode(id="transport", kind=NodeKind.EVAL_TRANSPORT, label="Eval transport")
-    return [
+    graphs = [
         PipelineGraph(
             name="Realtime assistant",
             mode=PipelineMode.REALTIME,
@@ -81,3 +83,66 @@ def seed_graphs() -> list[PipelineGraph]:
             ],
         ),
     ]
+    extension_specs = [
+        (
+            "Business phone agent",
+            NodeKind.TELEPHONY,
+            [NodeKind.MULTI_AGENT, NodeKind.CRM, NodeKind.HANDOFF],
+            "Route callers across billing, technical support, sales, and human escalation.",
+        ),
+        (
+            "Google Calendar appointment assistant",
+            NodeKind.WEBRTC,
+            [NodeKind.POLICY, NodeKind.APPOINTMENT, NodeKind.CALENDAR],
+            "Book confirmed appointments against the synchronized organization calendar.",
+        ),
+        (
+            "Simli avatar assistant",
+            NodeKind.WEBRTC,
+            [NodeKind.AVATAR],
+            "Be a concise on-screen avatar assistant.",
+        ),
+        (
+            "Healthcare intake assistant",
+            NodeKind.WEBRTC,
+            [NodeKind.HEALTHCARE, NodeKind.POLICY],
+            "Collect consent-first structured intake. Never diagnose or provide medical advice.",
+        ),
+    ]
+    for name, transport_kind, tools, prompt in extension_specs:
+        path = [
+            GraphNode(id="transport", kind=transport_kind, label="Voice transport"),
+            GraphNode(id="stt", kind=NodeKind.STT, label="Streaming speech recognition"),
+            GraphNode(id="turn", kind=NodeKind.TURN, label="Silero turn handling"),
+            GraphNode(id="context", kind=NodeKind.CONTEXT, label="Conversation context"),
+            GraphNode(
+                id="llm",
+                kind=NodeKind.LLM,
+                label="OpenAI Responses",
+                config={"prompt": prompt},
+            ),
+            *[
+                GraphNode(
+                    id=f"feature-{index}", kind=kind, label=kind.value.replace("_", " ").title()
+                )
+                for index, kind in enumerate(tools)
+            ],
+            GraphNode(
+                id="tts",
+                kind=NodeKind.TTS,
+                label="OpenAI speech",
+                config={"voice": "marin"},
+            ),
+        ]
+        graphs.append(
+            PipelineGraph(
+                name=name,
+                mode=PipelineMode.CASCADE,
+                nodes=[*path, *_operational_nodes()],
+                edges=[
+                    GraphEdge(source=source.id, target=target.id)
+                    for source, target in pairwise(path)
+                ],
+            )
+        )
+    return graphs

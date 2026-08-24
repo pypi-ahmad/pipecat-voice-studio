@@ -1,23 +1,27 @@
 flowchart LR
-    media["Browser media<br/>ephemeral audio frames"]
-    transport["SmallWebRTC transport"]
+    media["Browser/provider media<br/>ephemeral frames"]
     pipeline["Pipecat processors<br/>Realtime or cascade"]
-    tools["Flow tools<br/>appointment operations"]
+    tools["Governed Flow tools<br/>confirmation / consent"]
+    providers["Calendar / CRM / telephone / avatar"]
     observer["SemanticTimelineObserver"]
-    events["Typed semantic events<br/>turns, tools, metrics, state"]
-    store[("SQLite<br/>durable records")]
-    records["Records and analytics UI"]
+    normal["Normal session events<br/>turns / tools / metrics"]
+    health["Healthcare boundary<br/>no turn persistence"]
+    cipher["AES-256-GCM<br/>session-bound intake"]
+    store[("SQLite schema v2")]
+    ui["Records / analytics<br/>metadata-only healthcare view"]
 
-    media --> transport
-    transport --> pipeline
+    media --> pipeline
     pipeline --> tools
+    tools <--> providers
     pipeline --> observer
-    tools --> observer
-    observer --> events
-    events --> store
-    store --> records
+    observer --> normal
+    normal --> store
+    tools --> health
+    health --> cipher
+    cipher --> store
+    store --> ui
 
     classDef focal fill:#fceee8,stroke:#eb6c36,color:#2d3142
-    classDef store fill:#e9ebef,stroke:#4f5d75,color:#2d3142
-    class observer focal
-    class store store
+    classDef storeStyle fill:#e9ebef,stroke:#4f5d75,color:#2d3142
+    class observer,cipher focal
+    class store storeStyle

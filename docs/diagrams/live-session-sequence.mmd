@@ -1,19 +1,30 @@
 sequenceDiagram
     actor User
-    participant Browser as React client
-    participant Studio as Streamlit
-    participant Worker as Pipecat worker
+    participant Client as Browser or telephone provider
+    participant Entry as Worker or callback gateway
     participant Store as SQLite store
+    participant Models as OpenAI / Simli
+    participant Tools as Flow / external adapters
 
-    User->>Studio: Select active pipeline
-    Studio-->>Browser: Worker URL and pipeline ID
-    Browser->>Worker: POST /start
-    Worker->>Store: Load and revalidate graph
-    Worker->>Store: Create running session
-    Worker-->>Browser: SmallWebRTC connection data
-    User->>Browser: Speak through microphone
-    Browser->>Worker: Stream audio frames
-    Worker->>Worker: Realtime or cascade pipeline
-    Worker-->>Browser: Stream audio and RTVI events
-    Worker->>Store: Append semantic events
-    Browser-->>User: Play response and show transcript
+    User->>Client: Speak
+    alt Browser session
+        Client->>Entry: POST /start + SmallWebRTC
+    else Telephone session
+        Client->>Entry: Signed answer callback
+        Entry-->>Client: Media WebSocket instruction
+        Client->>Entry: Short-lived-token WebSocket
+    end
+    Entry->>Store: Load and revalidate graph
+    Entry->>Store: Create running session
+    loop Conversation turns
+        Client->>Entry: Stream audio frames
+        Entry->>Models: STT / LLM / TTS or Realtime
+        opt Tool-bearing cascade
+            Models->>Tools: Confirmed function call
+            Tools->>Store: Persist governed result
+            Tools-->>Models: Structured status
+        end
+        Models-->>Client: Stream audio and optional avatar video
+        Entry->>Store: Append allowed semantic events
+    end
+    Entry->>Store: Complete or fail session

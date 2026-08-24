@@ -27,7 +27,8 @@
 
 ## Error and Logging Conventions
 
-- Contract violations raise `ValueError`, `PermissionError`, `KeyError`, or Pydantic validation errors at the responsible boundary.
+- Contract violations use boundary-specific `ValueError`/`PermissionError` subclasses, `KeyError`,
+  HTTP status errors, or Pydantic validation errors at the responsible layer.
 - FastAPI maps a missing active pipeline to HTTP 404; request validation remains FastAPI/Pydantic's standard 422 behavior.
 - The worker catches terminal exceptions, records a failed session, then re-raises. Evaluations convert failures into persisted structured results.
 - Operational output uses Pipecat/loguru logging in the worker and bounded subprocess logs in evaluations. There is no repository-wide structured logging schema.
@@ -38,7 +39,9 @@
 - Tests live in `tests/` and use `test_*.py` plus plain `assert`.
 - pytest fixtures and `monkeypatch` isolate files, environment, subprocesses, and model-backed execution.
 - Live paid tests require both an explicit flag and `OPENAI_API_KEY`.
-- Coverage must be at least 80%, but `ui/*` and `voice/*` are omitted from Python coverage measurement.
+- Coverage must be at least 80%. Interactive UI/voice code and credential-dependent provider,
+  gateway, and polling boundaries are omitted; security, storage, graph, API, and policy code remain
+  measured.
 
 ## Evidence
 
@@ -47,4 +50,5 @@
 - `src/pipecat_voice_studio/evaluations.py`
 - `src/pipecat_voice_studio/voice/bot.py`
 - `tests/test_evaluations.py`
-
+- `tests/test_security.py`
+- `tests/test_extended_storage.py`

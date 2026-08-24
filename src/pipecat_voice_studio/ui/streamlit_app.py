@@ -18,14 +18,16 @@ hardware problems.
 3. Choose **Validate and save clone**. The original pipeline is not changed.
 """,
     "Live session": """
-1. Select a realtime pipeline for general conversation or a cascade pipeline for appointments.
+1. Select a browser pipeline: realtime, appointment, Google Calendar, Simli avatar, or healthcare.
 2. Confirm the worker shows as ready, then choose **Connect** and allow microphone access.
 3. Use **Mic on / Mic off** during the call and **Disconnect** when finished. Raw audio is not
-   stored.
+   stored. Healthcare pipelines also suppress conversation transcript persistence.
 """,
     "Records": """
 Use **Sessions** to review final conversation turns or delete a session. Use **Appointments** to
-review confirmed bookings. Deleting a session removes its timeline but keeps its appointment record.
+review bookings and external status. **Calls and handoffs** contains redacted telephone state;
+**Healthcare metadata** never decrypts intake. Deleting a session removes its timeline but keeps
+its appointment record.
 """,
     "Evaluations": """
 1. Select an evaluation pipeline and an allowlisted scenario.
@@ -36,6 +38,14 @@ review confirmed bookings. Deleting a session removes its timeline but keeps its
     "Analytics": """
 Review aggregate session, completion, and appointment counts. **Tool outcomes** summarizes persisted
 tool lifecycle events; run voice sessions or evaluations first if this page is empty.
+""",
+    "Integrations": """
+1. Configure provider environment variables and restart the launcher.
+2. Bind Twilio or Vonage to the business telephone pipeline.
+3. Add exact E.164 destinations to `PVS_OUTBOUND_ALLOWLIST`, then explicitly confirm each
+   outbound call.
+Readiness also covers Google Calendar, HubSpot, Simli, and healthcare. Provider credentials are
+never displayed or stored in SQLite.
 """,
 }
 
@@ -57,6 +67,11 @@ page = st.navigation(
             page_directory / "live_session.py",
             title="Live session",
             icon=":material/mic:",
+        ),
+        st.Page(
+            page_directory / "integrations.py",
+            title="Integrations",
+            icon=":material/extension:",
         ),
         st.Page(
             page_directory / "records.py",

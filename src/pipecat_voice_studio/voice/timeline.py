@@ -24,10 +24,13 @@ if TYPE_CHECKING:
 class SemanticTimelineObserver(BaseObserver):
     """Persist bounded semantic conversation events without retaining audio."""
 
-    def __init__(self, store: StudioStore, session_id: str) -> None:
+    def __init__(
+        self, store: StudioStore, session_id: str, *, persist_conversation: bool = True
+    ) -> None:
         super().__init__()
         self.store = store
         self.session_id = session_id
+        self.persist_conversation = persist_conversation
         self._seen: set[int] = set()
         self._history: deque[int] = deque(maxlen=500)
         self._assistant_text: list[str] = []
@@ -46,6 +49,8 @@ class SemanticTimelineObserver(BaseObserver):
         if not self._mark_seen(data.frame.id):
             return
         if isinstance(data.frame, TranscriptionFrame) and data.frame.finalized:
+            if not self.persist_conversation:
+                return
             self.store.append_event(
                 self.session_id,
                 "turn.final",
@@ -61,7 +66,7 @@ class SemanticTimelineObserver(BaseObserver):
         elif isinstance(data.frame, LLMFullResponseEndFrame):
             text = "".join(self._assistant_text).strip()
             self._assistant_text.clear()
-            if text:
+            if text and self.persist_conversation:
                 self.store.append_event(
                     self.session_id,
                     "turn.final",
