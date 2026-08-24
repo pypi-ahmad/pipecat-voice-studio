@@ -32546,11 +32546,18 @@ function RD({ data: e }) {
 							disabled: !T || E,
 							children: "Disconnect"
 						}),
-						/* @__PURE__ */ (0, H.jsx)("button", {
+						/* @__PURE__ */ (0, H.jsxs)("button", {
 							type: "button",
+							className: `mic-toggle ${s ? "mic-on" : "mic-off"}`,
 							onClick: k,
 							disabled: !T,
-							children: s ? "Mute microphone" : "Unmute microphone"
+							"aria-pressed": s,
+							"aria-label": s ? "Turn microphone off" : "Turn microphone on",
+							title: s ? "Turn microphone off" : "Turn microphone on",
+							children: [/* @__PURE__ */ (0, H.jsx)("span", {
+								"aria-hidden": "true",
+								children: s ? "🎙" : "🔇"
+							}), s ? "Mic on" : "Mic off"]
 						}),
 						/* @__PURE__ */ (0, H.jsxs)("label", { children: ["Microphone", /* @__PURE__ */ (0, H.jsxs)("select", {
 							value: a,

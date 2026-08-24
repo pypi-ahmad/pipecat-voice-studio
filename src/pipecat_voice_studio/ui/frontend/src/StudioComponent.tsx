@@ -219,8 +219,17 @@ function VoiceView({ data }: { data: VoiceData }) {
           <button type="button" onClick={() => void disconnect()} disabled={!connected || busy}>
             Disconnect
           </button>
-          <button type="button" onClick={toggleMic} disabled={!connected}>
-            {micEnabled ? "Mute microphone" : "Unmute microphone"}
+          <button
+            type="button"
+            className={`mic-toggle ${micEnabled ? "mic-on" : "mic-off"}`}
+            onClick={toggleMic}
+            disabled={!connected}
+            aria-pressed={micEnabled}
+            aria-label={micEnabled ? "Turn microphone off" : "Turn microphone on"}
+            title={micEnabled ? "Turn microphone off" : "Turn microphone on"}
+          >
+            <span aria-hidden="true">{micEnabled ? "🎙" : "🔇"}</span>
+            {micEnabled ? "Mic on" : "Mic off"}
           </button>
           <label>
             Microphone

@@ -6,6 +6,39 @@ import streamlit as st
 
 st.set_page_config(page_title="Pipecat Voice Studio", page_icon=":material/graphic_eq:")
 
+PAGE_GUIDES = {
+    "Command center": """
+Check that Python, Pipecat, Streamlit, and Torch report versions. **CUDA ready** means GPU
+acceleration is available; **CPU mode ready** is also valid. Start here when diagnosing setup or
+hardware problems.
+""",
+    "Agent studio": """
+1. Select a saved pipeline to inspect its processing graph.
+2. Open **Safe configuration** to clone it with a new name, system prompt, or voice.
+3. Choose **Validate and save clone**. The original pipeline is not changed.
+""",
+    "Live session": """
+1. Select a realtime pipeline for general conversation or a cascade pipeline for appointments.
+2. Confirm the worker shows as ready, then choose **Connect** and allow microphone access.
+3. Use **Mic on / Mic off** during the call and **Disconnect** when finished. Raw audio is not
+   stored.
+""",
+    "Records": """
+Use **Sessions** to review final conversation turns or delete a session. Use **Appointments** to
+review confirmed bookings. Deleting a session removes its timeline but keeps its appointment record.
+""",
+    "Evaluations": """
+1. Select an evaluation pipeline and an allowlisted scenario.
+2. Read the scenario expectation, then choose **Run evaluation**.
+3. Review the result, diagnostics, and recent runs. Evaluations may call paid models but do not
+   retain audio.
+""",
+    "Analytics": """
+Review aggregate session, completion, and appointment counts. **Tool outcomes** summarizes persisted
+tool lifecycle events; run voice sessions or evaluations first if this page is empty.
+""",
+}
+
 page_directory = Path(__file__).parent / "app_pages"
 page = st.navigation(
     [
@@ -46,4 +79,6 @@ page = st.navigation(
 
 st.title(page.title)
 st.caption("Build and operate real-time voice and multimodal agents with Pipecat.")
+with st.expander(":material/help: How to use this page", expanded=True):
+    st.markdown(PAGE_GUIDES[page.title])
 page.run()

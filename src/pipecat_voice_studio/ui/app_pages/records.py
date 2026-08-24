@@ -35,4 +35,4 @@ with appointments_tab:
                 "SELECT * FROM appointments ORDER BY starts_at"
             ).fetchall()
         ]
-    st.dataframe(appointments, use_container_width=True, hide_index=True)
+    st.dataframe(appointments, width="stretch", hide_index=True)

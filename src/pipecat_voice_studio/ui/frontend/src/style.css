@@ -83,6 +83,9 @@ button, select { font: inherit; }
 }
 .voice-controls button { cursor: pointer; }
 .voice-controls button.primary { background: var(--st-primary-color); color: var(--st-background-color); }
+.voice-controls button.mic-toggle { display: inline-flex; align-items: center; gap: 7px; }
+.voice-controls button.mic-on { border-color: var(--st-green-text-color); color: var(--st-green-text-color); }
+.voice-controls button.mic-off { border-color: var(--st-red-text-color); color: var(--st-red-text-color); }
 .voice-controls button:disabled { cursor: not-allowed; opacity: .5; }
 .voice-controls label { display: grid; gap: 4px; font-size: 12px; }
 .voice-controls select { min-width: 210px; }
