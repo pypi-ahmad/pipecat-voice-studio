@@ -38,7 +38,8 @@ SQLite is supplied by Python's standard library; it is not a separately managed 
 ## Key Commands
 
 ```powershell
-.\launch.ps1
+.\launch.cmd
+.\launch.ps1 -WithApi
 uv sync --frozen
 uv run streamlit run src/pipecat_voice_studio/ui/streamlit_app.py
 uv run python -m pipecat_voice_studio.voice.bot --host 127.0.0.1 --port 7860
@@ -49,7 +50,9 @@ uv run pytest
 uv build
 ```
 
-On Linux, `./launch.sh` performs the equivalent setup and launch. Both scripts support setup-only and optional management-API modes.
+On Windows, `launch.cmd` is the double-clickable entry point and forwards arguments to
+`launch.ps1`. On Linux, `./launch.sh` performs the equivalent setup and launch. The PowerShell
+and Bash scripts support setup-only, custom ports, and optional management-API modes.
 
 Frontend changes additionally require `npm ci` and `npm run build` in
 `src/pipecat_voice_studio/ui/frontend`.
@@ -58,6 +61,7 @@ Frontend changes additionally require `npm ci` and `npm run build` in
 
 - Sources: process environment and project-root `.env`; `.env.example` is the committed template.
 - `OPENAI_API_KEY` is required for voice pipelines and paid evaluations. `OPENAI_BASE_URL` is optional.
+- The Windows launcher imports missing OpenAI values from the user environment; both native launchers verify pandas and `dateutil` and repair an incomplete `python-dateutil` installation.
 - `PVS_*` variables configure environment, worker URL, database, timezone, models, and voice.
 - The default database is `data/pipecat_voice_studio.db`.
 - Local GPU dependencies use the PyTorch CUDA 13.2 index.
@@ -71,5 +75,6 @@ Frontend changes additionally require `npm ci` and `npm run build` in
 - `.env.example`
 - `src/pipecat_voice_studio/ui/frontend/package.json`
 - `.github/workflows/quality.yml`
+- `launch.cmd`
 - `launch.ps1`
 - `launch.sh`

@@ -105,10 +105,12 @@ The launchers install `uv` when needed, reuse an installed Python 3.14.7 or inst
 
 ### Clone and launch
 
+On Windows, double-click `launch.cmd`. You can also launch from PowerShell:
+
 ```powershell
 git clone https://github.com/pypi-ahmad/pipecat-voice-studio.git
 Set-Location pipecat-voice-studio
-powershell -ExecutionPolicy Bypass -File .\launch.ps1
+.\launch.cmd
 ```
 
 On Linux:
@@ -119,7 +121,7 @@ cd pipecat-voice-studio
 ./launch.sh
 ```
 
-Each launcher creates `.venv` and `.env` in the repository root, synchronizes the locked dependencies, starts the Pipecat worker, waits for readiness, and runs Streamlit at [http://127.0.0.1:8501](http://127.0.0.1:8501). Add `OPENAI_API_KEY` to `.env` before starting a live voice session.
+Each launcher creates `.venv` and `.env` in the repository root, synchronizes and verifies the locked dependencies, starts the Pipecat worker, waits for readiness, and runs Streamlit at [http://127.0.0.1:8501](http://127.0.0.1:8501). Configure `OPENAI_API_KEY` in `.env` or, on Windows, as a user environment variable before starting a live voice session.
 
 Use `-WithApi` on Windows or `--with-api` on Linux to also start FastAPI. Use `-SetupOnly` or `--setup-only` to prepare the project without starting services.
 
@@ -150,11 +152,13 @@ Open [http://localhost:8501](http://localhost:8501), go to **Live session**, sel
 
 ## Using the studio
 
+Every page includes an expanded **How to use this page** panel with its immediate workflow and expected result.
+
 | Page | Purpose |
 |---|---|
 | Command center | View runtime readiness and studio overview |
 | Agent studio | Inspect, validate, clone, and activate pipeline graphs |
-| Live session | Start a browser voice conversation and inspect live transcripts, tools, and metrics |
+| Live session | Start a browser voice conversation, toggle the microphone, and inspect live transcripts, tools, and metrics |
 | Records | Review or delete stored sessions and inspect appointments |
 | Evaluations | Execute allowlisted Pipecat scenarios and review diagnostics |
 | Analytics | View session, completion, appointment, and tool-event counts |
@@ -209,6 +213,7 @@ The repository does not document a custom branching model. Keep changes focused,
 .
 ├── .github/workflows/              # Quality and manual live-evaluation workflows
 ├── docs/                           # Technical and codebase documentation
+├── launch.cmd                      # Double-clickable Windows launcher
 ├── launch.ps1                      # Native Windows setup and launcher
 ├── launch.sh                       # Native Linux setup and launcher
 ├── src/pipecat_voice_studio/

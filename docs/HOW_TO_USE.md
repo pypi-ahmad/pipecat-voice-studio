@@ -60,8 +60,10 @@ Set-Location pipecat-voice-studio
 Run first-time setup and launch on Windows:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\launch.ps1
+.\launch.cmd
 ```
+
+You can double-click `launch.cmd` in File Explorer. It invokes `launch.ps1` with the required execution-policy override and pauses if startup fails so the error remains visible.
 
 On Linux:
 
@@ -80,6 +82,11 @@ After the first setup, edit `.env` and set at least:
 ```dotenv
 OPENAI_API_KEY=your-key-here
 ```
+
+Alternatively, native Windows users can define `OPENAI_API_KEY` and `OPENAI_BASE_URL` as user
+environment variables. When either variable is absent from the launcher process, `launch.ps1`
+imports it from the Windows user environment without printing its value. Linux uses the process
+environment or `.env`.
 
 Available settings:
 
@@ -128,7 +135,7 @@ The launchers support these equivalent controls:
 | Set the Streamlit port | `-StreamlitPort 8502` | `--streamlit-port 8502` |
 | Set the API port | `-ApiPort 8001` | `--api-port 8001` |
 
-Selected ports must be distinct and unused. The launcher stops with an error when a port is unavailable or when the worker or optional API does not become ready within 30 seconds. If a single built JavaScript or CSS asset is missing, the launcher rebuilds the frontend with npm; Node.js and npm are required only for that fallback or for frontend development.
+Selected ports must be distinct and unused. The launcher stops with an error when a port is unavailable or when the worker or optional API does not become ready within 30 seconds. After dependency synchronization, it verifies that pandas and `dateutil` import successfully and repairs `python-dateutil` if its installed files are incomplete. If a single built JavaScript or CSS asset is missing, the launcher rebuilds the frontend with npm; Node.js and npm are required only for that fallback or for frontend development.
 
 The following commands are the manual alternative when you want to manage each process yourself.
 
@@ -165,6 +172,9 @@ Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) for the generated 
 
 ## Use the Streamlit studio
 
+Each page opens with a **How to use this page** panel. It summarizes what to select, what action to
+take, and what result or side effect to expect.
+
 ### Check runtime readiness
 
 Open **Command center** to inspect the environment, installed runtime, CUDA status, and GPU readiness.
@@ -187,7 +197,8 @@ The application validates the complete graph and compiles its executable path be
 3. Select a realtime or cascade pipeline. Evaluation pipelines are intentionally excluded.
 4. Select the browser microphone if more than one input device is available.
 5. Choose **Connect** and grant microphone permission.
-6. Speak normally; use mute or disconnect controls when needed.
+6. Speak normally; use **Mic on / Mic off** to control microphone transmission and **Disconnect**
+   to end the session.
 7. Observe transcripts, speaking state, function calls, and available timing metrics.
 
 The browser retains only bounded, ephemeral transcript state. The database stores selected semantic events but never raw audio or browser media tracks.

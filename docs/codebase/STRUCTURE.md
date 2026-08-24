@@ -14,7 +14,7 @@
 | `.github/workflows/` | Automated quality and manual live evaluations | workflow files |
 | `data/` | Default local SQLite runtime data | `.env.example` |
 | `docs/` | Technical and codebase documentation | `docs/TECHNICAL.md` |
-| `launch.ps1`, `launch.sh` | Native Windows/Linux setup and process supervision | launcher files |
+| `launch.cmd`, `launch.ps1`, `launch.sh` | Windows wrapper plus native Windows/Linux setup and process supervision | launcher files |
 
 Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; they are not source architecture.
 
@@ -25,7 +25,7 @@ Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; 
 - Management API: ASGI object `pipecat_voice_studio.api.app:app`.
 - Evaluations: `run_evaluation()` in `evaluations.py`, invoked by the Streamlit page or pytest live suite.
 - Frontend component: `ui/frontend/src/index.tsx`, built by Vite and registered through `ui/components.py`.
-- User launch entry points: root `launch.ps1` and `launch.sh`; both prepare `.venv` before starting the worker and Streamlit.
+- User launch entry points: root `launch.cmd`, `launch.ps1`, and `launch.sh`. The CMD file wraps the PowerShell launcher for File Explorer; the PowerShell and Bash scripts prepare `.venv` before starting the worker and Streamlit.
 
 ## Module Boundaries
 
@@ -54,5 +54,6 @@ Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; 
 - `src/pipecat_voice_studio/ui/streamlit_app.py`
 - `src/pipecat_voice_studio/voice/bot.py`
 - `src/pipecat_voice_studio/api/app.py`
+- `launch.cmd`
 - `launch.ps1`
 - `launch.sh`

@@ -1,5 +1,11 @@
 
 === DIRECTORY TREE (max depth 3, source files only) ===
+.code-review-graph
+.code-review-graph\.gitignore
+.code-review-graph\graph.db
+.codegraph
+.codegraph\.gitignore
+.codegraph\codegraph.db
 .coverage
 .env
 .env.example
@@ -57,8 +63,22 @@ docs\codebase\INTEGRATIONS.md
 docs\codebase\STACK.md
 docs\codebase\STRUCTURE.md
 docs\codebase\TESTING.md
+docs\diagrams
+docs\diagrams\architecture-overview.html
+docs\diagrams\database-er.mmd
+docs\diagrams\database-er.svg
+docs\diagrams\live-session-sequence.mmd
+docs\diagrams\live-session-sequence.svg
+docs\diagrams\module-dependencies.mmd
+docs\diagrams\module-dependencies.svg
+docs\diagrams\README.md
+docs\diagrams\semantic-data-flow.mmd
+docs\diagrams\semantic-data-flow.svg
+docs\diagrams\system-architecture.mmd
+docs\diagrams\system-architecture.svg
 docs\HOW_TO_USE.md
 docs\TECHNICAL.md
+launch.cmd
 launch.ps1
 launch.sh
 LICENSE
@@ -303,56 +323,61 @@ PVS_REALTIME_VOICE=marin
 None found.
 
 === GIT RECENT COMMITS (last 20) ===
+45ecf81 docs: add codebase architecture diagrams
+41bd76e fix: mark Linux launcher executable
+01d88f8 docs: add project guides and codebase reference
+7d9f06d build: add native launchers and cross-platform CI
+b59e099 feat: add live voice evaluation studio
 cd2f841 feat: add validated Pipecat voice studio
 319e414 feat: establish runnable application foundation
 9749ea2 docs: add references and MIT license
 
 === HIGH-CHURN FILES (last 90 days, top 20) ===
-   2 .env.example
-   2 .gitignore
-   2 pyproject.toml
-   2 src/pipecat_voice_studio/api/app.py
-   2 src/pipecat_voice_studio/config.py
-   2 src/pipecat_voice_studio/ui/app_pages/agent_studio.py
-   2 src/pipecat_voice_studio/ui/app_pages/analytics.py
-   2 src/pipecat_voice_studio/ui/app_pages/live_session.py
-   2 src/pipecat_voice_studio/ui/app_pages/records.py
-   2 src/pipecat_voice_studio/ui/streamlit_app.py
-   2 tests/test_config.py
-   2 tests/test_streamlit_app.py
-   2 uv.lock
-   1 src/pipecat_voice_studio/appointments.py
-   1 src/pipecat_voice_studio/graph.py
-   1 src/pipecat_voice_studio/pyproject.toml
-   1 src/pipecat_voice_studio/seeds.py
-   1 src/pipecat_voice_studio/storage.py
-   1 src/pipecat_voice_studio/ui/app_pages/evaluations.py
-   1 src/pipecat_voice_studio/ui/components.py
+   3 README.md
+   3 pyproject.toml
+   3 src/pipecat_voice_studio/ui/app_pages/agent_studio.py
+   3 src/pipecat_voice_studio/ui/app_pages/live_session.py
+   3 tests/test_streamlit_app.py
+   3 uv.lock
+   2 launch.sh
+   2 src/pipecat_voice_studio/pyproject.toml
+   2 src/pipecat_voice_studio/storage.py
+   2 src/pipecat_voice_studio/ui/app_pages/command_center.py
+   2 src/pipecat_voice_studio/ui/app_pages/evaluations.py
+   2 src/pipecat_voice_studio/ui/components.py
+   2 src/pipecat_voice_studio/ui/frontend/build/assets/index-DnMHrpn2.js
+   2 src/pipecat_voice_studio/ui/frontend/build/index.html
+   2 src/pipecat_voice_studio/ui/frontend/index.html
+   2 src/pipecat_voice_studio/ui/frontend/package-lock.json
+   2 src/pipecat_voice_studio/ui/frontend/package.json
+   2 src/pipecat_voice_studio/ui/frontend/src/main.tsx
+   2 src/pipecat_voice_studio/ui/frontend/src/style.css
+   2 src/pipecat_voice_studio/ui/frontend/tsconfig.json
 
 === MONOREPO SIGNALS ===
 No monorepo signals detected.
 
 === CODE METRICS ===
-Total files scanned: 74
-Total lines of code: 4482
+Total files scanned: 89
+Total lines of code: 4526
 
 Files by language:
-  Other: 35
+  Other: 50
   Python: 35
   TypeScript: 2
   TypeScript/React: 2
 
 Top 10 largest files:
+.code-review-graph\graph.db: 18332.0KB
+.codegraph\codegraph.db: 1136.0KB
 uv.lock: 551.2KB
+docs\diagrams\database-er.svg: 120.4KB
+artifacts\launcher\worker.err.log: 61.1KB
 src\pipecat_voice_studio\ui\frontend\package-lock.json: 56.4KB
 data\pipecat_voice_studio.db: 56.0KB
-docs\TECHNICAL.md: 16.2KB
-docs\HOW_TO_USE.md: 13.6KB
-README.md: 13.0KB
-src\pipecat_voice_studio\storage.py: 10.3KB
-src\pipecat_voice_studio\ui\frontend\src\StudioComponent.tsx: 9.7KB
-src\pipecat_voice_studio\evaluations.py: 8.8KB
-src\pipecat_voice_studio\voice\bot.py: 8.7KB
+docs\diagrams\live-session-sequence.svg: 29.3KB
+docs\diagrams\module-dependencies.svg: 28.9KB
+docs\diagrams\system-architecture.svg: 24.6KB
 
 === CI/CD PIPELINES ===
 CI/CD: GitHub Actions

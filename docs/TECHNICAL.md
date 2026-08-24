@@ -44,7 +44,8 @@ The application has three runtime boundaries:
 
 The worker is intentionally a separate process. The Streamlit application probes its `/status`
 endpoint but does not create or supervise it; `launch.ps1` and `launch.sh` supervise both
-processes during launcher-managed runs.
+processes during launcher-managed runs. On Windows, `launch.cmd` is a double-clickable wrapper
+around `launch.ps1`, not a separate process supervisor.
 
 ## Repository structure
 
@@ -129,7 +130,7 @@ The browser UI provides:
 
 - connect and disconnect controls;
 - microphone permission and input-device selection;
-- mute and unmute controls;
+- accessible `Mic on / Mic off` control with visible and pressed state;
 - user and assistant speaking indicators;
 - interim and final user transcripts;
 - streamed assistant output;
@@ -241,8 +242,13 @@ worker port; the documented default applies to manual process startup.
 Windows:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\launch.ps1
+.\launch.cmd
 ```
+
+`launch.cmd` forwards command-line arguments to `launch.ps1`, starts PowerShell without loading
+a user profile, applies the required execution-policy override, and pauses after a nonzero exit
+so File Explorer users can read the error. Run `launch.ps1` directly when invoking advanced
+PowerShell parameters interactively.
 
 Linux:
 
@@ -250,7 +256,11 @@ Linux:
 ./launch.sh
 ```
 
-Both launchers bootstrap `uv`, reuse or install Python 3.14.7 with a 3.13.13 fallback, create root `.venv` and `.env`, synchronize `uv.lock`, validate frontend assets, start the worker, wait for `/status`, and run Streamlit. If exactly one built JavaScript or CSS asset is absent, they rebuild the frontend with npm. Add `-WithApi` or `--with-api` to start the management API, or `-SetupOnly` or `--setup-only` to stop after setup. Worker, Streamlit, and API ports are configurable and must be distinct and available. Worker and API readiness time out after 30 seconds. Background logs are stored in `artifacts/launcher/`, `PVS_BOT_BASE_URL` is aligned with the selected worker port, and launcher-owned processes are stopped on exit.
+The PowerShell and Bash launchers bootstrap `uv`, reuse or install Python 3.14.7 with a 3.13.13 fallback, create root `.venv` and `.env`, synchronize `uv.lock`, verify pandas and `dateutil` imports, validate frontend assets, start the worker, wait for `/status`, and run Streamlit. An incomplete `python-dateutil` installation is repaired with a locked package reinstall. If exactly one built JavaScript or CSS asset is absent, the launchers rebuild the frontend with npm. Add `-WithApi` or `--with-api` to start the management API, or `-SetupOnly` or `--setup-only` to stop after setup. Worker, Streamlit, and API ports are configurable and must be distinct and available. Worker and API readiness time out after 30 seconds. Background logs are stored in `artifacts/launcher/`, `PVS_BOT_BASE_URL` is aligned with the selected worker port, and launcher-owned processes are stopped on exit.
+
+When `OPENAI_API_KEY` or `OPENAI_BASE_URL` is absent from the Windows launcher process,
+`launch.ps1` imports the missing value from the Windows user environment. Existing process values
+and `.env` configuration retain their normal precedence, and values are never printed.
 
 Linux support requires glibc 2.34+ because the Pipecat evaluation dependency ships its x86-64 wheel at that baseline. ARM64 and musl Linux are not supported.
 
@@ -261,7 +271,9 @@ uv sync --frozen
 Copy-Item .env.example .env
 ```
 
-Populate `OPENAI_API_KEY` in `.env`. Do not commit `.env` or Streamlit secrets files.
+Populate `OPENAI_API_KEY` in `.env` or the process environment. Do not commit `.env` or Streamlit
+secrets files. Manual startup does not perform the Windows user-environment fallback implemented by
+`launch.ps1`.
 
 Build the Streamlit component after changing frontend source:
 
