@@ -1,0 +1,13 @@
+:root { font-family: Inter, ui-sans-serif, system-ui; color: #e9efff; }
+body { margin: 0; background: transparent; }
+.shell { height: 590px; overflow: hidden; border: 1px solid #2e3b59; border-radius: 16px; background: #0d1424; }
+header { height: 58px; display: flex; align-items: center; gap: 14px; padding: 0 18px; border-bottom: 1px solid #2e3b59; }
+header h3 { margin: 0; font-size: 16px; }
+header span { padding: 4px 9px; border-radius: 99px; background: #4338ca; font-size: 11px; text-transform: uppercase; }
+.react-flow { height: 532px; }
+.react-flow__node { width: 180px; border: 1px solid #4f67a1; border-radius: 12px; padding: 12px; background: #18233b; color: #f6f8ff; box-shadow: 0 8px 22px #05091666; }
+.react-flow__node small, .react-flow__node strong { display: block; }
+.react-flow__node small { color: #8ca8ee; margin-bottom: 5px; }
+.react-flow__node.locked { border-style: dashed; opacity: .8; }
+.react-flow__edge-path { stroke: #768ef0; stroke-width: 2; }
+.react-flow__minimap { background: #111b30; }

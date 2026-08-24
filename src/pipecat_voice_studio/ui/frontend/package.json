@@ -1,0 +1,23 @@
+{
+  "name": "pipecat-voice-studio-component",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build --outDir build",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@streamlit/component-v2-lib": "latest",
+    "@xyflow/react": "^12.9.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "latest",
+    "typescript": "^5.9.2",
+    "vite": "latest"
+  }
+}

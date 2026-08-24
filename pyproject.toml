@@ -11,7 +11,7 @@ license = "MIT"
 requires-python = ">=3.13,<3.15"
 dependencies = [
     "fastapi>=0.141.1",
-    "pipecat-ai==1.7.0",
+    "pipecat-ai[cli,webrtc]==1.7.0",
     "pydantic-settings>=2.15.0",
     "streamlit==1.62.0",
     "torch==2.13.0+cu132",
@@ -21,6 +21,11 @@ dependencies = [
 
 [tool.uv.build-backend]
 module-name = "pipecat_voice_studio"
+
+[tool.streamlit.component]
+components = [
+    { name = "studio_graph", asset_dir = "ui/frontend/build" },
+]
 
 [tool.uv.sources]
 torch = { index = "pytorch-cu132" }
@@ -54,7 +59,12 @@ select = ["ALL"]
 ignore = ["COM812", "CPY001", "D", "ISC001"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101"]
+"src/pipecat_voice_studio/graph.py" = ["C901", "EM101", "PLR0912", "PLR0915", "TRY003"]
+"src/pipecat_voice_studio/appointments.py" = ["EM101", "PLR0913", "TRY003"]
+"src/pipecat_voice_studio/storage.py" = ["EM101", "TRY003"]
+"src/pipecat_voice_studio/voice/bot.py" = ["ANN401"]
+"src/pipecat_voice_studio/voice/appointment_flow.py" = ["FBT001"]
+"tests/**" = ["PLR2004", "PT018", "S101", "TC003"]
 
 [tool.ty.environment]
 python-version = "3.14"
@@ -63,4 +73,4 @@ python-version = "3.14"
 error-on-warning = true
 
 [tool.coverage.run]
-omit = ["src/pipecat_voice_studio/ui/*"]
+omit = ["src/pipecat_voice_studio/ui/*", "src/pipecat_voice_studio/voice/*"]

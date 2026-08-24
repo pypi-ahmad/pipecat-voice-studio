@@ -17,3 +17,4 @@ def test_settings_use_prefixed_environment_variables(monkeypatch: pytest.MonkeyP
 
     assert settings.environment == "test"
     assert settings.app_name == "Pipecat Voice Studio"
+    assert settings.bot_websocket_base_url == "ws://127.0.0.1:7860/realtime"

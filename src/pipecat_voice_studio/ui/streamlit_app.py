@@ -31,6 +31,11 @@ page = st.navigation(
             icon=":material/folder_open:",
         ),
         st.Page(
+            page_directory / "evaluations.py",
+            title="Evaluations",
+            icon=":material/science:",
+        ),
+        st.Page(
             page_directory / "analytics.py",
             title="Analytics",
             icon=":material/analytics:",

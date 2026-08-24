@@ -13,5 +13,10 @@ recordings/
 artifacts/
 dist/
 build/
+!src/pipecat_voice_studio/ui/frontend/build/
+!src/pipecat_voice_studio/ui/frontend/build/**
+src/pipecat_voice_studio/ui/frontend/dist/
+src/pipecat_voice_studio/ui/frontend/node_modules/
+*.tsbuildinfo
+data/
 *.egg-info/
-
