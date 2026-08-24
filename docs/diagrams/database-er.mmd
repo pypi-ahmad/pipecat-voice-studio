@@ -1,0 +1,51 @@
+erDiagram
+    PIPELINE_DEFINITIONS ||--o{ SESSIONS : runs
+    PIPELINE_DEFINITIONS ||--o{ EVAL_RUNS : evaluates
+    SESSIONS ||--o{ SESSION_EVENTS : contains
+    SESSIONS o|--o{ APPOINTMENTS : books
+
+    PIPELINE_DEFINITIONS {
+        text id PK
+        text name
+        text mode
+        text graph_json
+        integer revision
+        integer active
+        text updated_at
+    }
+    SESSIONS {
+        text id PK
+        text pipeline_id FK
+        text status
+        text graph_json
+        text models_json
+        text failure
+        text started_at
+        text ended_at
+    }
+    SESSION_EVENTS {
+        integer id PK
+        text session_id FK
+        integer sequence
+        text event_type
+        text payload_json
+        text created_at
+    }
+    APPOINTMENTS {
+        text id PK
+        text session_id FK
+        text attendee_name
+        text purpose
+        text starts_at
+        integer duration_minutes
+        text status
+        text created_at
+    }
+    EVAL_RUNS {
+        text id PK
+        text pipeline_id FK
+        text scenario
+        text status
+        text result_json
+        text created_at
+    }

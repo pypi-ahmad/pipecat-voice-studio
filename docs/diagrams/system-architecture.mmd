@@ -1,0 +1,26 @@
+flowchart LR
+    browser["Browser<br/>React voice client"]
+    studio["Streamlit studio"]
+    api["FastAPI management API"]
+    worker["Pipecat worker<br/>validated pipeline runtime"]
+    graphmod["Graph compiler<br/>closed schema"]
+    models["OpenAI services<br/>Realtime or STT / LLM / TTS"]
+    flow["Appointment Flow<br/>policy and tools"]
+    timeline["Semantic timeline observer"]
+    db[("SQLite studio store")]
+
+    browser -->|SmallWebRTC audio| worker
+    studio -->|pipeline and records| db
+    studio -->|start session| worker
+    api -->|validated definitions| db
+    worker --> graphmod
+    worker --> models
+    models --> flow
+    flow --> db
+    worker --> timeline
+    timeline --> db
+
+    classDef focal fill:#fceee8,stroke:#eb6c36,color:#2d3142
+    classDef store fill:#e9ebef,stroke:#4f5d75,color:#2d3142
+    class worker focal
+    class db store

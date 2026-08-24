@@ -1,0 +1,19 @@
+sequenceDiagram
+    actor User
+    participant Browser as React client
+    participant Studio as Streamlit
+    participant Worker as Pipecat worker
+    participant Store as SQLite store
+
+    User->>Studio: Select active pipeline
+    Studio-->>Browser: Worker URL and pipeline ID
+    Browser->>Worker: POST /start
+    Worker->>Store: Load and revalidate graph
+    Worker->>Store: Create running session
+    Worker-->>Browser: SmallWebRTC connection data
+    User->>Browser: Speak through microphone
+    Browser->>Worker: Stream audio frames
+    Worker->>Worker: Realtime or cascade pipeline
+    Worker-->>Browser: Stream audio and RTVI events
+    Worker->>Store: Append semantic events
+    Browser-->>User: Play response and show transcript

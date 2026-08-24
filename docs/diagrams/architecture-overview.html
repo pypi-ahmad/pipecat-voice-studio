@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pipecat Voice Studio architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --paper:#f5f5f5; --ink:#2d3142; --muted:#4f5d75; --soft:#7a8399; --accent:#eb6c36; --accent-tint:#fceee8; --link:#2e5aa8; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:Geist, sans-serif; }
+    main { width:min(1200px, 100%); margin:auto; padding:40px 32px 32px; }
+    .eyebrow { margin:0 0 8px; color:var(--soft); font:500 8px/1 Geist Mono, monospace; letter-spacing:.18em; text-transform:uppercase; }
+    h1 { margin:0; font:400 32px/1.1 "Instrument Serif", serif; }
+    .subtitle { max-width:760px; margin:12px 0 28px; color:var(--muted); font-size:14px; line-height:1.5; }
+    figure { margin:0; overflow-x:auto; }
+    svg { display:block; width:100%; min-width:960px; height:auto; }
+    .zone { fill:rgba(45,49,66,.02); stroke:rgba(45,49,66,.12); stroke-width:1; }
+    .zone-label { fill:var(--soft); font:500 8px Geist Mono, monospace; letter-spacing:.14em; }
+    .node { fill:white; stroke:var(--ink); stroke-width:1; }
+    .node-focal { fill:var(--accent-tint); stroke:var(--accent); stroke-width:1.2; }
+    .node-store { fill:rgba(45,49,66,.05); stroke:var(--muted); stroke-width:1; }
+    .tag { fill:none; stroke:rgba(45,49,66,.35); stroke-width:.8; }
+    .tag-text { fill:var(--soft); font:500 8px Geist Mono, monospace; letter-spacing:.08em; }
+    .name { fill:var(--ink); font:600 12px Geist, sans-serif; }
+    .sub { fill:var(--muted); font:400 8px Geist Mono, monospace; }
+    .edge { fill:none; stroke:var(--muted); stroke-width:1.2; marker-end:url(#arrow); }
+    .edge-link { fill:none; stroke:var(--link); stroke-width:1.2; marker-end:url(#arrow-link); }
+    .edge-accent { fill:none; stroke:var(--accent); stroke-width:1.4; marker-end:url(#arrow-accent); }
+    .edge-label-bg { fill:var(--paper); }
+    .edge-label { fill:var(--soft); font:400 8px Geist Mono, monospace; letter-spacing:.06em; }
+    .legend-rule { stroke:rgba(45,49,66,.12); stroke-width:1; }
+    .legend { fill:var(--muted); font:400 8px Geist Mono, monospace; letter-spacing:.08em; }
+    footer { margin-top:20px; padding-top:16px; border-top:1px solid rgba(45,49,66,.12); color:var(--soft); font:400 8px Geist Mono, monospace; }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">System architecture · current implementation</p>
+  <h1>Pipecat Voice Studio</h1>
+  <p class="subtitle">Browser media connects directly to a separate Pipecat worker. The control plane and worker share validated pipeline definitions and durable semantic records through SQLite.</p>
+  <figure>
+    <svg viewBox="0 0 1120 640" role="img" aria-labelledby="pvs-architecture-title pvs-architecture-desc">
+      <title id="pvs-architecture-title">Pipecat Voice Studio architecture</title>
+      <desc id="pvs-architecture-desc">Architecture showing browser and control-plane entry points feeding a validated Pipecat worker, model pipeline, semantic observer, and SQLite store.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#eb6c36"/></marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2e5aa8"/></marker>
+      </defs>
+
+      <rect class="zone" x="24" y="40" width="240" height="480" rx="8"/>
+      <rect class="zone" x="296" y="40" width="520" height="480" rx="8"/>
+      <rect class="zone" x="848" y="40" width="240" height="480" rx="8"/>
+      <rect x="40" y="44" width="80" height="16" fill="#f5f5f5"/><text class="zone-label" x="80" y="56" text-anchor="middle">EXPERIENCE</text>
+      <rect x="312" y="44" width="72" height="16" fill="#f5f5f5"/><text class="zone-label" x="348" y="56" text-anchor="middle">RUNTIME</text>
+      <rect x="864" y="44" width="88" height="16" fill="#f5f5f5"/><text class="zone-label" x="908" y="56" text-anchor="middle">PERSISTENCE</text>
+
+      <!-- Connectors are painted before nodes. -->
+      <path class="edge-accent" d="M224 176 H352"/>
+      <rect class="edge-label-bg" x="256" y="148" width="64" height="16" rx="2"/><text class="edge-label" x="288" y="160" text-anchor="middle">WEBRTC</text>
+      <path class="edge-link" d="M224 376 H280 Q288 376 288 368 V256 Q288 248 296 248 H352"/>
+      <rect class="edge-label-bg" x="256" y="300" width="56" height="16" rx="2"/><text class="edge-label" x="284" y="312" text-anchor="middle">START</text>
+      <path class="edge" d="M456 216 V144"/>
+      <path class="edge-accent" d="M560 216 H608"/>
+      <path class="edge" d="M712 296 V352"/>
+      <path class="edge" d="M760 256 H824 Q832 256 832 264 V288 Q832 296 840 296 H888"/>
+      <path class="edge" d="M760 392 H824 Q832 392 832 384 V344 Q832 336 840 336 H888"/>
+      <path class="edge" d="M224 416 H824 Q832 416 832 408 V376 Q832 368 840 368 H888"/>
+
+      <g><rect class="node" x="64" y="136" width="160" height="80" rx="6"/><rect class="tag" x="72" y="144" width="48" height="16" rx="2"/><text class="tag-text" x="96" y="156" text-anchor="middle">CLIENT</text><text class="name" x="144" y="176" text-anchor="middle">Browser voice client</text><text class="sub" x="144" y="196" text-anchor="middle">React · microphone · RTVI</text></g>
+      <g><rect class="node" x="64" y="336" width="160" height="120" rx="6"/><rect class="tag" x="72" y="344" width="56" height="16" rx="2"/><text class="tag-text" x="100" y="356" text-anchor="middle">CONTROL</text><text class="name" x="144" y="384" text-anchor="middle">Studio + API</text><text class="sub" x="144" y="404" text-anchor="middle">Streamlit · FastAPI</text><text class="sub" x="144" y="424" text-anchor="middle">graphs · records · evals</text></g>
+      <g><rect class="node" x="376" y="80" width="160" height="64" rx="6"/><rect class="tag" x="384" y="88" width="48" height="16" rx="2"/><text class="tag-text" x="408" y="100" text-anchor="middle">SCHEMA</text><text class="name" x="456" y="120" text-anchor="middle">Graph compiler</text><text class="sub" x="456" y="136" text-anchor="middle">validate · compile</text></g>
+      <g><rect class="node-focal" x="352" y="216" width="208" height="112" rx="6"/><rect class="tag" x="360" y="224" width="56" height="16" rx="2"/><text class="tag-text" x="388" y="236" text-anchor="middle">WORKER</text><text class="name" x="456" y="264" text-anchor="middle">Pipecat runtime</text><text class="sub" x="456" y="284" text-anchor="middle">transport · pipeline · Flow</text><text class="sub" x="456" y="304" text-anchor="middle">metrics · lifecycle</text></g>
+      <g><rect class="node" x="608" y="216" width="152" height="80" rx="6"/><rect class="tag" x="616" y="224" width="48" height="16" rx="2"/><text class="tag-text" x="640" y="236" text-anchor="middle">MODEL</text><text class="name" x="684" y="260" text-anchor="middle">AI services</text><text class="sub" x="684" y="280" text-anchor="middle">Realtime or STT→LLM→TTS</text></g>
+      <g><rect class="node" x="608" y="352" width="152" height="80" rx="6"/><rect class="tag" x="616" y="360" width="64" height="16" rx="2"/><text class="tag-text" x="648" y="372" text-anchor="middle">OBSERVER</text><text class="name" x="684" y="396" text-anchor="middle">Semantic timeline</text><text class="sub" x="684" y="416" text-anchor="middle">turns · tools · metrics</text></g>
+      <g><rect class="node-store" x="888" y="256" width="160" height="144" rx="6"/><rect class="tag" x="896" y="264" width="40" height="16" rx="2"/><text class="tag-text" x="916" y="276" text-anchor="middle">STORE</text><text class="name" x="968" y="312" text-anchor="middle">SQLite</text><text class="sub" x="968" y="336" text-anchor="middle">pipeline definitions</text><text class="sub" x="968" y="356" text-anchor="middle">sessions · events</text><text class="sub" x="968" y="376" text-anchor="middle">appointments · eval runs</text></g>
+
+      <line class="legend-rule" x1="24" y1="552" x2="1088" y2="552"/>
+      <text class="legend" x="24" y="576">LEGEND</text>
+      <line class="edge-accent" x1="112" y1="572" x2="152" y2="572"/><text class="legend" x="168" y="576">primary media path</text>
+      <line class="edge-link" x1="336" y1="572" x2="376" y2="572"/><text class="legend" x="392" y="576">HTTP control</text>
+      <line class="edge" x1="520" y1="572" x2="560" y2="572"/><text class="legend" x="576" y="576">internal / durable flow</text>
+    </svg>
+  </figure>
+  <footer>Source: current repository implementation · Pipecat Voice Studio</footer>
+</main>
+</body>
+</html>

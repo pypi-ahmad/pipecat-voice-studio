@@ -1,0 +1,29 @@
+flowchart TD
+    ui["ui<br/>Streamlit pages and component"]
+    api["api<br/>FastAPI surface"]
+    evals["evaluations<br/>isolated harness"]
+    voice["voice<br/>Pipecat runtime"]
+    graphmod["graph<br/>schema and compiler"]
+    appointments["appointments<br/>booking policy"]
+    storage["storage<br/>SQLite repository"]
+    config["config<br/>environment settings"]
+    pipecat["Pipecat<br/>runner, services, evals"]
+
+    ui --> storage
+    ui --> graphmod
+    ui --> evals
+    api --> storage
+    api --> graphmod
+    voice --> storage
+    voice --> graphmod
+    voice --> appointments
+    voice --> config
+    voice --> pipecat
+    evals --> storage
+    evals --> appointments
+    evals --> config
+    evals --> pipecat
+    appointments --> storage
+
+    classDef shared fill:#fceee8,stroke:#eb6c36,color:#2d3142
+    class storage shared

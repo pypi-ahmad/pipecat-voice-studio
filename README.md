@@ -231,6 +231,7 @@ The repository does not document a custom branching model. Keep changes focused,
 |---|---|
 | [How to use](docs/HOW_TO_USE.md) | Installation, configuration, processes, studio workflows, evaluations, development checks, and troubleshooting |
 | [Technical guide](docs/TECHNICAL.md) | Runtime architecture, pipelines, storage, API, security, operations, and troubleshooting |
+| [Architecture diagrams](docs/diagrams/README.md) | System architecture, live-session sequence, semantic data flow, module dependencies, and SQLite relationships |
 | [Technology stack](docs/codebase/STACK.md) | Runtime versions, dependencies, tools, commands, and configuration |
 | [Codebase structure](docs/codebase/STRUCTURE.md) | Directory map, entry points, and module boundaries |
 | [Architecture](docs/codebase/ARCHITECTURE.md) | System flow, responsibilities, patterns, and architectural risks |

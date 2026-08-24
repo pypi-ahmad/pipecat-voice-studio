@@ -1,0 +1,23 @@
+flowchart LR
+    media["Browser media<br/>ephemeral audio frames"]
+    transport["SmallWebRTC transport"]
+    pipeline["Pipecat processors<br/>Realtime or cascade"]
+    tools["Flow tools<br/>appointment operations"]
+    observer["SemanticTimelineObserver"]
+    events["Typed semantic events<br/>turns, tools, metrics, state"]
+    store[("SQLite<br/>durable records")]
+    records["Records and analytics UI"]
+
+    media --> transport
+    transport --> pipeline
+    pipeline --> tools
+    pipeline --> observer
+    tools --> observer
+    observer --> events
+    events --> store
+    store --> records
+
+    classDef focal fill:#fceee8,stroke:#eb6c36,color:#2d3142
+    classDef store fill:#e9ebef,stroke:#4f5d75,color:#2d3142
+    class observer focal
+    class store store
