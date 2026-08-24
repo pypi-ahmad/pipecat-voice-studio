@@ -112,6 +112,11 @@ python_exe="$PROJECT_ROOT/.venv/bin/python"
     echo "The project virtual environment was not created at .venv." >&2
     exit 1
 }
+if ! "$python_exe" -c 'import dateutil, pandas' 2>/dev/null; then
+    echo "Repairing the python-dateutil installation..."
+    uv sync --locked --python "$python_version" --reinstall-package python-dateutil
+    "$python_exe" -c 'import dateutil, pandas'
+fi
 
 if [[ ! -f .env ]]; then
     cp .env.example .env

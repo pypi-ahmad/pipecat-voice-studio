@@ -151,10 +151,32 @@ $PythonExe = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 if (-not (Test-Path -LiteralPath $PythonExe)) {
     throw "The project virtual environment was not created at .venv."
 }
+& $PythonExe -c "import dateutil, pandas" 2>$null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Repairing the python-dateutil installation..."
+    Invoke-Uv sync --locked --python $PythonVersion --reinstall-package python-dateutil
+    & $PythonExe -c "import dateutil, pandas"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Python dependency verification failed after repairing python-dateutil."
+    }
+}
 
 if (-not (Test-Path -LiteralPath ".env")) {
     Copy-Item -LiteralPath ".env.example" -Destination ".env"
     Write-Host "Created .env from .env.example."
+}
+
+if ([string]::IsNullOrWhiteSpace($env:OPENAI_API_KEY)) {
+    $UserApiKey = [Environment]::GetEnvironmentVariable("OPENAI_API_KEY", "User")
+    if (-not [string]::IsNullOrWhiteSpace($UserApiKey)) {
+        $env:OPENAI_API_KEY = $UserApiKey
+    }
+}
+if ([string]::IsNullOrWhiteSpace($env:OPENAI_BASE_URL)) {
+    $UserBaseUrl = [Environment]::GetEnvironmentVariable("OPENAI_BASE_URL", "User")
+    if (-not [string]::IsNullOrWhiteSpace($UserBaseUrl)) {
+        $env:OPENAI_BASE_URL = $UserBaseUrl
+    }
 }
 
 $HasApiKey = Select-String -LiteralPath ".env" `
