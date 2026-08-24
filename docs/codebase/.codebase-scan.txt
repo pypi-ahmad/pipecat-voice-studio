@@ -1,0 +1,369 @@
+
+=== DIRECTORY TREE (max depth 3, source files only) ===
+.coverage
+.env
+.env.example
+.gitattributes
+.github
+.github\workflows
+.github\workflows\live-evaluations.yml
+.github\workflows\quality.yml
+.gitignore
+.pytest_cache
+.pytest_cache\.gitignore
+.pytest_cache\CACHEDIR.TAG
+.pytest_cache\README.md
+.pytest_cache\v
+.pytest_cache\v\cache
+.pytest_cache\v\cache\lastfailed
+.pytest_cache\v\cache\nodeids
+.python-version
+.ruff_cache
+.ruff_cache\.gitignore
+.ruff_cache\0.16.4
+.ruff_cache\0.16.4\12144833737384843632
+.ruff_cache\0.16.4\13366696457091090644
+.ruff_cache\0.16.4\1379239269603465483
+.ruff_cache\0.16.4\14610246312477629576
+.ruff_cache\0.16.4\15403019600304796454
+.ruff_cache\0.16.4\15667747851598911789
+.ruff_cache\0.16.4\17085097723469432352
+.ruff_cache\0.16.4\3651159784226402034
+.ruff_cache\0.16.4\487605170014614011
+.ruff_cache\0.16.4\5085591074712916178
+.ruff_cache\0.16.4\5189199546847209332
+.ruff_cache\0.16.4\7231991612831387336
+.ruff_cache\0.16.4\7349138375832069825
+.ruff_cache\0.16.4\751764375672979024
+.ruff_cache\0.16.4\8047668625135459452
+.ruff_cache\0.16.4\8300162345693563991
+.ruff_cache\0.16.4\8400612527552135674
+.ruff_cache\0.16.4\9430633869131735737
+.ruff_cache\0.16.4\9447698953928507127
+.ruff_cache\CACHEDIR.TAG
+artifacts
+artifacts\launcher
+artifacts\launcher\worker.err.log
+artifacts\launcher\worker.out.log
+data
+data\pipecat_voice_studio.db
+docs
+docs\codebase
+docs\codebase\.codebase-scan.txt
+docs\codebase\ARCHITECTURE.md
+docs\codebase\CONCERNS.md
+docs\codebase\CONVENTIONS.md
+docs\codebase\INTEGRATIONS.md
+docs\codebase\STACK.md
+docs\codebase\STRUCTURE.md
+docs\codebase\TESTING.md
+docs\HOW_TO_USE.md
+docs\TECHNICAL.md
+launch.ps1
+launch.sh
+LICENSE
+pyproject.toml
+README.md
+src
+src\pipecat_voice_studio
+src\pipecat_voice_studio\__init__.py
+src\pipecat_voice_studio\api
+src\pipecat_voice_studio\api\__init__.py
+src\pipecat_voice_studio\api\app.py
+src\pipecat_voice_studio\appointments.py
+src\pipecat_voice_studio\config.py
+src\pipecat_voice_studio\diagnostics.py
+src\pipecat_voice_studio\eval_scenarios
+src\pipecat_voice_studio\eval_scenarios\happy_path.yaml
+src\pipecat_voice_studio\eval_scenarios\interruption.yaml
+src\pipecat_voice_studio\eval_scenarios\policy_denial.yaml
+src\pipecat_voice_studio\eval_scenarios\synthetic_audio_smoke.yaml
+src\pipecat_voice_studio\eval_scenarios\unavailable_slot.yaml
+src\pipecat_voice_studio\evaluations.py
+src\pipecat_voice_studio\graph.py
+src\pipecat_voice_studio\pyproject.toml
+src\pipecat_voice_studio\seeds.py
+src\pipecat_voice_studio\storage.py
+src\pipecat_voice_studio\ui
+src\pipecat_voice_studio\ui\__init__.py
+src\pipecat_voice_studio\ui\app_pages
+src\pipecat_voice_studio\ui\components.py
+src\pipecat_voice_studio\ui\frontend
+src\pipecat_voice_studio\ui\store.py
+src\pipecat_voice_studio\ui\streamlit_app.py
+src\pipecat_voice_studio\voice
+src\pipecat_voice_studio\voice\__init__.py
+src\pipecat_voice_studio\voice\appointment_flow.py
+src\pipecat_voice_studio\voice\bot.py
+src\pipecat_voice_studio\voice\timeline.py
+tests
+tests\__init__.py
+tests\test_api.py
+tests\test_appointments.py
+tests\test_config.py
+tests\test_diagnostics.py
+tests\test_evaluations.py
+tests\test_graph.py
+tests\test_live_evaluations.py
+tests\test_storage.py
+tests\test_streamlit_app.py
+uv.lock
+
+=== STACK DETECTION (manifest files) ===
+
+--- pyproject.toml ---
+[build-system]
+requires = ["uv_build>=0.8.15,<0.9"]
+build-backend = "uv_build"
+
+[project]
+name = "pipecat-voice-studio"
+version = "0.1.0"
+description = "Streamlit studio for building real-time voice and multimodal agents with Pipecat"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    "fastapi>=0.141.1",
+    "pipecat-ai[cli,evals,runner,webrtc]==1.7.0",
+    "pydantic-settings>=2.15.0",
+    "streamlit==1.62.0",
+    "torch==2.13.0+cu132",
+    "torchvision==0.28.0+cu132",
+    "uvicorn>=0.52.4",
+]
+
+[tool.uv.build-backend]
+module-name = "pipecat_voice_studio"
+
+[tool.uv]
+required-environments = [
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+    "sys_platform == 'linux' and platform_machine == 'x86_64'",
+]
+
+[[tool.streamlit.component.components]]
+name = "studio_graph"
+asset_dir = "src/pipecat_voice_studio/ui/frontend/build"
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu132" }
+torchvision = { index = "pytorch-cu132" }
+
+[[tool.uv.index]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+explicit = true
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.4",
+    "ty>=0.0.74",
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov=pipecat_voice_studio --cov-report=term-missing --cov-fail-under=80"
+testpaths = ["tests"]
+markers = ["live_eval: runs paid Pipecat evaluations against configured models"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "CPY001", "D", "ISC001"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/pipecat_voice_studio/graph.py" = ["C901", "EM101", "PLR0912", "PLR0915", "TRY003"]
+"src/pipecat_voice_studio/appointments.py" = ["EM101", "PLR0913", "TRY003"]
+"src/pipecat_voice_studio/storage.py" = ["EM101", "TRY003"]
+"src/pipecat_voice_studio/voice/bot.py" = ["ANN401"]
+"src/pipecat_voice_studio/voice/appointment_flow.py" = ["FBT001"]
+"src/pipecat_voice_studio/evaluations.py" = ["BLE001", "TRY003"]
+"src/pipecat_voice_studio/voice/timeline.py" = ["C901"]
+"tests/test_evaluations.py" = ["SLF001"]
+"tests/**" = ["PLR2004", "PT018", "S101", "TC003"]
+
+[tool.ty.environment]
+python-version = "3.14"
+
+
+[TRUNCATED] Showing first 80 of 85 lines.
+--- uv.lock ---
+version = 1
+revision = 3
+requires-python = ">=3.13, <3.15"
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version < '3.14' and sys_platform == 'win32'",
+    "python_full_version < '3.14' and sys_platform == 'emscripten'",
+    "python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+required-markers = [
+    "platform_machine == 'AMD64' and sys_platform == 'win32'",
+    "platform_machine == 'x86_64' and sys_platform == 'linux'",
+]
+
+[[package]]
+name = "aiofiles"
+version = "25.1.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/41/c3/534eac40372d8ee36ef40df62ec129bee4fdb5ad9706e58a29be53b2c970/aiofiles-25.1.0.tar.gz", hash = "sha256:a8d728f0a29de45dc521f18f07297428d56992a742f0cd2701ba86e44d23d5b2", size = 46354, upload-time = "2025-10-09T20:51:04.358Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bc/8a/340a1555ae33d7354dbca4faa54948d76d89a27ceef032c8c3bc661d003e/aiofiles-25.1.0-py3-none-any.whl", hash = "sha256:abe311e527c862958650f9438e859c1fa7568a141b22abcd015e120e86a85695", size = 14668, upload-time = "2025-10-09T20:51:03.174Z" },
+]
+
+[[package]]
+name = "aiohappyeyeballs"
+version = "2.7.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ce/f4/eec0465c2f67b2664688d0240b3212d5196fd89e741df67ddb81f8d35658/aiohappyeyeballs-2.7.1.tar.gz", hash = "sha256:065665c041c42a5938ed220bdcd7230f22527fbec085e1853d2402c8a3615d9d", size = 24757, upload-time = "2026-07-01T17:11:55.501Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/71/43/1947f06babed6b3f1d7f38b0c767f52df66bfb2bc10b468c4a7de9eceff2/aiohappyeyeballs-2.7.1-py3-none-any.whl", hash = "sha256:9243213661e29250eb41368e5daa826fc017156c3b8a11440826b2e3ed376472", size = 15038, upload-time = "2026-07-01T17:11:54.055Z" },
+]
+
+[[package]]
+name = "aiohttp"
+version = "3.14.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohappyeyeballs" },
+    { name = "aiosignal" },
+    { name = "attrs" },
+    { name = "frozenlist" },
+    { name = "multidict" },
+    { name = "propcache" },
+    { name = "yarl" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/58/d9/22ce5786ac0c1653ae8b6c23bded02c1686d11f0dbb45b31ce128e0df985/aiohttp-3.14.3.tar.gz", hash = "sha256:9491196535a88924a60afd5b5f434b5b203b6cc616250878dbdb223a8f7844bc", size = 7971213, upload-time = "2026-07-23T01:57:27.037Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/57/be/5afd201cc0ab139029aadb75392efe85a293403d9dd3a3226161c21ce00c/aiohttp-3.14.3-cp313-cp313-android_21_arm64_v8a.whl", hash = "sha256:2e9878ae68e4a5f1c0abe4dd497dbc3d51946f5837b56759e2a02e78fa90ef86", size = 506269, upload-time = "2026-07-23T01:54:49.075Z" },
+    { url = "https://files.pythonhosted.org/packages/22/09/dec8189d62b45ade009f6792a2264b942a90cb88aeaf181239933cd72c3c/aiohttp-3.14.3-cp313-cp313-android_21_x86_64.whl", hash = "sha256:f3d2669fe7dec7fc359ecdb5984b29b50d85d5d00f8c1cb61de4f4a24ee42627", size = 515166, upload-time = "2026-07-23T01:54:51.894Z" },
+    { url = "https://files.pythonhosted.org/packages/28/24/2854869d29ed8a8b19d74f9ec6629515f7e04d02dd329d9d179201e58e47/aiohttp-3.14.3-cp313-cp313-ios_13_0_arm64_iphoneos.whl", hash = "sha256:cc7cb243a68167172f48c1fd43cee91ec4b1d40cefd190edd43369d1a6bc9c82", size = 486263, upload-time = "2026-07-23T01:54:54.223Z" },
+    { url = "https://files.pythonhosted.org/packages/d4/dd/57187c8be2a35aea65eaee3bd2c3dcbbcf0204f5106c89637e3610380cd1/aiohttp-3.14.3-cp313-cp313-ios_13_0_arm64_iphonesimulator.whl", hash = "sha256:78253b573e6ffab5028924fc98bc281aae05445969982a10864bc360dea2016c", size = 492299, upload-time = "2026-07-23T01:54:56.236Z" },
+    { url = "https://files.pythonhosted.org/packages/b9/11/06ae6ed8f0d414edf4068861e233d8fe23ee699bfd4b3ceb8663db948a62/aiohttp-3.14.3-cp313-cp313-ios_13_0_x86_64_iphonesimulator.whl", hash = "sha256:7041d52c3a7fa20c9e8c182b534704abb19502c8bdcbde7ab23bfda6f642394f", size = 502235, upload-time = "2026-07-23T01:54:58.377Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/a3/559639c34a345d2cf7c52dff6838119f2eaf29eb508227b5b83f573af813/aiohttp-3.14.3-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:ac74facc01463f138b0da5580329cfcc82818dea5656e83ddcd11268fc12ff80", size = 750883, upload-time = "2026-07-23T01:55:00.65Z" },
+    { url = "https://files.pythonhosted.org/packages/91/cd/41e131f13afd1e7b0172a9d9eda085ef90eb8439f41f0d279db81ed3ae60/aiohttp-3.14.3-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:d6218d92e450824e9b4881f44e8c09f1853b490f9a64130801024a4793b1b3b0", size = 508473, upload-time = "2026-07-23T01:55:02.945Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/6b/e7f13410d391c6e55b4c007a8de024355389d7d459e3d64c42b2d33617e5/aiohttp-3.14.3-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:11fb37ef075669eee52ab1928fbf6e1741fada40409fa309ebde9607a962aebf", size = 509190, upload-time = "2026-07-23T01:55:05.173Z" },
+    { url = "https://files.pythonhosted.org/packages/97/21/6464573e53d69672cc1eada3e5c5cb2d2efa82701e8305a0f2047a576967/aiohttp-3.14.3-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:55bdcc472aafe2de4a253045cc128007a64f1e0264fb675791e132ea5edaa3bd", size = 1761478, upload-time = "2026-07-23T01:55:07.383Z" },
+    { url = "https://files.pythonhosted.org/packages/1a/81/d217043a4c17fbce360905e3b2bdd20139ebc9a2de836d035d179c4da006/aiohttp-3.14.3-cp313-cp313-manylinux2014_armv7l.manylinux_2_17_armv7l.manylinux_2_31_armv7l.whl", hash = "sha256:c39846c3aad97a8530c89d7a3869a8f8e9e3762c6ac0504481e5c80948f7e807", size = 1735092, upload-time = "2026-07-23T01:55:09.803Z" },
+    { url = "https://files.pythonhosted.org/packages/a1/66/e13a02d0eeb1a9a502402a977abb4e4abff9fe4051c26f80558c57a7c975/aiohttp-3.14.3-cp313-cp313-manylinux2014_ppc64le.manylinux_2_17_ppc64le.manylinux_2_28_ppc64le.whl", hash = "sha256:5895ef58c4620afe02fa16044f023dc4dafec08158f9d08874a46a7dbc0341b8", size = 1800546, upload-time = "2026-07-23T01:55:12.012Z" },
+    { url = "https://files.pythonhosted.org/packages/26/5e/57d42fca1d18cb5acc1cad945d017fabc5d6ae71d8a08ad66be8dc3ee544/aiohttp-3.14.3-cp313-cp313-manylinux2014_s390x.manylinux_2_17_s390x.manylinux_2_28_s390x.whl", hash = "sha256:fa9467a8113aa69d3d7c55a70ef0b7c636010a40993f3df9d9d0d73b3eb7ef24", size = 1895250, upload-time = "2026-07-23T01:55:14.357Z" },
+    { url = "https://files.pythonhosted.org/packages/ca/1c/7da8d08e74d56f00070822f9638ff3f1c563f8ad87d1efa996c87bfc8644/aiohttp-3.14.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d7d2deec16eeedf55f2c7cf75b521ea3856a5177e123844f8fd0f114ce252cb5", size = 1789289, upload-time = "2026-07-23T01:55:16.668Z" },
+    { url = "https://files.pythonhosted.org/packages/cd/0f/cf16bcf56896981c1a0319f5d5db9337994b5165730c48a8fa07e9b34be6/aiohttp-3.14.3-cp313-cp313-manylinux_2_31_riscv64.manylinux_2_39_riscv64.whl", hash = "sha256:dd54d0e8717de95939766febac482ac0474d8ac3b048115f9f2b1d23a16e7db4", size = 1586706, upload-time = "2026-07-23T01:55:18.913Z" },
+    { url = "https://files.pythonhosted.org/packages/fe/6f/76eac12a7f2480e1e304f842efdb07db33256b0d9165b866b6ef0806c202/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:df82f3787c940c94986b34222d59c9e38843fba85139f36e85255a82ad5355a9", size = 1724652, upload-time = "2026-07-23T01:55:21.296Z" },
+    { url = "https://files.pythonhosted.org/packages/39/b6/19c8c592baeeb94b75f966547d40c02ac7590902306ec5863d5c027cf506/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_armv7l.whl", hash = "sha256:42a67efc36300d052fb4508a53e8b6901b9284b599ae63945c377569c5fcc1e1", size = 1756239, upload-time = "2026-07-23T01:55:23.705Z" },
+    { url = "https://files.pythonhosted.org/packages/dc/c9/4e9383150296f97f873b680c4de8fb2cd88608fb9f48c79edcb111611abc/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_ppc64le.whl", hash = "sha256:7a75aa63cbf9b21cfaf60dc2657e19df2c2867d91707d653fee171ffeedd1371", size = 1769161, upload-time = "2026-07-23T01:55:26.082Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/1e/147bdc6cc5de5f3ab011be8bf5d6e786633249f22c20bae06f85e45f5387/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_riscv64.whl", hash = "sha256:e92eb8acc45eb6a9f4935071a77edf5b85cc6f8dfad5cd99e97653c26593cdde", size = 1578759, upload-time = "2026-07-23T01:55:28.846Z" },
+    { url = "https://files.pythonhosted.org/packages/fd/31/78388a9d6040ece2e11df62ea229a822cf5e52d238374b220ae9975b2623/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_s390x.whl", hash = "sha256:b014a6ed7cf912e787149fdc529166d3ceabac23f26efeea3158c9aba2354e7e", size = 1792025, upload-time = "2026-07-23T01:55:31.457Z" },
+    { url = "https://files.pythonhosted.org/packages/03/51/a3d29fdf2c25d796746af8ad6fe56a45d6256c38b0a8a2ed752e1160b3a2/aiohttp-3.14.3-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:3d4f72af88ac2474bb5bca640030320e3d38a0163a1d7533500e87be458eef71", size = 1768477, upload-time = "2026-07-23T01:55:33.87Z" },
+    { url = "https://files.pythonhosted.org/packages/29/a6/442e18b5afeade534d877a2dc3c3e392aff8d49787890b0cf84790410267/aiohttp-3.14.3-cp313-cp313-win32.whl", hash = "sha256:5f08ec777f35ee70720233b8b9811d3bb5d728137f30ac91b7457709c3261ac0", size = 451069, upload-time = "2026-07-23T01:55:36.121Z" },
+    { url = "https://files.pythonhosted.org/packages/9d/69/3d876ac02659f271cf7f6769f14a8e3de5b6e888ed8b5a7e998086a4cec8/aiohttp-3.14.3-cp313-cp313-win_amd64.whl", hash = "sha256:dff9461ec275f22135650d5ba4b4931a11f3958df7dfbb8db630000d4dee0883", size = 476518, upload-time = "2026-07-23T01:55:38.303Z" },
+    { url = "https://files.pythonhosted.org/packages/b2/0e/50d6e6471cd31edce8b282bdec59375a3a69124d8a989a0b1313355cae52/aiohttp-3.14.3-cp313-cp313-win_arm64.whl", hash = "sha256:ddcac3c6b382e81f1dd0499199d4136b877beb4cb5ef770bbbfba56c4b8f55d2", size = 447676, upload-time = "2026-07-23T01:55:40.451Z" },
+    { url = "https://files.pythonhosted.org/packages/c8/20/887fdcf832326571b370ffc347b3e70abe101096f3720126aac161b1d872/aiohttp-3.14.3-cp314-cp314-android_24_arm64_v8a.whl", hash = "sha256:49f7325beb0f85ef4aef5f48f490269575f83e6e2acad00a1d80b807eb027062", size = 509067, upload-time = "2026-07-23T01:55:42.618Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/a3/92cec936f78cc4bf0fa5554ebe593b73459d94e3c62303e1902a4cccb6f7/aiohttp-3.14.3-cp314-cp314-android_24_x86_64.whl", hash = "sha256:e3be98a7c30b8c25d573dafba7171d66dfb05ee6a9070fc46535464ff97700a6", size = 514774, upload-time = "2026-07-23T01:55:44.937Z" },
+    { url = "https://files.pythonhosted.org/packages/29/ba/2a0c38df3fc557620b6a5acd98364af050053b6285b4dc7ee74100c63c18/aiohttp-3.14.3-cp314-cp314-ios_13_0_arm64_iphoneos.whl", hash = "sha256:614c61d478b83953e261d02bb2df750f17227cd33ef8002945bf5aebbde21919", size = 488134, upload-time = "2026-07-23T01:55:47.135Z" },
+    { url = "https://files.pythonhosted.org/packages/48/d6/d51b7d4bf309af3693940d8ffd2b9ed0b682434ef85959b7c9c137f60cf8/aiohttp-3.14.3-cp314-cp314-ios_13_0_arm64_iphonesimulator.whl", hash = "sha256:1caa7b0d05f3e3a36f87788c59e970a7ee1cefcfcbb924a9f138c4a6551c9cb7", size = 494201, upload-time = "2026-07-23T01:55:49.451Z" },
+    { url = "https://files.pythonhosted.org/packages/3f/5a/8f624384e5f1efabb5229b94157eb966b021e97bdb188c62860c2ae243c2/aiohttp-3.14.3-cp314-cp314-ios_13_0_x86_64_iphonesimulator.whl", hash = "sha256:dfa68deb2a443bdaa3ea5297b0699c1464f08aef3812b486d1348eee61b07dc0", size = 502766, upload-time = "2026-07-23T01:55:51.656Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/26/4ff0164370deec18fb19254ee4ab10b7a73304ac0c860b13f5f84663759b/aiohttp-3.14.3-cp314-cp314-macosx_10_15_universal2.whl", hash = "sha256:e72ee89e28d907a18f46959b4eb0bb06701cc7f8cf4366e00029e2ccfaaf5924", size = 756557, upload-time = "2026-07-23T01:55:53.964Z" },
+    { url = "https://files.pythonhosted.org/packages/97/a3/7056b86dc0d9ec709ea9777eae3b0161428f943372f8b98c01c11593b682/aiohttp-3.14.3-cp314-cp314-macosx_10_15_x86_64.whl", hash = "sha256:ad4c8b7488d745d2ca4838ebd8ae5ba9b56341d30b1da43640e4ce87f9f49646", size = 510168, upload-time = "2026-07-23T01:55:56.22Z" },
+    { url = "https://files.pythonhosted.org/packages/85/ed/0357a015892fd68058bf2d39d3fd1958e459b997a7db30aaa6aaa434ae96/aiohttp-3.14.3-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:db332af25642007330fca8be5c4d194caf2bea7a7fc84415aff3497af5dfee6b", size = 512957, upload-time = "2026-07-23T01:55:58.437Z" },
+
+[TRUNCATED] Showing first 80 of 3321 lines.
+
+=== ENTRY POINTS ===
+No common entry points found. Check 'main' or 'scripts.start' in manifest files above.
+
+=== LINTING AND FORMATTING CONFIG ===
+No linting or formatting config files found in project root.
+
+=== ENVIRONMENT VARIABLE TEMPLATES ===
+--- .env.example ---
+OPENAI_API_KEY=
+OPENAI_BASE_URL=
+PVS_ENVIRONMENT=development
+PVS_BOT_BASE_URL=http://127.0.0.1:7860
+PVS_DATABASE_PATH=data/pipecat_voice_studio.db
+PVS_TIMEZONE=Asia/Calcutta
+PVS_REALTIME_MODEL=gpt-realtime-2.1-mini
+PVS_CASCADE_STT_MODEL=gpt-realtime-whisper
+PVS_CASCADE_LLM_MODEL=gpt-5.6-luna
+PVS_CASCADE_TTS_MODEL=gpt-4o-mini-tts
+PVS_REALTIME_VOICE=marin
+
+
+=== TODO / FIXME / HACK (production code only, test dirs excluded) ===
+None found.
+
+=== GIT RECENT COMMITS (last 20) ===
+cd2f841 feat: add validated Pipecat voice studio
+319e414 feat: establish runnable application foundation
+9749ea2 docs: add references and MIT license
+
+=== HIGH-CHURN FILES (last 90 days, top 20) ===
+   2 .env.example
+   2 .gitignore
+   2 pyproject.toml
+   2 src/pipecat_voice_studio/api/app.py
+   2 src/pipecat_voice_studio/config.py
+   2 src/pipecat_voice_studio/ui/app_pages/agent_studio.py
+   2 src/pipecat_voice_studio/ui/app_pages/analytics.py
+   2 src/pipecat_voice_studio/ui/app_pages/live_session.py
+   2 src/pipecat_voice_studio/ui/app_pages/records.py
+   2 src/pipecat_voice_studio/ui/streamlit_app.py
+   2 tests/test_config.py
+   2 tests/test_streamlit_app.py
+   2 uv.lock
+   1 src/pipecat_voice_studio/appointments.py
+   1 src/pipecat_voice_studio/graph.py
+   1 src/pipecat_voice_studio/pyproject.toml
+   1 src/pipecat_voice_studio/seeds.py
+   1 src/pipecat_voice_studio/storage.py
+   1 src/pipecat_voice_studio/ui/app_pages/evaluations.py
+   1 src/pipecat_voice_studio/ui/components.py
+
+=== MONOREPO SIGNALS ===
+No monorepo signals detected.
+
+=== CODE METRICS ===
+Total files scanned: 74
+Total lines of code: 4482
+
+Files by language:
+  Other: 35
+  Python: 35
+  TypeScript: 2
+  TypeScript/React: 2
+
+Top 10 largest files:
+uv.lock: 551.2KB
+src\pipecat_voice_studio\ui\frontend\package-lock.json: 56.4KB
+data\pipecat_voice_studio.db: 56.0KB
+docs\TECHNICAL.md: 16.2KB
+docs\HOW_TO_USE.md: 13.6KB
+README.md: 13.0KB
+src\pipecat_voice_studio\storage.py: 10.3KB
+src\pipecat_voice_studio\ui\frontend\src\StudioComponent.tsx: 9.7KB
+src\pipecat_voice_studio\evaluations.py: 8.8KB
+src\pipecat_voice_studio\voice\bot.py: 8.7KB
+
+=== CI/CD PIPELINES ===
+CI/CD: GitHub Actions
+
+=== CONTAINERS & ORCHESTRATION ===
+No containerization configs detected.
+
+=== SECURITY & COMPLIANCE ===
+No security configs detected.
+
+=== PERFORMANCE & TESTING ===
+No performance testing configs detected.
+
+=== SCAN COMPLETE ===
