@@ -6,15 +6,15 @@ Pipecat Voice Studio is a local application for building, running, inspecting, a
 
 The required runtime versions and environment constraints are defined in [pyproject.toml](file:///D:/AI/Github/pipecat-voice-studio/pyproject.toml) and [package.json](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/package.json):
 
-- **Python**: `>=3.13,<3.15`. The launchers target Python `3.14.7` by default and fall back to `3.13.13` if installation is required.
-- **Operating system**:
+- Python: `>=3.13,<3.15`. The launchers target Python `3.14.7` by default and fall back to `3.13.13` if installation is required.
+- Operating system:
   - Native 64-bit Windows AMD64 (`sys_platform == 'win32' and platform_machine == 'AMD64'`).
   - Native 64-bit Linux x86_64 (`sys_platform == 'linux' and platform_machine == 'x86_64'`) with GNU glibc 2.34 or newer.
   - macOS, Apple Silicon, ARM64 architectures, and musl-based Linux distributions are not supported due to platform-specific wheel builds (`torch==2.13.0+cu132`).
-- **Package and environment manager**: [uv](https://docs.astral.sh/uv/) (installed automatically by launchers if absent on PATH).
-- **Node.js and npm**: Node.js 24 (or modern LTS) and npm are required only when rebuilding the React frontend component. Pre-built frontend bundles are committed under [build/](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/build).
-- **Hardware acceleration**: CUDA 13.2 GPU acceleration is optional. CPU mode is supported when no compatible GPU is detected.
-- **External credentials**: An OpenAI API key (`OPENAI_API_KEY`) is required for live voice sessions, speech transcription, language model generation, text-to-speech, and automated evaluations.
+- Package and environment manager: [uv](https://docs.astral.sh/uv/) (installed automatically by launchers if absent on PATH).
+- Node.js and npm: Node.js 24 (or modern LTS) and npm are required only when rebuilding the React frontend component. Pre-built frontend bundles are committed under [build/](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/build).
+- Hardware acceleration: CUDA 13.2 GPU acceleration is optional. CPU mode is supported when no compatible GPU is detected.
+- External credentials: An OpenAI API key (`OPENAI_API_KEY`) is required for live voice sessions, speech transcription, language model generation, text-to-speech, and automated evaluations.
 
 ## Setup and run commands
 
@@ -247,17 +247,13 @@ uv run pytest -m live_eval tests/test_live_evaluations.py --no-cov -q
 ```
 *Note: Live evaluations incur model API usage costs and require `OPENAI_API_KEY` to be set.*
 
-### Working tree status
-
-In the local working copy, tests are tracked in git history under `tests/`, but test files are currently unstaged deletions. Automated runs of `uv run pytest` expect the `tests/` directory to be present on disk.
-
 ## Known limitations
 
-1. **Localhost single-tenant architecture**: The FastAPI management API (`api/app.py`) includes no authentication or role-based access control. The application is intended for local execution or trusted private networks.
-2. **Platform limitations**: Only 64-bit Windows AMD64 and Linux x86_64 (glibc >= 2.34) are supported. macOS, Apple Silicon, and ARM64 architectures are unsupported due to PyTorch CUDA wheel requirements.
-3. **Linear pipeline compilation**: The graph compiler ([compile_graph](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/graph.py#L247-L290)) only permits a single, unbranching, connected acyclic chain. Graph nodes cannot fork or merge frame streams. Multi-specialist routing is implemented through state transitions in Pipecat Flow rather than topology branches.
-4. **Appointment scheduling rules**: Appointments are strictly restricted to 30-minute intervals, aligned to half-hour marks (`:00`, `:30`), between 09:00 and 17:00, Monday through Friday, evaluated in the studio's configured timezone.
-5. **Outbound telephone destination restrictions**: Outbound calls require exact string matching in `PVS_OUTBOUND_ALLOWLIST`. Prefix or wildcard matching is not supported.
-6. **Public webhook ingress**: Telephony webhooks from Twilio and Vonage require an external HTTPS tunnel (such as ngrok or Cloudflare Tunnel) forwarding to local port 8080. Plain HTTP URLs are rejected by `pvs_public_base_url` validation.
-7. **Single-file SQLite concurrency**: All concurrent processes (worker, gateway, calendar worker, API, Streamlit) read and write to a single SQLite file. Concurrency is managed via WAL mode and a 5-second busy timeout; high-throughput distributed database clustering is not supported.
-8. **Healthcare privacy constraints**: When healthcare intake is active, raw user and assistant turns are suppressed from SQLite event logs (`persist_conversation=False`). Intake data is encrypted with AES-256-GCM. Automated encryption key rotation is not implemented.
+1. Localhost single-tenant architecture: The FastAPI management API (`api/app.py`) includes no authentication or role-based access control. The application is intended for local execution or trusted private networks.
+2. Platform limitations: Only 64-bit Windows AMD64 and Linux x86_64 (glibc >= 2.34) are supported. macOS, Apple Silicon, and ARM64 architectures are unsupported due to PyTorch CUDA wheel requirements.
+3. Linear pipeline compilation: The graph compiler ([compile_graph](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/graph.py#L247-L290)) only permits a single, unbranching, connected acyclic chain. Graph nodes cannot fork or merge frame streams. Multi-specialist routing is implemented through state transitions in Pipecat Flow rather than topology branches.
+4. Appointment scheduling rules: Appointments are strictly restricted to 30-minute intervals, aligned to half-hour marks (`:00`, `:30`), between 09:00 and 17:00, Monday through Friday, evaluated in the studio's configured timezone.
+5. Outbound telephone destination restrictions: Outbound calls require exact string matching in `PVS_OUTBOUND_ALLOWLIST`. Prefix or wildcard matching is not supported.
+6. Public webhook ingress: Telephony webhooks from Twilio and Vonage require an external HTTPS tunnel (such as ngrok or Cloudflare Tunnel) forwarding to local port 8080. Plain HTTP URLs are rejected by `pvs_public_base_url` validation.
+7. Single-file SQLite concurrency: All concurrent processes (worker, gateway, calendar worker, API, Streamlit) read and write to a single SQLite file. Concurrency is managed via WAL mode and a 5-second busy timeout; high-throughput distributed database clustering is not supported.
+8. Healthcare privacy constraints: When healthcare intake is active, raw user and assistant turns are suppressed from SQLite event logs (`persist_conversation=False`). Intake data is encrypted with AES-256-GCM. Automated encryption key rotation is not implemented.
