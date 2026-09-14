@@ -1,4 +1,14 @@
-"""Closed, validated pipeline graph contracts."""
+"""Closed, validated pipeline graph contracts.
+
+This module is the trust boundary between operator-editable pipeline definitions
+(e.g. a cloned graph from the Agent Studio page) and what `voice/bot.py` will
+actually construct and run. It must not allow an unknown node kind or an
+unlisted config key through: `NodeKind` and `ALLOWED_CONFIG` are closed
+allowlists, not open enums, so a saved graph can never smuggle in an
+unaudited service or an arbitrary settings key. See `seeds.py` for the
+built-in graphs constructed from these types, and `voice/bot.py` for how a
+validated graph becomes a running pipeline.
+"""
 
 from __future__ import annotations
 
@@ -61,6 +71,8 @@ PATH_KINDS = {
     NodeKind.POLICY,
 }
 OPERATIONAL_KINDS = {NodeKind.TIMELINE, NodeKind.METRICS, NodeKind.PERSISTENCE}
+# Any node config key outside this set is rejected by GraphNode.validate_config below;
+# this is what stops a stored graph from carrying arbitrary or executable settings.
 ALLOWED_CONFIG = {"prompt", "voice", "speed", "language", "vad_eagerness"}
 
 
@@ -104,6 +116,7 @@ class PipelineGraph(BaseModel):
 
     @model_validator(mode="after")
     def validate_topology(self) -> PipelineGraph:
+        # Phase 1: structural sanity (unique ids, edges reference real nodes, no self-loops).
         by_id = {node.id: node for node in self.nodes}
         if len(by_id) != len(self.nodes):
             raise ValueError("Node IDs must be unique")
@@ -113,6 +126,8 @@ class PipelineGraph(BaseModel):
             if edge.source == edge.target:
                 raise ValueError("Self-referencing edges are not allowed")
 
+        # Phase 2: every graph, regardless of mode, must carry the operational triad
+        # (timeline/metrics/persistence) and exactly one transport matching its mode.
         kinds = {node.kind for node in self.nodes}
         required_ops = OPERATIONAL_KINDS - kinds
         if required_ops:
@@ -137,6 +152,10 @@ class PipelineGraph(BaseModel):
         ):
             raise ValueError("The graph must contain exactly one transport for its mode")
 
+        # Phase 3: mode-specific node-set requirements. Realtime and cascade are mutually
+        # exclusive service stacks; telephony, avatar, and healthcare each add their own
+        # constraints on top (healthcare must stay isolated from business/booking tools
+        # so a single graph can't mix consumer-health data with CRM or scheduling writes).
         if self.mode == PipelineMode.REALTIME:
             if NodeKind.REALTIME not in kinds or kinds & {
                 NodeKind.STT,
@@ -170,6 +189,12 @@ class PipelineGraph(BaseModel):
         }:
             raise ValueError("Healthcare graphs must remain isolated from business tools")
 
+        # Phase 4: the executable frame path (PATH_KINDS nodes only, i.e. excluding the
+        # operational triad) must be both acyclic and fully connected. These are checked
+        # separately on purpose: a topological sort alone would still fully visit two
+        # disjoint acyclic chains (each has its own zero-indegree start), so it cannot by
+        # itself detect a graph that is really two disconnected pipelines. The undirected
+        # reachability walk below is what actually proves there is one connected path.
         path_ids = {node.id for node in self.nodes if node.kind in PATH_KINDS}
         path_edges = [
             (edge.source, edge.target)
@@ -220,7 +245,13 @@ class CompiledPipeline(BaseModel):
 
 
 def compile_graph(graph: PipelineGraph) -> CompiledPipeline:
-    """Compile a validated graph into a deterministic runtime recipe."""
+    """Compile a validated graph into a deterministic runtime recipe.
+
+    `PipelineGraph.validate_topology` only proves the frame path is acyclic and
+    connected; it does not rule out branching. This function walks the path in
+    order and raises if any node has more than one outgoing path edge, which is
+    the stricter guarantee the worker actually needs: a single linear chain.
+    """
     path_nodes = {node.id: node for node in graph.nodes if node.kind in PATH_KINDS}
     targets = {
         edge.target

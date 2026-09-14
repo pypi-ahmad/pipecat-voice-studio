@@ -1,4 +1,14 @@
-"""Application configuration."""
+"""Application configuration.
+
+Single source of runtime settings, loaded from process environment variables
+(and `.env` in the repository root) via Pydantic Settings. Every other module
+that needs a credential, path, or tunable reads it from here rather than
+`os.environ` directly. Unknown environment variables are ignored rather than
+rejected (`extra="ignore"`), so a shared `.env` can carry keys this project
+does not use without failing startup. See `pipecat_voice_studio.storage` for
+how `pvs_database_path` is used, and `integrations/readiness.py` for how the
+optional provider settings are turned into an operator-facing status.
+"""
 
 from functools import lru_cache
 from pathlib import Path
@@ -58,7 +68,11 @@ class Settings(BaseSettings):
 
     @property
     def bot_websocket_base_url(self) -> str:
-        """Derive the browser WebSocket endpoint from the configured HTTP endpoint."""
+        """Derive the browser WebSocket endpoint from the configured HTTP endpoint.
+
+        Converts the configured http(s) worker URL into the matching ws(s) URL and
+        appends the fixed `/realtime` path; there is no separate websocket setting.
+        """
         scheme, separator, remainder = self.pvs_bot_base_url.partition("://")
         if separator == "" or scheme not in {"http", "https"}:
             msg = "PVS_BOT_BASE_URL must be an absolute HTTP(S) URL"
@@ -75,7 +89,12 @@ class Settings(BaseSettings):
 
     @property
     def outbound_allowlist(self) -> frozenset[str]:
-        """Return exact E.164 destinations approved for local outbound calls."""
+        """Return exact E.164 destinations approved for local outbound calls.
+
+        `PVS_OUTBOUND_ALLOWLIST` is a comma-separated list of exact numbers; there is
+        no wildcard or prefix matching, so every callable destination must be listed
+        verbatim (see `integrations/telephony.require_allowed_destination`).
+        """
         return frozenset(value.strip() for value in self.pvs_outbound_allowlist.split(",") if value)
 
     @property
@@ -97,7 +116,12 @@ class Settings(BaseSettings):
     @field_validator("pvs_public_base_url")
     @classmethod
     def validate_public_url(cls, value: str | None) -> str | None:
-        """Require TLS for public telephony callbacks."""
+        """Require TLS for public telephony callbacks.
+
+        This URL is handed to Twilio/Vonage as the callback origin for untrusted
+        public webhooks, so plain http is rejected outright rather than allowed
+        and merely discouraged.
+        """
         if value is not None and not value.startswith("https://"):
             msg = "PVS_PUBLIC_BASE_URL must use https://"
             raise ValueError(msg)

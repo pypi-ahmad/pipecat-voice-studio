@@ -1,4 +1,11 @@
-"""Runtime readiness diagnostics shared by the API and UI."""
+"""Runtime readiness diagnostics shared by the API and UI.
+
+Read-only introspection of installed package versions and CUDA/GPU state,
+used by the FastAPI `/health` endpoint (`api/app.py`) and the Streamlit
+Command center page. Must not import or touch application settings; this
+module only reports on the environment torch/pipecat/streamlit are already
+running in.
+"""
 
 import platform
 from importlib.metadata import PackageNotFoundError, version
@@ -37,5 +44,6 @@ def runtime_readiness() -> RuntimeReadiness:
         "streamlit": _package_version("streamlit"),
         "torch": torch.__version__,
         "cuda_available": cuda_available,
+        # Reports only the first visible device; multi-GPU selection is not modeled here.
         "gpu": torch.cuda.get_device_name(0) if cuda_available else None,
     }

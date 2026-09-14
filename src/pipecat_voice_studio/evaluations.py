@@ -1,4 +1,12 @@
-"""Isolated Pipecat behavioral evaluation runner."""
+"""Isolated Pipecat behavioral evaluation runner.
+
+Executes automated dialog and audio test scenarios using Pipecat's evaluation
+harness (`pipecat.evals`). Spawns ephemeral background worker processes against
+isolated temporary SQLite databases to prevent pollution of production records.
+Must never retain raw audio or execute unvalidated scenarios outside the
+allowlist. Next module to read: `voice/bot.py` for evaluation WebSocket handling
+and `storage.py` for evaluation run persistence.
+"""
 
 from __future__ import annotations
 
@@ -71,9 +79,9 @@ def _creation_flags() -> int:
     return subprocess.CREATE_NO_WINDOW if sys.platform == "win32" else 0
 
 
-def _drain_output(
-    process: subprocess.Popen[str], logs: list[str], ready: threading.Event
-) -> None:
+def _drain_output(process: subprocess.Popen[str], logs: list[str], ready: threading.Event) -> None:
+    # Continuously drains worker stdout to prevent OS pipe buffers from deadlocking
+    # the subprocess. Keeps only the latest 200 lines to bound memory.
     if process.stdout is None:
         return
     for line in process.stdout:
@@ -87,6 +95,8 @@ def _drain_output(
 def _start_worker(
     *, port: int, body_path: Path, database_path: Path
 ) -> tuple[subprocess.Popen[str], list[str], threading.Event]:
+    # Worker runs with an isolated PVS_DATABASE_PATH pointing to the tempdir,
+    # ensuring that evaluation side effects cannot alter the production database.
     env = os.environ.copy()
     env["PVS_DATABASE_PATH"] = str(database_path)
     env["PYTHONIOENCODING"] = "utf-8"

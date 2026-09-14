@@ -1,4 +1,11 @@
-"""Built-in editable pipeline definitions."""
+"""Built-in editable pipeline definitions.
+
+Constructs the seven starter `PipelineGraph`s that `storage.StudioStore.initialize`
+inserts for any name not already present, so a fresh or upgraded database always
+has the full built-in set. Every node kind and config key used here must already
+be allowlisted in `graph.py`; this module only assembles graphs, it does not
+relax what `PipelineGraph`/`GraphNode` will accept.
+"""
 
 from itertools import pairwise
 
@@ -6,6 +13,8 @@ from pipecat_voice_studio.graph import GraphEdge, GraphNode, NodeKind, PipelineG
 
 
 def _operational_nodes() -> list[GraphNode]:
+    # Every graph mode requires these three kinds (see graph.py's OPERATIONAL_KINDS);
+    # they are appended to every starter graph below rather than made optional.
     return [
         GraphNode(id="timeline", kind=NodeKind.TIMELINE, label="Semantic timeline"),
         GraphNode(id="metrics", kind=NodeKind.METRICS, label="Metrics"),
@@ -110,6 +119,8 @@ def seed_graphs() -> list[PipelineGraph]:
         ),
     ]
     for name, transport_kind, tools, prompt in extension_specs:
+        # pairwise(path) below wires each node to the next in list order, so `path`
+        # must already be in the exact execution order the compiled pipeline needs.
         path = [
             GraphNode(id="transport", kind=transport_kind, label="Voice transport"),
             GraphNode(id="stt", kind=NodeKind.STT, label="Streaming speech recognition"),

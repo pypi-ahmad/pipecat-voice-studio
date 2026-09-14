@@ -1,4 +1,12 @@
-"""Small security primitives shared by external integration boundaries."""
+"""Small security primitives shared by external integration boundaries.
+
+Everything reaching these functions from `telephony_gateway.py` (webhook
+signatures, media tokens) originates on the public internet and must be
+treated as untrusted until verified here. `HealthcareCipher` is the only
+place structured health intake is encrypted or decrypted; storage.py never
+sees plaintext. None of these functions read application Settings directly,
+so every secret must be passed in explicitly by the caller.
+"""
 
 from __future__ import annotations
 
@@ -60,7 +68,12 @@ class HealthcareCipher:
         self._cipher = AESGCM(key)
 
     def encrypt(self, payload: dict[str, Any], *, session_id: str) -> tuple[bytes, bytes]:
-        """Encrypt one JSON payload and bind it to its session identifier."""
+        """Encrypt one JSON payload and bind it to its session identifier.
+
+        `session_id` is passed as AES-GCM associated data (authenticated, not
+        encrypted): decrypting with a different session_id than the one used here
+        will fail, so a stored ciphertext cannot be replayed under another session.
+        """
         nonce = os.urandom(12)
         plaintext = json.dumps(payload, separators=(",", ":"), sort_keys=True).encode()
         return self._cipher.encrypt(nonce, plaintext, session_id.encode()), nonce
@@ -74,7 +87,11 @@ class HealthcareCipher:
 
 
 def sign_media_token(call_id: str, secret: str, *, now: int | None = None) -> str:
-    """Create a short-lived token binding a media connection to one call."""
+    """Create a short-lived token binding a media connection to one call.
+
+    Wire format is `{call_id}.{unix_timestamp}.{hmac_sha256_hex}`; there is no
+    versioning byte, so any format change here must also update `verify_media_token`.
+    """
     timestamp = int(time.time()) if now is None else now
     payload = f"{call_id}.{timestamp}"
     signature = hmac.new(secret.encode(), payload.encode(), hashlib.sha256).hexdigest()
@@ -91,6 +108,8 @@ def verify_media_token(
     except (TypeError, ValueError) as error:
         raise InvalidMediaTokenError from error
     current = int(time.time()) if now is None else now
+    # The +30s allowance is clock-skew tolerance for a timestamp slightly in the
+    # future relative to this process; max_age_seconds is the actual token lifetime.
     if timestamp > current + 30 or current - timestamp > max_age_seconds:
         raise InvalidMediaTokenError
     expected = hmac.new(
@@ -102,7 +121,13 @@ def verify_media_token(
 
 
 def verify_twilio_signature(url: str, params: dict[str, str], signature: str, token: str) -> bool:
-    """Verify Twilio's HMAC-SHA1 webhook signature."""
+    """Verify Twilio's HMAC-SHA1 webhook signature.
+
+    The message construction (full callback URL followed by each form param's
+    key and value concatenated, params sorted by key) is Twilio's documented
+    algorithm, not an arbitrary choice; it must match exactly or every valid
+    callback will fail verification.
+    """
     message = url + "".join(key + params[key] for key in sorted(params))
     expected = base64.b64encode(hmac.new(token.encode(), message.encode(), hashlib.sha1).digest())
     return hmac.compare_digest(signature.encode(), expected)

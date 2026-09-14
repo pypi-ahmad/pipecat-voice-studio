@@ -1,4 +1,13 @@
-"""SQLite persistence for definitions, semantic events, appointments, and evaluations."""
+"""SQLite persistence for definitions, semantic events, appointments, and evaluations.
+
+Owns the single local SQLite database file, handling table creation, schema
+migrations, WAL journal mode, and foreign keys. This module is the only place
+where database tables are defined and schema operations are executed. It must
+never persist unredacted phone numbers, plaintext healthcare intake data, or
+raw audio frames. See `appointments.py` for slot booking validation that sits
+atop the appointments table, and `voice/timeline.py` for how Pipecat audio frames
+become `session_events` rows.
+"""
 
 from __future__ import annotations
 
@@ -16,6 +25,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
     from pathlib import Path
 
+# Schema migration version. v1 -> v2 added healthcare sensitivity and external
+# calendar provider tracking on appointments.
 SCHEMA_VERSION = 2
 
 
@@ -31,7 +42,12 @@ class StudioStore:
 
     @contextmanager
     def connect(self) -> Iterator[sqlite3.Connection]:
-        """Open a configured SQLite connection."""
+        """Open a configured SQLite connection.
+
+        Configured for concurrent access across the Streamlit UI, telephony gateway,
+        and audio bot worker processes: WAL journal mode allows concurrent readers
+        alongside a single writer, and busy_timeout=5000ms avoids immediate locks.
+        """
         self.path.parent.mkdir(parents=True, exist_ok=True)
         connection = sqlite3.connect(self.path, timeout=5)
         connection.row_factory = sqlite3.Row
@@ -144,6 +160,8 @@ class StudioStore:
                     "INSERT INTO schema_version(version) VALUES (?)", (SCHEMA_VERSION,)
                 )
             elif row["version"] == 1:
+                # Upgrading from v1 -> v2 creates an offline copy before altering columns
+                # to guard against data corruption on crashes during migration.
                 backup_path = self.path.with_suffix(self.path.suffix + ".v1.bak")
                 if not backup_path.exists():
                     with sqlite3.connect(backup_path) as backup:
@@ -158,6 +176,7 @@ class StudioStore:
                     """
                 )
             elif row["version"] != SCHEMA_VERSION:
+                # Unsupported schema versions fail fast rather than risking partial writes.
                 msg = f"Unsupported database schema version: {row['version']}"
                 raise RuntimeError(msg)
             names = {
@@ -240,9 +259,12 @@ class StudioStore:
 
     def append_event(self, session_id: str, event_type: str, payload: dict[str, Any]) -> int:
         """Append an ordered semantic event; raw audio is deliberately unsupported."""
+        # Core privacy invariant: raw binary audio must never touch local storage.
         if event_type == "audio.raw":
             raise ValueError("Raw audio may not be persisted")
         with self.connect() as connection:
+            # Monotonic sequence counter per session guarantees deterministic timeline
+            # ordering even when events are logged in the same millisecond.
             row = connection.execute(
                 "SELECT COALESCE(MAX(sequence), 0) + 1 AS sequence "
                 "FROM session_events WHERE session_id = ?",
@@ -496,7 +518,12 @@ class StudioStore:
                 raise KeyError(appointment_id)
 
     def apply_calendar_changes(self, changes: list[dict[str, Any]]) -> int:
-        """Apply Google status changes to known external appointments."""
+        """Apply Google status changes to known external appointments.
+
+        When an external event is marked 'cancelled' in Google Calendar, the local
+        status flips to 'cancelled' as well. Other external updates modify external_status
+        without overwriting the local appointment status.
+        """
         updated = 0
         with self.connect() as connection:
             for event in changes:
@@ -573,7 +600,12 @@ class StudioStore:
         status: str,
         escalated: bool,
     ) -> str:
-        """Persist only encrypted structured healthcare intake content."""
+        """Persist only encrypted structured healthcare intake content.
+
+        Raw patient intake fields never touch the database. The caller must encrypt
+        with HealthcareCipher using session_id as authenticated data (AAD) before
+        storing the ciphertext and nonce bytes here.
+        """
         intake_id = uuid4().hex
         timestamp = _now()
         with self.connect() as connection:
@@ -593,7 +625,11 @@ class StudioStore:
         return intake_id
 
     def list_healthcare_metadata(self) -> list[dict[str, Any]]:
-        """Return intake state without decrypting or selecting protected fields."""
+        """Return intake state without decrypting or selecting protected fields.
+
+        The UI only displays policy version, consent acceptance, triage status,
+        and escalation flags; ciphertext and nonce are omitted from the projection.
+        """
         with self.connect() as connection:
             rows = connection.execute(
                 "SELECT i.id, i.session_id, c.policy_version, c.accepted, i.status, "
