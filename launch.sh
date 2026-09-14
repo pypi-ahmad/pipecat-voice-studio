@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
+# POSIX Bash launcher for Pipecat Voice Studio.
+#
+# Orchestrates dependency synchronization (via uv), Python version verification,
+# Vite frontend bundle compilation, port checks, and supervised multi-process
+# lifecycles (Pipecat worker, telephony gateway, calendar daemon, Streamlit).
+# Traps EXIT, SIGINT, and SIGTERM to guarantee no orphaned background processes.
+# Next module to open: docs/RUNBOOK.md for operational details.
+
 set -Eeuo pipefail
+
 
 PROJECT_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 PRIMARY_PYTHON="3.14.7"
