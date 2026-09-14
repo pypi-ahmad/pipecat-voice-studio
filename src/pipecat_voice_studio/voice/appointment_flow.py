@@ -1,4 +1,11 @@
-"""Pipecat Flow nodes for the local appointment tool."""
+"""Pipecat Flow nodes for the conversational appointment booking pipeline.
+
+Implements a multi-turn confirmation-gated state machine (`collect` ->
+`confirmation` -> `finish`). Stashes appointment candidate parameters in flow
+state during availability checking and requires an affirmative confirmation turn
+before writing to SQLite or Google Calendar. Next module to read:
+`appointments.py` for slot suggestion, conflict detection, and calendar sync.
+"""
 
 from datetime import datetime
 from typing import TYPE_CHECKING, Any

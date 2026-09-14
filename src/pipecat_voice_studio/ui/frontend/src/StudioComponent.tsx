@@ -1,3 +1,17 @@
+/**
+ * Front-end React views for pipeline graph visualization and browser WebRTC audio.
+ *
+ * Dispatches between:
+ * 1. `GraphView`: Interactive node-and-edge pipeline visualizer using `@xyflow/react`
+ * 2. `VoiceView`: Real-time WebRTC audio client using `@pipecat-ai/client-react` and
+ *    `SmallWebRTCTransport`, capturing user speech and rendering live transcripts
+ *    and latency metrics.
+ *
+ * Audio frames are handled strictly in the browser WebRTC runtime and are never
+ * persisted to disk or sent to the SQLite database.
+ * Next module to read: `ui/components.py` for Streamlit Python integration.
+ */
+
 import { PipecatClient, type PipecatMetricsData, type TransportState } from "@pipecat-ai/client-js";
 import {
   PipecatClientAudio,
@@ -15,6 +29,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
+
 
 type GraphData = {
   view: "graph";

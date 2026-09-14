@@ -1,4 +1,10 @@
-"""Consent-gated HubSpot CRM adapter."""
+"""Consent-gated HubSpot CRM adapter.
+
+Creates or updates HubSpot contacts, sales deals, and call engagement notes.
+Strictly requires explicit caller consent before writing any contact record or
+transmitting customer data to the HubSpot API. Next module to read:
+`voice/business_flow.py` for how sales specialist nodes call this adapter.
+"""
 
 from __future__ import annotations
 

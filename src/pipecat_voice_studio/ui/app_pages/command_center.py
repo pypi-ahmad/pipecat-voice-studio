@@ -1,4 +1,9 @@
-"""Command center page."""
+"""Command center page for environment, dependency, and GPU diagnostics.
+
+Displays real-time package versions for Python, Pipecat, Streamlit, and PyTorch,
+as well as CUDA accelerator availability and GPU device model names.
+Next module to read: `diagnostics.py` for diagnostic inspection logic.
+"""
 
 import streamlit as st
 

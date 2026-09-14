@@ -1,4 +1,12 @@
-"""Consent-first encrypted healthcare intake Flow."""
+"""Consent-first encrypted healthcare intake Flow.
+
+Implements a non-diagnostic medical intake state machine (`consent` ->
+`structured_intake` -> `finish`). Enforces explicit patient consent prior to
+gathering health information, encrypts structured intake payloads with AES-256-GCM
+using the session ID as authenticated data, and flags immediate emergency escalations.
+Must never attempt clinical diagnosis or persist unencrypted patient data.
+Next module to read: `security.py` for the AES-GCM cipher and key derivation.
+"""
 
 from __future__ import annotations
 
@@ -10,7 +18,7 @@ if TYPE_CHECKING:
     from pipecat_voice_studio.security import HealthcareCipher
     from pipecat_voice_studio.storage import StudioStore
 
-
+# Version identifier for the consent disclosure presented to the caller.
 POLICY_VERSION = "2026-08"
 
 

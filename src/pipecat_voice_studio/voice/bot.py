@@ -1,4 +1,12 @@
-"""Pipecat runner entry point for validated studio pipelines."""
+"""Pipecat runner entry point for validated studio pipelines.
+
+Assembles the audio processing graph, configuring either the OpenAI Realtime API
+for low-latency single-model interaction or a modular cascade pipeline (STT +
+LLM + TTS + optional Simli avatar). Attaches FlowManager state machines and the
+SemanticTimelineObserver for persistence. Must not log conversation text during
+healthcare sessions, and must not run unvalidated graphs. Next module to read:
+`voice/timeline.py` for frame event tracking and `graph.py` for compilation rules.
+"""
 
 from __future__ import annotations
 
@@ -248,6 +256,8 @@ async def run_pipeline(
             transport, settings, compiled.settings, kinds
         )
         flow_parts = (llm, aggregators)
+    # Privacy invariant: healthcare sessions suppress conversation turn logging
+    # to avoid storing protected health dialogue in the unencrypted session_events table.
     worker = PipelineWorker(
         Pipeline(processors),
         conversation_id=session_id,

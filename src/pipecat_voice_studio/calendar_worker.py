@@ -1,4 +1,11 @@
-"""Incremental Google Calendar synchronization worker."""
+"""Incremental Google Calendar synchronization worker.
+
+Runs as a background polling daemon that pulls external calendar events and
+syncs status (such as external cancellations) back into local SQLite appointment
+records. Must not crash on transient HTTP errors or raise when Google Calendar
+credentials are absent. Next module to read: `integrations/google_calendar.py`
+for the REST API client and `appointments.py` for appointment state transitions.
+"""
 
 from __future__ import annotations
 
@@ -11,6 +18,8 @@ from pipecat_voice_studio.config import get_settings
 from pipecat_voice_studio.integrations.google_calendar import GoogleCalendar
 from pipecat_voice_studio.storage import StudioStore
 
+# Google Calendar API returns HTTP 410 Gone when an incremental sync token has
+# expired or become invalid (typically after a long gap between sync passes).
 SYNC_TOKEN_GONE = 410
 
 
@@ -21,6 +30,7 @@ async def synchronize_once(calendar: GoogleCalendar, store: StudioStore) -> int:
     try:
         changes, next_token = await calendar.incremental_changes(token)
     except httpx.HTTPStatusError as error:
+        # Fallback to full sync without a token recovers transparently if the token expired.
         if error.response.status_code == SYNC_TOKEN_GONE:
             changes, next_token = await calendar.incremental_changes(None)
         else:

@@ -1,4 +1,10 @@
-"""Validated visual pipeline studio."""
+"""Validated visual pipeline studio page.
+
+Renders the interactive React Flow graph for any stored pipeline definition,
+and enables safe pipeline cloning where operators can customize system prompts
+and voice selections while server-enforced structural invariants remain locked.
+Next module to read: `graph.py` for the pipeline graph validation rules.
+"""
 
 import streamlit as st
 

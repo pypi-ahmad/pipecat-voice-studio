@@ -1,4 +1,12 @@
-"""Public callback gateway for Twilio and Vonage media WebSockets."""
+"""Public callback gateway for Twilio and Vonage media WebSockets.
+
+Accepts public internet webhook and WebSocket traffic from telephony carriers,
+validating carrier signatures, minting short-lived media tokens, and bridging
+carrier audio streams into Pipecat pipeline workers. Must not accept unsigned
+callbacks or expired media tokens, and must not store unredacted phone numbers.
+See `integrations/telephony.py` for outbound call initiation and `voice/bot.py`
+for how the audio pipeline is constructed and executed.
+"""
 
 from __future__ import annotations
 
@@ -151,6 +159,8 @@ async def twilio_media(websocket: WebSocket, token: str) -> None:
     """Run one Twilio Media Stream through its bound cascade pipeline."""
     settings = get_settings()
     try:
+        # Rejects connection with WebSocket 1008 (Policy Violation) if token is expired (>300s)
+        # or has an invalid HMAC signature.
         call_id = verify_media_token(token, _secret(settings, "twilio"))
     except ValueError:
         await websocket.close(code=1008)
@@ -158,6 +168,7 @@ async def twilio_media(websocket: WebSocket, token: str) -> None:
     store = _store(settings)
     pipeline_id = _bound_pipeline(store, "twilio")
     await websocket.accept()
+    # Twilio sends a JSON handshake packet with streamSid/callSid before streaming raw μ-law audio.
     first = json.loads(await websocket.receive_text())
     start: dict[str, Any] = first.get("start", {})
     serializer = TwilioFrameSerializer(
@@ -252,6 +263,7 @@ async def vonage_media(websocket: WebSocket, token: str) -> None:
     """Run one Vonage audio WebSocket through its bound cascade pipeline."""
     settings = get_settings()
     try:
+        # Rejects connection with WebSocket 1008 if media token expired or failed HMAC verification.
         call_id = verify_media_token(token, _secret(settings, "vonage"))
     except ValueError:
         await websocket.close(code=1008)
@@ -259,6 +271,7 @@ async def vonage_media(websocket: WebSocket, token: str) -> None:
     store = _store(settings)
     pipeline_id = _bound_pipeline(store, "vonage")
     await websocket.accept()
+    # 640 bytes = 20ms of 16kHz 16-bit mono linear PCM audio (16000 * 2 * 0.02 = 640 bytes).
     transport = FastAPIWebsocketTransport(
         websocket,
         FastAPIWebsocketParams(

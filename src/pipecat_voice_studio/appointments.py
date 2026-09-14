@@ -1,4 +1,13 @@
-"""Deterministic appointment availability and mutation policy."""
+"""Deterministic appointment availability and mutation policy.
+
+Owns local slot availability (business hours, 30-minute grid, collision
+checks) and is the only place an appointment row is written. When a
+`GoogleCalendar` is supplied, it is treated as the external source of truth
+in addition to local state; this module must not create a confirmed local
+appointment without going through the confirmation gate in `create`. See
+`voice/appointment_flow.py` for the Flow that drives this class through a
+conversation, and `storage.py` for the underlying `appointments` table.
+"""
 
 from __future__ import annotations
 
@@ -16,6 +25,8 @@ if TYPE_CHECKING:
 SLOT_MINUTES = 30
 OPEN_HOUR = 9
 CLOSE_HOUR = 17
+# weekday() >= 5 means Saturday/Sunday; business hours below are evaluated in the
+# studio's configured timezone (self.timezone), not the caller's or the server's.
 WEEKEND_START = 5
 
 
@@ -30,7 +41,12 @@ class AppointmentBook:
         self.calendar = calendar
 
     def normalize(self, starts_at: datetime) -> datetime:
-        """Require aware datetimes and normalize into the studio timezone."""
+        """Require aware datetimes and normalize into the studio timezone.
+
+        Truncating seconds/microseconds makes two datetimes for "the same slot"
+        compare and serialize identically, which the UNIQUE(starts_at, ...)
+        constraint in storage.py and the collision check below both depend on.
+        """
         if starts_at.tzinfo is None:
             raise ValueError("Appointment start must include a timezone")
         return starts_at.astimezone(self.timezone).replace(second=0, microsecond=0)
@@ -75,6 +91,10 @@ class AppointmentBook:
         flow_node: str,
     ) -> str:
         """Create only from the confirmation node after a current affirmative response."""
+        # This is the actual enforcement of "no booking without explicit confirmation":
+        # the LLM's tool call must both pass confirmed=True and be invoked from the
+        # Flow's "confirmation" node (see voice/appointment_flow.py). Either failing
+        # closes off the shortcut of confirming from an earlier node in the conversation.
         if not confirmed or flow_node != "confirmation":
             raise PermissionError("Appointment creation requires explicit confirmation")
         start = self.normalize(starts_at)
@@ -120,6 +140,9 @@ class AppointmentBook:
     ) -> str:
         """Create a confirmation-gated local record and synchronized Google event."""
         start = self.normalize(starts_at)
+        # Google event is created first, then the local row. If the local write then
+        # fails (e.g. a race lost to the UNIQUE constraint), the just-created external
+        # event is cancelled so the two stores don't end up disagreeing about the slot.
         external: dict[str, object] | None = None
         if self.calendar is not None:
             external = await self.calendar.create_event(

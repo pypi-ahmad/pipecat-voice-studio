@@ -1,4 +1,11 @@
-"""Live voice session launcher."""
+"""Live voice session launcher page.
+
+Filters stored pipelines to WebRTC-compatible configurations, probes the
+separate Pipecat bot worker HTTP readiness endpoint, and mounts the client-side
+WebRTC audio component. Audio is streamed directly in the browser and is never
+written to the local database. Next module to read: `voice/bot.py` for bot worker
+startup flags.
+"""
 
 import httpx
 import streamlit as st

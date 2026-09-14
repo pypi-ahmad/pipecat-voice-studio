@@ -1,4 +1,13 @@
-"""Pipecat Flow routing for business specialists, CRM, and human handoff."""
+"""Pipecat Flow routing for business specialists, CRM, and human handoff.
+
+Implements the multi-agent business flow: a receptionist node that routes callers
+to specialist departments (`billing`, `technical`, `sales`, `appointments`),
+handles consent-verified lead creation into HubSpot CRM, and transfers callers
+to human agents over active Twilio or Vonage telephone calls. Must not create CRM
+records without caller consent or initiate handoffs without a configured carrier
+destination. Next module to read: `integrations/telephony.py` for carrier
+bridging and `integrations/hubspot.py` for CRM lead upserting.
+"""
 
 from __future__ import annotations
 

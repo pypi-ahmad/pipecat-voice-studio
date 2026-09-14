@@ -1,4 +1,11 @@
-"""External provider setup and telephone operations."""
+"""External provider setup and telephone operations page.
+
+Displays provider configuration readiness, allows binding telephony carriers
+(Twilio, Vonage) to pipeline graphs, and provides a confirmation-gated interface
+for initiating outbound phone calls to allowlisted destinations. Redacts all phone
+numbers to their last-four digits and HMAC digests before persisting records.
+Next module to read: `integrations/telephony.py` for carrier REST clients.
+"""
 
 from __future__ import annotations
 

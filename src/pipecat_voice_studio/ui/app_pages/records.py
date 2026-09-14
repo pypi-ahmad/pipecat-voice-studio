@@ -1,4 +1,12 @@
-"""Session and appointment records."""
+"""Session, appointment, telephone, and healthcare audit records page.
+
+Presents multi-tab operator ledgers for:
+1. Conversation sessions and completed dialogue turns
+2. Scheduled appointments and external calendar sync states
+3. Carrier telephone calls (with redacted numbers) and warm transfer handoffs
+4. Healthcare consent status and escalation metadata (never exposing encrypted intake)
+Next module to read: `storage.py` for database schemas and cascading delete behaviors.
+"""
 
 import streamlit as st
 
@@ -8,6 +16,7 @@ store = studio_store()
 sessions_tab, appointments_tab, calls_tab, health_tab = st.tabs(
     ["Sessions", "Appointments", "Calls and handoffs", "Healthcare metadata"]
 )
+
 with sessions_tab:
     with store.connect() as connection:
         sessions = [

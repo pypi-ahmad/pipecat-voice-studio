@@ -1,4 +1,12 @@
-"""Semantic Pipecat frame observer; deliberately excludes raw audio."""
+"""Semantic Pipecat frame observer; deliberately excludes raw audio.
+
+Intercepts typed frames from the Pipecat pipeline (transcriptions, speech turns,
+interruption markers, tool execution milestones, and transport metrics) and
+persists them as structured JSON events in SQLite. Must never persist raw audio
+frames, and must suppress turn text when conversation persistence is disabled
+(e.g., healthcare intake). Next module to read: `storage.py` for how the
+resulting `session_events` rows are queried and ordered.
+"""
 
 from collections import deque
 from typing import TYPE_CHECKING
@@ -32,6 +40,8 @@ class SemanticTimelineObserver(BaseObserver):
         self.session_id = session_id
         self.persist_conversation = persist_conversation
         self._seen: set[int] = set()
+        # Bounded 500-item sliding window prevents duplicate frame observations
+        # while keeping memory strictly bounded during long sessions.
         self._history: deque[int] = deque(maxlen=500)
         self._assistant_text: list[str] = []
 
