@@ -1,3 +1,16 @@
+<#
+.SYNOPSIS
+Windows PowerShell launcher for Pipecat Voice Studio.
+
+.DESCRIPTION
+Orchestrates dependency synchronization (via uv), Python 3.14 / fallback 3.13
+runtime verification, Vite frontend compilation, port availability validation,
+and supervised multi-process lifecycle management.
+Must never leave orphan background processes running when the parent session
+exits (guaranteed via a PowerShell finally block).
+Next module to open: docs/RUNBOOK.md for port definitions and operational runbooks.
+#>
+
 [CmdletBinding()]
 param(
     [switch]$WithApi,
@@ -7,6 +20,7 @@ param(
     [ValidateRange(1, 65535)][int]$ApiPort = 8000,
     [ValidateRange(1, 65535)][int]$GatewayPort = 8080
 )
+
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
