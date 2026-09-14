@@ -72,32 +72,32 @@ Linux options:
 
 If running without the launcher scripts, execute each process in a separate terminal window:
 
-1. **Verify dependencies and lockfile**:
+1. Verify dependencies and lockfile:
    ```bash
    uv sync --frozen
    ```
 
-2. **Start the Pipecat audio worker**:
+2. Start the Pipecat audio worker:
    ```bash
    uv run python -m pipecat_voice_studio.voice.bot --host 127.0.0.1 --port 7860 --allowed-origins http://localhost:8501 http://127.0.0.1:8501
    ```
 
-3. **Start the telephony gateway**:
+3. Start the telephony gateway:
    ```bash
    uv run uvicorn pipecat_voice_studio.telephony_gateway:app --host 127.0.0.1 --port 8080 --proxy-headers --forwarded-allow-ips 127.0.0.1
    ```
 
-4. **Start the calendar worker (optional)**:
+4. Start the calendar worker (optional):
    ```bash
    uv run python -m pipecat_voice_studio.calendar_worker
    ```
 
-5. **Start the management API (optional)**:
+5. Start the management API (optional):
    ```bash
    uv run uvicorn pipecat_voice_studio.api.app:app --host 127.0.0.1 --port 8000
    ```
 
-6. **Start Streamlit**:
+6. Start Streamlit:
    ```bash
    uv run streamlit run src/pipecat_voice_studio/ui/streamlit_app.py --server.address 127.0.0.1 --server.port 8501
    ```
@@ -313,7 +313,7 @@ PermissionError: Appointment creation requires explicit confirmation
 ValueError: The requested slot is unavailable
 ValueError: The requested slot was just taken
 ```
-**Cause**: The requested time falls outside business hours (09:00–17:00 weekdays), is not on a 30-minute boundary, or another confirmed appointment already exists at that timestamp.  
+**Cause**: The requested time falls outside business hours (09:00 to 17:00 weekdays), is not on a 30-minute boundary, or another confirmed appointment already exists at that timestamp.  
 **Resolution**: Use the appointment flow's `suggest` function to identify next available half-hour slots.
 
 ### 12. Outbound telephone destination not allowlisted

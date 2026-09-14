@@ -15,8 +15,8 @@ the telephony callback gateway when telephone calls are enabled.
 3. Restart the launcher after changing configuration.
 4. Open **Integrations** and confirm the service reports ready.
 
-The launcher starts the browser worker, callback gateway on port `8080`, Streamlit, and—when Google
-is configured—the Calendar synchronization worker. Use `-GatewayPort` or `--gateway-port` to change
+The launcher starts the browser worker, callback gateway on port `8080`, Streamlit, and, when Google
+is configured, the Calendar synchronization worker. Use `-GatewayPort` or `--gateway-port` to change
 the local gateway port.
 
 ## Twilio Voice
@@ -144,12 +144,12 @@ not establish legal or regulatory compliance.
 
 ## Troubleshooting checklist
 
-- **Provider reports not ready:** compare `.env` with the missing-variable list on Integrations and
+- Provider reports not ready: compare `.env` with the missing-variable list on Integrations and
   restart all launcher-managed processes.
-- **Telephone HTTP 403:** verify the exact HTTPS origin, callback path, and signing secret.
-- **Call connects without media:** confirm the tunnel supports WebSockets and forwards to the
+- Telephone HTTP 403: verify the exact HTTPS origin, callback path, and signing secret.
+- Call connects without media: confirm the tunnel supports WebSockets and forwards to the
   gateway port rather than the worker port.
-- **Outbound call denied:** use canonical E.164 and an exact `PVS_OUTBOUND_ALLOWLIST` match.
-- **Google HTTP 403:** confirm Calendar API access and calendar sharing for the service account.
-- **Avatar fails immediately:** verify both Simli variables and use a browser cascade graph.
-- **Healthcare refuses startup:** verify enablement, decoded key length, and `openai` approval.
+- Outbound call denied: use canonical E.164 and an exact `PVS_OUTBOUND_ALLOWLIST` match.
+- Google HTTP 403: confirm Calendar API access and calendar sharing for the service account.
+- Avatar fails immediately: verify both Simli variables and use a browser cascade graph.
+- Healthcare refuses startup: verify enablement, decoded key length, and `openai` approval.

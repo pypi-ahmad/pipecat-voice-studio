@@ -1,4 +1,4 @@
-# How to Use Pipecat Voice Studio
+# How to use Pipecat Voice Studio
 
 This guide is for developers and local operators running Pipecat Voice Studio on native Windows or native x86-64 Linux.
 
@@ -114,7 +114,7 @@ Available settings:
 | `PVS_CASCADE_TTS_MODEL` | `gpt-4o-mini-tts` | Cascaded text-to-speech model |
 | `PVS_REALTIME_VOICE` | `marin` | Default realtime voice |
 | `PVS_PUBLIC_BASE_URL` | Empty | Public HTTPS tunnel origin forwarding provider callbacks to the local gateway |
-| `PVS_CALENDAR_SYNC_SECONDS` | `60` | Calendar polling interval; accepted range is 15–3600 seconds |
+| `PVS_CALENDAR_SYNC_SECONDS` | `60` | Calendar polling interval; accepted range is 15 to 3600 seconds |
 | `PVS_OUTBOUND_ALLOWLIST` | Empty | Comma-separated exact E.164 numbers authorized for outbound calls |
 | `TWILIO_ACCOUNT_SID` | Empty | Twilio account identity |
 | `TWILIO_AUTH_TOKEN` | Empty | Twilio REST credential, webhook secret, and media-token key |
@@ -472,7 +472,7 @@ fails; the provider runbook includes a safe inspection command.
 
 The **Business phone agent** starts in reception and routes to billing, technical support, sales, or
 appointments. Sales can write a HubSpot contact, optional deal, and note only after explicit CRM
-consent. The database stores provider IDs, score, result, and redacted telephone suffix—not the full
+consent. The database stores provider IDs, score, result, and redacted telephone suffix, not the full
 lead payload.
 
 ### Simli avatar

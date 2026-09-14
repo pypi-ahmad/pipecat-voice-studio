@@ -6,15 +6,15 @@ This document describes the runtime architecture, request and data flows, data s
 
 Pipecat Voice Studio consists of five communicating subsystems operating on a single host:
 
-1. **User interface control plane**: Multi-page [Streamlit](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/streamlit_app.py) application for configuring pipelines, managing sessions, reviewing records, running evaluations, and monitoring runtime health.
-2. **Interactive client component**: Custom React 19 component ([StudioComponent.tsx](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/src/StudioComponent.tsx)) embedded in Streamlit via Streamlit Components v2, providing pipeline graph visualization with `@xyflow/react` and direct browser audio/video transport using `@pipecat-ai/small-webrtc-transport`.
-3. **Pipecat audio worker**: Dedicated Python worker process ([bot.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/voice/bot.py)) executing Pipecat pipelines over SmallWebRTC, WebSocket, or evaluation transports.
-4. **Telephony callback and media gateway**: FastAPI ASGI application ([telephony_gateway.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/telephony_gateway.py)) authenticating incoming webhooks from Twilio and Vonage and streaming bidirectional audio over WebSockets.
-5. **Persistent storage layer**: Local SQLite database managed by [StudioStore](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/storage.py#L29-L277) operating in Write-Ahead Logging (WAL) mode with foreign key enforcement and 5000ms busy timeout handling.
+1. User interface control plane: Multi-page [Streamlit](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/streamlit_app.py) application for configuring pipelines, managing sessions, reviewing records, running evaluations, and monitoring runtime health.
+2. Interactive client component: Custom React 19 component ([StudioComponent.tsx](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/src/StudioComponent.tsx)) embedded in Streamlit via Streamlit Components v2, providing pipeline graph visualization with `@xyflow/react` and direct browser audio/video transport using `@pipecat-ai/small-webrtc-transport`.
+3. Pipecat audio worker: Dedicated Python worker process ([bot.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/voice/bot.py)) executing Pipecat pipelines over SmallWebRTC, WebSocket, or evaluation transports.
+4. Telephony callback and media gateway: FastAPI ASGI application ([telephony_gateway.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/telephony_gateway.py)) authenticating incoming webhooks from Twilio and Vonage and streaming bidirectional audio over WebSockets.
+5. Persistent storage layer: Local SQLite database managed by [StudioStore](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/storage.py#L29-L277) operating in Write-Ahead Logging (WAL) mode with foreign key enforcement and 5000ms busy timeout handling.
 
 Optional background processes include:
-- **Calendar synchronization worker**: Periodic polling process ([calendar_worker.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/calendar_worker.py)) syncing Google Calendar events into local appointment records.
-- **Management API**: FastAPI application ([api/app.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/api/app.py)) exposing health status and pipeline compilation over HTTP.
+- Calendar synchronization worker: Periodic polling process ([calendar_worker.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/calendar_worker.py)) syncing Google Calendar events into local appointment records.
+- Management API: FastAPI application ([api/app.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/api/app.py)) exposing health status and pipeline compilation over HTTP.
 
 ## Request and data flows
 
@@ -194,22 +194,22 @@ Persistent state is stored across 14 tables in SQLite:
 
 Pipecat Voice Studio communicates with the following external APIs:
 
-1. **OpenAI API**:
-   - **Realtime API** (`wss://api.openai.com/v1/realtime`): Low-latency bidirectional WebSocket connection used for OpenAI Realtime voice sessions (`PVS_REALTIME_MODEL`, default `gpt-realtime-2.1-mini`).
-   - **Responses API**: Large language model generation for cascaded pipelines (`PVS_CASCADE_LLM_MODEL`, default `gpt-5.6-luna`).
-   - **Whisper API**: Streaming speech-to-text transcription (`PVS_CASCADE_STT_MODEL`, default `gpt-realtime-whisper`).
-   - **TTS API**: Text-to-speech audio synthesis (`PVS_CASCADE_TTS_MODEL`, default `gpt-4o-mini-tts`).
-2. **Twilio Programmable Voice**:
+1. OpenAI API:
+   - Realtime API (`wss://api.openai.com/v1/realtime`): Low-latency bidirectional WebSocket connection used for OpenAI Realtime voice sessions (`PVS_REALTIME_MODEL`, default `gpt-realtime-2.1-mini`).
+   - Responses API: Large language model generation for cascaded pipelines (`PVS_CASCADE_LLM_MODEL`, default `gpt-5.6-luna`).
+   - Whisper API: Streaming speech-to-text transcription (`PVS_CASCADE_STT_MODEL`, default `gpt-realtime-whisper`).
+   - TTS API: Text-to-speech audio synthesis (`PVS_CASCADE_TTS_MODEL`, default `gpt-4o-mini-tts`).
+2. Twilio Programmable Voice:
    - Webhook ingress: Signed HTTP POST callbacks received at `/telephony/twilio/answer` and `/telephony/twilio/status`.
    - Media streaming: Twilio Media Streams connected to `/telephony/twilio/media/{token}`.
    - REST API: Outbound call initiation and handoff bridging via `https://api.twilio.com/2010-04-01/Accounts/{AccountSid}/Calls.json`.
-3. **Vonage Voice API**:
+3. Vonage Voice API:
    - Webhook ingress: Signed HTTP callbacks received at `/telephony/vonage/answer` and `/telephony/vonage/events`.
    - Media streaming: WebSocket audio connected to `/telephony/vonage/media/{token}`.
    - REST API: Outbound call initiation and transfer via `https://api.nexmo.com/v1/calls`.
-4. **Google Calendar API**:
+4. Google Calendar API:
    - REST API v3 (`https://www.googleapis.com/calendar/v3/calendars/{calendarId}/events`): Authenticated via Google Service Account OAuth2 credentials (`https://www.googleapis.com/auth/calendar` scope). Performs free/busy interval checks, event creation, event cancellation, and incremental change polling.
-5. **HubSpot CRM API**:
+5. HubSpot CRM API:
    - REST API (`https://api.hubapi.com`): Authenticated using a Private App Bearer token. Used for contact batch upsert (`/crm/v3/objects/contacts/batch/upsert`), deal creation (`/crm/v3/objects/deals`), and note attachment (`/crm/v3/objects/notes`).
-6. **Simli Video Avatar Service**:
+6. Simli Video Avatar Service:
    - Streaming API: Video generation driven by Pipecat's `SimliVideoService` using `SIMLI_API_KEY` and `SIMLI_FACE_ID` to render an animated visual avatar in the browser client.

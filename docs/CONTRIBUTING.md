@@ -6,13 +6,13 @@ This document outlines the development workflow, quality checks, continuous inte
 
 Development requires the following toolchains and environments defined in [pyproject.toml](file:///D:/AI/Github/pipecat-voice-studio/pyproject.toml) and [.github/workflows/quality.yml](file:///D:/AI/Github/pipecat-voice-studio/.github/workflows/quality.yml):
 
-- **Supported operating systems**:
+- Supported operating systems:
   - Native 64-bit Windows AMD64 (`sys_platform == 'win32' and platform_machine == 'AMD64'`).
   - Native 64-bit Linux x86_64 (`sys_platform == 'linux' and platform_machine == 'x86_64'`) with glibc 2.34 or newer.
   - macOS, Apple Silicon, and ARM64 Linux are not supported due to PyTorch CUDA wheel constraints.
-- **Python**: `>=3.13,<3.15` (CI and launchers use `3.14.7` with fallback to `3.13.13`).
-- **Package manager**: [uv](https://docs.astral.sh/uv/).
-- **Node.js**: Node.js 24 and npm (for compiling the React frontend component).
+- Python: `>=3.13,<3.15` (CI and launchers use `3.14.7` with fallback to `3.13.13`).
+- Package manager: [uv](https://docs.astral.sh/uv/).
+- Node.js: Node.js 24 and npm (for compiling the React frontend component).
 
 ## Local development setup
 
@@ -84,8 +84,6 @@ Run the test suite using pytest:
 uv run pytest
 ```
 As configured in `[tool.pytest.ini_options]`, pytest enforces a minimum test coverage threshold of 80% (`--cov-fail-under=80`).
-
-*Note: In the local working tree, test files are tracked in git history under `tests/`, but test files are currently unstaged deletions. The CI workflow runs on clean checkouts with `tests/` present.*
 
 ### 5. Frontend typecheck and build
 
