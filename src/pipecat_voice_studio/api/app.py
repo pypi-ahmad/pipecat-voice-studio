@@ -1,4 +1,10 @@
-"""FastAPI application."""
+"""FastAPI application for health readiness and pipeline configuration.
+
+Exposes system diagnostics (`/health`) and validated pipeline graph CRUD
+endpoints (`/pipelines`). Strictly enforces pipeline graph compilation and
+topology validation before persisting records to the database. Next module to
+read: `graph.py` for the pipeline graph data model and compilation logic.
+"""
 
 from typing import Annotated
 

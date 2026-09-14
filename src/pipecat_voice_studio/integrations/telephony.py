@@ -1,4 +1,10 @@
-"""Twilio and Vonage Voice REST operations for calls and handoffs."""
+"""Twilio and Vonage Voice REST operations for calls and handoffs.
+
+Implements outbound call initiation and call transfer (warm handoff) for Twilio
+Programmable Voice and Vonage Voice APIs. Strictly enforces the outbound E.164
+number allowlist to prevent accidental or malicious dialing. Next module to read:
+`telephony_gateway.py` for how incoming carrier webhook callbacks are routed.
+"""
 
 from __future__ import annotations
 
@@ -25,6 +31,7 @@ class DestinationNotAllowedError(PermissionError):
 
 def require_allowed_destination(settings: Settings, destination: str) -> str:
     """Validate E.164 and require an exact configured outbound match."""
+
     number = require_e164(destination)
     if number not in settings.outbound_allowlist:
         raise DestinationNotAllowedError

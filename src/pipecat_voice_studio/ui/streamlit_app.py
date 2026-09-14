@@ -1,10 +1,17 @@
-"""Streamlit application entry point."""
+"""Streamlit application entry point and multi-page router.
+
+Configures the top-level page layout, mounts navigation across the 7 operator
+dashboards (Command center, Agent studio, Live session, Integrations, Records,
+Evaluations, Analytics), and renders contextual operator guides for each page.
+Next module to read: individual page files in `ui/app_pages/`.
+"""
 
 from pathlib import Path
 
 import streamlit as st
 
 st.set_page_config(page_title="Pipecat Voice Studio", page_icon=":material/graphic_eq:")
+
 
 PAGE_GUIDES = {
     "Command center": """

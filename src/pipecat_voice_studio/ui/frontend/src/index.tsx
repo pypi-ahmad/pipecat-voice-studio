@@ -1,3 +1,12 @@
+/**
+ * Streamlit Components v2 React entry point.
+ *
+ * Mounts the custom studio React application inside Streamlit's iframe host.
+ * Uses a WeakMap to memoize React roots across Streamlit script reruns without
+ * leaking memory or remounting DOM trees unnecessarily.
+ * Next module to read: `StudioComponent.tsx` for the view dispatcher.
+ */
+
 import type {
   FrontendRenderer,
   FrontendRendererArgs,
@@ -7,9 +16,12 @@ import { createRoot, type Root } from "react-dom/client";
 import StudioComponent, { type StudioData } from "./StudioComponent";
 import "./style.css";
 
+// WeakMap caches React 18 createRoot instances keyed by the parent DOM container
+// so Streamlit iframe updates reuse existing component instances without flashing.
 const roots = new WeakMap<FrontendRendererArgs["parentElement"], Root>();
 
 const StudioRoot: FrontendRenderer<Record<string, never>, StudioData> = ({
+
   data,
   parentElement,
 }) => {

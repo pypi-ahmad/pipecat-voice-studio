@@ -1,4 +1,9 @@
-"""Operational analytics derived from semantic events."""
+"""Operational analytics page derived from semantic timeline events.
+
+Aggregates overall session totals, session completion ratios, confirmed appointment
+counts, and breakdown of tool lifecycle events (`tool.started`, `tool.completed`,
+`tool.cancelled`). Next module to read: `storage.py` for event queries.
+"""
 
 import streamlit as st
 

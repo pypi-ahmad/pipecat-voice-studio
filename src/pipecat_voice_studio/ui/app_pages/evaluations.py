@@ -1,4 +1,10 @@
-"""Pipecat behavioral evaluation runner."""
+"""Pipecat behavioral evaluation runner page.
+
+Provides interactive controls to run allowlisted dialog and speech scenarios
+against isolated disposable worker subprocesses and ephemeral SQLite databases.
+Displays detailed pass/fail assertions, duration metrics, and recent run history.
+Next module to read: `evaluations.py` for worker lifecycle management.
+"""
 
 import streamlit as st
 

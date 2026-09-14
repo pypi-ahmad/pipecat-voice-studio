@@ -1,4 +1,12 @@
-"""Streamlit Components v2 wrappers."""
+"""Streamlit Components v2 wrappers for the React visual graph and WebRTC client.
+
+Bridges Python data dictionaries into the custom React frontend bundle
+(`frontend/src/StudioComponent.tsx`), hosting either the interactive React Flow
+pipeline visualizer or the browser-side SmallWebRTC microphone/audio interface.
+Audio streaming is executed client-side in the browser, not inside the Streamlit
+process. Next module to read: `ui/frontend/src/StudioComponent.tsx` for the React
+implementation.
+"""
 
 from typing import Any
 

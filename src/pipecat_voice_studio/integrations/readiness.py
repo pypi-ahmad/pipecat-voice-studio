@@ -1,4 +1,11 @@
-"""Operator-facing integration readiness without exposing credentials."""
+"""Operator-facing integration readiness without exposing credentials.
+
+Evaluates configuration readiness for third-party integrations (Twilio, Vonage,
+Google Calendar, HubSpot, Simli, Healthcare) and returns status tuples with
+guidance on missing environment variable names. Must never inspect secret values
+or print credential fragments. Next module to read: `ui/app_pages/integrations.py`
+for how readiness is displayed in the Streamlit operator dashboard.
+"""
 
 from __future__ import annotations
 
@@ -9,7 +16,11 @@ if TYPE_CHECKING:
 
 
 def integration_readiness(settings: Settings) -> dict[str, tuple[bool, str]]:
-    """Return configuration readiness and a concise missing-setting hint."""
+    """Return configuration readiness and a concise missing-setting hint.
+
+    Only checks existence (`is not None`), never accessing SecretStr values.
+    """
+
     public = settings.pvs_public_base_url is not None
     return {
         "Twilio": (

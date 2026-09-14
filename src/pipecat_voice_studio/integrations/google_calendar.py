@@ -1,4 +1,10 @@
-"""Google Calendar adapter using service-account OAuth and the REST API."""
+"""Google Calendar adapter using service-account OAuth and the REST API.
+
+Provides slot availability checking, confirmed event creation, event cancellation,
+and incremental change pagination using Google OAuth service account credentials.
+Next module to read: `calendar_worker.py` for the background sync daemon or
+`appointments.py` for slot coordination.
+"""
 
 from __future__ import annotations
 
@@ -26,6 +32,8 @@ class GoogleCalendar:
         self._calendar_id = calendar_id
 
     async def _headers(self) -> dict[str, str]:
+        # Refreshes the OAuth access token in a worker thread because Google Auth
+        # transport requests perform blocking I/O.
         if not self._credentials.valid:
             await asyncio.to_thread(self._credentials.refresh, Request())
         return {"Authorization": f"Bearer {self._credentials.token}"}
