@@ -1,335 +1,263 @@
-<div align="center">
-
 # Pipecat Voice Studio
 
-Build, run, inspect, and evaluate real-time voice agents from a local Streamlit workspace.
+Pipecat Voice Studio is a local application for building, running, inspecting, and evaluating real-time voice and multimodal pipelines using the Pipecat framework. It provides a Streamlit control interface, a React browser audio client using SmallWebRTC, a standalone Pipecat audio worker, a FastAPI telephony callback gateway for Twilio and Vonage, an optional management API, and a local SQLite database for session and operational records.
 
-[![Quality](https://github.com/pypi-ahmad/pipecat-voice-studio/actions/workflows/quality.yml/badge.svg)](https://github.com/pypi-ahmad/pipecat-voice-studio/actions/workflows/quality.yml)
-[![Python](https://img.shields.io/badge/Python-3.13%20%7C%203.14-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Pipecat](https://img.shields.io/badge/Pipecat-1.7.0-5C4EE5)](https://github.com/pipecat-ai/pipecat)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.62-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+## Requirements
 
-[GitHub repository](https://github.com/pypi-ahmad/pipecat-voice-studio) · [How to use](docs/HOW_TO_USE.md) · [Technical guide](docs/TECHNICAL.md) · [Documentation index](#documentation)
+The required runtime versions and environment constraints are defined in [pyproject.toml](file:///D:/AI/Github/pipecat-voice-studio/pyproject.toml) and [package.json](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/package.json):
 
-</div>
+- **Python**: `>=3.13,<3.15`. The launchers target Python `3.14.7` by default and fall back to `3.13.13` if installation is required.
+- **Operating system**:
+  - Native 64-bit Windows AMD64 (`sys_platform == 'win32' and platform_machine == 'AMD64'`).
+  - Native 64-bit Linux x86_64 (`sys_platform == 'linux' and platform_machine == 'x86_64'`) with GNU glibc 2.34 or newer.
+  - macOS, Apple Silicon, ARM64 architectures, and musl-based Linux distributions are not supported due to platform-specific wheel builds (`torch==2.13.0+cu132`).
+- **Package and environment manager**: [uv](https://docs.astral.sh/uv/) (installed automatically by launchers if absent on PATH).
+- **Node.js and npm**: Node.js 24 (or modern LTS) and npm are required only when rebuilding the React frontend component. Pre-built frontend bundles are committed under [build/](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/ui/frontend/build).
+- **Hardware acceleration**: CUDA 13.2 GPU acceleration is optional. CPU mode is supported when no compatible GPU is detected.
+- **External credentials**: An OpenAI API key (`OPENAI_API_KEY`) is required for live voice sessions, speech transcription, language model generation, text-to-speech, and automated evaluations.
 
-Pipecat Voice Studio is a local-first development and operations console for building voice and multimodal agents with [Pipecat](https://github.com/pipecat-ai/pipecat). It combines a Streamlit control plane, a React browser voice client, a separate Pipecat worker, a management API, and SQLite-backed session records in one repository.
+## Setup and run commands
 
-The current implementation supports browser and telephone voice sessions, low-latency OpenAI Realtime and cascaded pipelines, business routing, appointments, CRM capture, avatar video, privacy-focused healthcare intake, semantic timelines, and isolated behavioral evaluations.
+### Launchers
 
-> [!IMPORTANT]
-> The project currently targets local development and trusted networks. The management API has no authentication, and the included SmallWebRTC and SQLite configuration is not an internet-scale production deployment.
+The repository includes startup scripts that check system prerequisites, configure Python via `uv`, synchronize locked dependencies, build missing frontend assets, verify port availability, start background processes, and open Streamlit.
 
-## Index
+On Windows (Command Prompt or PowerShell):
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [Built-in agents](#built-in-agents)
-- [Technology stack](#technology-stack)
-- [Getting started](#getting-started)
-- [Optional provider setup](#optional-provider-setup)
-- [Using the studio](#using-the-studio)
-- [Management API](#management-api)
-- [Development and testing](#development-and-testing)
-- [Project structure](#project-structure)
-- [Documentation](#documentation)
-- [Project scope](#project-scope)
-- [References](#references)
-- [License](#license)
-
-## Features
-
-- **Visual agent studio** — inspect seeded pipeline graphs and clone them with a different name, prompt, or voice.
-- **Browser voice sessions** — connect a microphone through Pipecat SmallWebRTC and receive streamed responses.
-- **Two live pipeline modes** — combined OpenAI Realtime or a cascaded STT, turn detection, LLM, Flow, and TTS pipeline.
-- **Appointment agent** — collect details, check local availability, require explicit confirmation, and create 30-minute bookings.
-- **Safe pipeline contracts** — Pydantic schemas allow only audited node kinds and configuration fields; executable paths must be connected, acyclic chains.
-- **Semantic timelines** — retain final turns, interruptions, Flow transitions, tool lifecycle events, metrics, and terminal state without storing raw audio.
-- **Records and analytics** — review final conversation turns, appointments, evaluation history, and aggregate operational counts.
-- **Behavioral evaluations** — run allowlisted scenarios in an isolated worker and temporary database, including interruption and synthetic-audio paths.
-- **Management API** — query health and create or inspect validated pipeline definitions through FastAPI.
-- **Telephone agents** — receive and place allowlisted Twilio or Vonage calls through native Pipecat WebSocket serializers, with signed callbacks and redacted records.
-- **Connected operations** — synchronize confirmed bookings with Google Calendar, consent-gated leads with HubSpot, and transfer telephone callers to configured humans.
-- **Specialized experiences** — route among business specialists, render Simli avatar video, and run consent-first encrypted healthcare intake without transcript retention.
-- **Windows and Linux CI** — validate the lockfile, launchers, linting, types, tests, frontend, and Python package on both platforms.
-
-## Architecture
-
-```mermaid
-flowchart LR
-    Browser[React voice client] -->|SmallWebRTC| Worker[Pipecat worker]
-    Phone[Twilio or Vonage] -->|signed callback + WebSocket| Gateway[Telephony gateway]
-    Gateway --> Worker
-    Streamlit[Streamlit studio] --> Store[(SQLite)]
-    API[FastAPI management API] --> Store
-    Worker --> Graph[Validated pipeline graph]
-    Graph --> Models[Realtime or STT → LLM → TTS]
-    Models --> Tools[Pipecat Flow tools]
-    Worker --> Timeline[Semantic timeline observer]
-    Timeline --> Store
-    Evaluations[Evaluation runner] -->|isolated subprocess| Worker
+```cmd
+launch.cmd
 ```
 
-The Streamlit process is the operator interface. Browser media connects directly to the separate Pipecat worker; provider credentials remain server-side. The worker reloads and compiles the selected graph, constructs the appropriate Pipecat pipeline, and records selected semantic events through the shared persistence layer.
-
-Three pipeline modes are implemented:
-
-| Mode | Processing path | Use |
-|---|---|---|
-| `realtime` | Browser → context → OpenAI Realtime → browser | Low-latency general conversation |
-| `cascade` | Browser or phone → STT → turn detection → context → LLM → optional Flow/avatar → TTS → output | Appointment, business, healthcare, or avatar conversation |
-| `eval` | EvalTransport → cascaded pipeline | Behavioral regression evaluation |
-
-See the [technical guide](docs/TECHNICAL.md) and [architecture document](docs/codebase/ARCHITECTURE.md) for implementation details and data flows.
-
-## Built-in agents
-
-The studio seeds seven validated pipelines and restores any missing seed on startup:
-
-| Pipeline | Transport | Purpose |
-|---|---|---|
-| Realtime assistant | Browser | Low-latency general voice conversation |
-| Cascaded appointment assistant | Browser | Local availability checks and confirmed bookings |
-| Appointment evaluation | Evaluation transport | Isolated behavioral regression scenarios |
-| Business phone agent | Twilio or Vonage | Reception, billing, technical support, lead capture, and human handoff |
-| Google Calendar appointment assistant | Browser | Availability and bookings synchronized with Google Calendar |
-| Simli avatar assistant | Browser | Cascaded voice conversation with streamed avatar video |
-| Healthcare intake assistant | Browser | Consent-first encrypted structured intake with transcript suppression |
-
-## Technology stack
-
-| Area | Technology |
-|---|---|
-| Voice orchestration | Pipecat 1.7.0, Pipecat Flows, Pipecat Evals |
-| Application UI | Streamlit 1.62.0 |
-| Browser component | React 19, TypeScript 5.9, Vite 8, Pipecat client SDK |
-| Management API | FastAPI and Uvicorn |
-| External providers | Twilio, Vonage, Google Calendar, HubSpot, and Simli |
-| Security primitives | PyJWT, google-auth, and cryptography/AES-GCM |
-| Validation/configuration | Pydantic and Pydantic Settings |
-| Persistence | SQLite with WAL and foreign-key enforcement |
-| Python environment | Python 3.13–3.14 and uv |
-| ML runtime | PyTorch and torchvision CUDA 13.2 wheels |
-| Quality | Ruff, ty, pytest, pytest-cov, GitHub Actions |
-
-## Getting started
-
-### Prerequisites
-
-- Native 64-bit Windows 11, or native x86-64 Linux with glibc 2.34+ (Ubuntu 22.04+)
-- PowerShell on Windows; Bash plus `curl` or `wget` on Linux
-- Node.js and npm only when rebuilding the React component
-- An OpenAI API key for live voice sessions and model-backed evaluations
-- A browser with microphone permission
-- A CUDA 13.2-compatible NVIDIA environment for GPU acceleration; CPU mode is supported
-
-The launchers install `uv` when needed, reuse an installed Python 3.14.7 or install it through `uv`, and fall back to Python 3.13.13 if required. Docker and WSL are not required or used.
-
-### Clone and launch
-
-On Windows, double-click `launch.cmd`. You can also launch from PowerShell:
+Or directly via PowerShell:
 
 ```powershell
-git clone https://github.com/pypi-ahmad/pipecat-voice-studio.git
-Set-Location pipecat-voice-studio
-.\launch.cmd
+.\launch.ps1
 ```
+
+PowerShell options:
+- `.\launch.ps1 -WithApi`: Also start the FastAPI management API on port 8000.
+- `.\launch.ps1 -SetupOnly`: Install and validate dependencies and exit without starting services.
+- `.\launch.ps1 -WorkerPort 7860 -StreamlitPort 8501 -GatewayPort 8080 -ApiPort 8000`: Override default service ports.
 
 On Linux:
 
 ```bash
-git clone https://github.com/pypi-ahmad/pipecat-voice-studio.git
-cd pipecat-voice-studio
+chmod +x launch.sh
 ./launch.sh
 ```
 
-Each launcher creates `.venv` and `.env` in the repository root, synchronizes the locked dependencies,
-starts the Pipecat worker and telephony gateway, optionally starts Calendar sync and the management
-API, then runs Streamlit at [http://127.0.0.1:8501](http://127.0.0.1:8501). Configure
-`OPENAI_API_KEY` before starting a live voice session.
+Linux options:
+- `./launch.sh --with-api`: Also start the FastAPI management API on port 8000.
+- `./launch.sh --setup-only`: Install and validate dependencies and exit without starting services.
+- `./launch.sh --worker-port 7860 --streamlit-port 8501 --gateway-port 8080 --api-port 8000`: Override default service ports.
 
-Use `-WithApi` on Windows or `--with-api` on Linux to also start FastAPI. Use `-SetupOnly` or `--setup-only` to prepare the project without starting services.
+### Manual process execution
 
-> [!NOTE]
-> The Linux evaluation dependency requires glibc 2.34 or newer. ARM64 and musl-based distributions are not currently supported.
+If running services individually without launcher supervision:
 
-### Optional provider setup
+1. Synchronize Python dependencies:
+   ```bash
+   uv sync --frozen
+   ```
 
-Copy values into the root `.env` file, or expose them as environment variables before launching. The **Integrations** page reports whether each provider is ready without displaying secrets.
+2. Build frontend assets (only required if modifying the React component):
+   ```bash
+   cd src/pipecat_voice_studio/ui/frontend
+   npm ci
+   npm run build
+   cd ../../../..
+   ```
 
-| Capability | Required configuration |
-|---|---|
-| Twilio | `PVS_PUBLIC_BASE_URL`, `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_FROM_NUMBER` |
-| Vonage | `PVS_PUBLIC_BASE_URL`, `VONAGE_APPLICATION_ID`, `VONAGE_API_KEY`, `VONAGE_PRIVATE_KEY`, `VONAGE_SIGNATURE_SECRET`, and `VONAGE_FROM_NUMBER` |
-| Outbound calls | An exact E.164 destination in `PVS_OUTBOUND_ALLOWLIST`; no wildcard matching is supported |
-| Human handoff | `TWILIO_HANDOFF_DESTINATION` or `VONAGE_HANDOFF_DESTINATION` |
-| Google Calendar | `GOOGLE_SERVICE_ACCOUNT_JSON` and `GOOGLE_CALENDAR_ID` |
-| HubSpot CRM | `HUBSPOT_PRIVATE_APP_TOKEN`; the agent records a lead only after explicit consent |
-| Simli avatar | `SIMLI_API_KEY` and `SIMLI_FACE_ID` |
-| Healthcare intake | `PVS_HEALTHCARE_ENABLED=true`, a URL-safe base64 32-byte `PVS_HEALTHCARE_DATA_KEY`, and an approved model service in `PVS_HEALTHCARE_APPROVED_SERVICES` |
+3. Start the Pipecat audio worker:
+   ```bash
+   uv run python -m pipecat_voice_studio.voice.bot --host 127.0.0.1 --port 7860 --allowed-origins http://localhost:8501 http://127.0.0.1:8501
+   ```
 
-Twilio and Vonage require a public HTTPS origin that forwards to the local callback gateway on port `8080`. Callback signatures are verified before calls are accepted. Follow the [provider runbook](docs/PROVIDERS.md) for callback URLs, account-side configuration, key generation, synchronization, and troubleshooting.
+4. Start the telephony gateway (required for Twilio or Vonage webhooks):
+   ```bash
+   uv run uvicorn pipecat_voice_studio.telephony_gateway:app --host 127.0.0.1 --port 8080 --proxy-headers --forwarded-allow-ips 127.0.0.1
+   ```
 
-### Manual startup
+5. Start the Google Calendar sync worker (optional, when Google credentials are configured):
+   ```bash
+   uv run python -m pipecat_voice_studio.calendar_worker
+   ```
 
-If the environment is already synchronized, start the worker manually:
+6. Start the management API (optional):
+   ```bash
+   uv run uvicorn pipecat_voice_studio.api.app:app --host 127.0.0.1 --port 8000
+   ```
 
-```powershell
-uv run python -m pipecat_voice_studio.voice.bot `
-  --host 127.0.0.1 `
-  --port 7860 `
-  --allowed-origins http://localhost:8501 http://127.0.0.1:8501
-```
+7. Start the Streamlit user interface:
+   ```bash
+   uv run streamlit run src/pipecat_voice_studio/ui/streamlit_app.py --server.address 127.0.0.1 --server.port 8501
+   ```
 
-For telephone providers, also start the callback gateway and forward an HTTPS tunnel to port 8080:
+## Configuration
 
-```powershell
-uv run uvicorn pipecat_voice_studio.telephony_gateway:app --host 127.0.0.1 --port 8080 --proxy-headers --forwarded-allow-ips 127.0.0.1
-```
+Settings are parsed via [Settings](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/config.py#L21-L130) from environment variables or a [.env](file:///D:/AI/Github/pipecat-voice-studio/.env.example) file in the repository root.
 
-When Google Calendar is configured, start synchronization:
-
-```powershell
-uv run python -m pipecat_voice_studio.calendar_worker
-```
-
-Then start Streamlit in another terminal:
-
-```powershell
-uv run streamlit run src/pipecat_voice_studio/ui/streamlit_app.py
-```
-
-Open [http://localhost:8501](http://localhost:8501), go to **Live session**, select a browser
-pipeline, permit microphone access, and connect. Telephone pipelines are bound and operated from
-**Integrations**.
-
-> [!NOTE]
-> The studio creates or migrates schema version 2 and ensures all built-in realtime, cascade,
-> telephone, calendar, avatar, healthcare, and evaluation graphs exist.
-
-## Using the studio
-
-Every page includes an expanded **How to use this page** panel with its immediate workflow and expected result.
-
-| Page | Purpose |
-|---|---|
-| Command center | View runtime readiness and studio overview |
-| Agent studio | Inspect, validate, clone, and activate pipeline graphs |
-| Live session | Start a browser voice conversation, toggle the microphone, and inspect live transcripts, tools, and metrics |
-| Integrations | Check provider readiness, bind telephone pipelines, and place confirmed allowlisted calls |
-| Records | Review sessions, appointments, redacted calls, handoffs, and healthcare metadata |
-| Evaluations | Execute allowlisted Pipecat scenarios and review diagnostics |
-| Analytics | View session, completion, appointment, and tool-event counts |
-
-Live audio and browser media tracks are not written to the database. Healthcare sessions suppress
-conversation turns and encrypt structured intake. Telephone records contain redacted numbers.
-
-## Management API
-
-Start the API separately:
-
-```powershell
-uv run uvicorn pipecat_voice_studio.api.app:app --host 127.0.0.1 --port 8000
-```
-
-OpenAPI documentation is available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
-
-| Method | Endpoint | Purpose |
+| Variable | Default | Description |
 |---|---|---|
-| `GET` | `/health` | Runtime, dependency, CUDA, and GPU readiness |
-| `GET` | `/pipelines` | Pipeline metadata |
-| `GET` | `/pipelines/{pipeline_id}` | One active validated graph |
-| `POST` | `/pipelines` | Validate, compile, and save a graph |
+| `OPENAI_API_KEY` | None | Secret key for OpenAI models and evaluations. |
+| `OPENAI_BASE_URL` | None | Custom base URL for OpenAI API endpoints. |
+| `APP_NAME` | `Pipecat Voice Studio` | Application name displayed across API and UI. |
+| `PVS_ENVIRONMENT` | `development` | Deployment environment identifier. |
+| `PVS_BOT_BASE_URL` | `http://127.0.0.1:7860` | HTTP endpoint of the Pipecat worker process. |
+| `PVS_DATABASE_PATH` | `data/pipecat_voice_studio.db` | Filesystem path to the SQLite database. |
+| `PVS_TIMEZONE` | `Asia/Calcutta` | IANA timezone name used for business hours and appointments. |
+| `PVS_REALTIME_MODEL` | `gpt-realtime-2.1-mini` | Model name for OpenAI Realtime pipelines. |
+| `PVS_CASCADE_STT_MODEL` | `gpt-realtime-whisper` | Speech-to-text model name for cascaded pipelines. |
+| `PVS_CASCADE_LLM_MODEL` | `gpt-5.6-luna` | Large language model name for cascaded pipelines. |
+| `PVS_CASCADE_TTS_MODEL` | `gpt-4o-mini-tts` | Text-to-speech voice model for cascaded pipelines. |
+| `PVS_REALTIME_VOICE` | `marin` | Default voice identifier. |
+| `PVS_PUBLIC_BASE_URL` | None | Public HTTPS URL (e.g. reverse proxy tunnel) forwarding to port 8080 for telephony callbacks. Must use `https://`. |
+| `PVS_OUTBOUND_ALLOWLIST` | `""` | Comma-separated list of exact E.164 phone numbers allowed for outbound calls. Wildcards are not supported. |
+| `TWILIO_ACCOUNT_SID` | None | Twilio account identifier. |
+| `TWILIO_AUTH_TOKEN` | None | Secret auth token for Twilio signature verification and API calls. |
+| `TWILIO_FROM_NUMBER` | None | Canonical E.164 sender phone number for Twilio outbound calls. |
+| `TWILIO_HANDOFF_DESTINATION` | None | E.164 phone number to bridge calls during human handoff. |
+| `VONAGE_APPLICATION_ID` | None | Vonage application UUID. |
+| `VONAGE_API_KEY` | None | Vonage API key used for webhook signature verification. |
+| `VONAGE_PRIVATE_KEY` | None | Secret private key for Vonage JWT authentication. |
+| `VONAGE_SIGNATURE_SECRET` | None | Secret key for verifying signed incoming Vonage webhooks. |
+| `VONAGE_FROM_NUMBER` | None | Canonical E.164 sender phone number for Vonage outbound calls. |
+| `VONAGE_HANDOFF_DESTINATION` | None | E.164 phone number to bridge calls during human handoff. |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | None | JSON credential string for Google Calendar service account. |
+| `GOOGLE_CALENDAR_ID` | None | Google Calendar ID for appointment synchronization. |
+| `PVS_CALENDAR_SYNC_SECONDS` | `60` | Polling interval in seconds (minimum 15, maximum 3600). |
+| `HUBSPOT_PRIVATE_APP_TOKEN` | None | Secret token for HubSpot CRM contact and deal insertion. |
+| `SIMLI_API_KEY` | None | Secret API key for Simli video avatar service. |
+| `SIMLI_FACE_ID` | None | Face identifier for Simli video avatar generation. |
+| `PVS_HEALTHCARE_ENABLED` | `false` | Boolean toggle to enable the healthcare intake flow. |
+| `PVS_HEALTHCARE_DATA_KEY` | None | URL-safe base64-encoded 32-byte secret key for AES-256-GCM intake encryption. |
+| `PVS_HEALTHCARE_APPROVED_SERVICES` | `""` | Comma-separated allowlist of approved model providers (must include `openai`). |
 
-## Development and testing
+## Repository map
 
-Run the Python quality suite:
+```text
+pipecat-voice-studio/
+├── .github/workflows/                 # GitHub Actions workflows
+│   ├── quality.yml                    # CI workflow for linting, typing, tests, and builds
+│   └── live-evaluations.yml           # Manual workflow for live model evaluations
+├── artifacts/                         # Generated process logs and evaluation reports
+│   └── launcher/                      # Background process log files
+├── data/                              # SQLite database storage directory
+├── docs/                              # Technical, architectural, and operational documentation
+│   ├── ARCHITECTURE.md                # System diagrams, data flows, and external boundaries
+│   ├── TECHNICAL.md                   # Technical stack rationale, invariants, and persistence
+│   ├── RUNBOOK.md                     # Startup, shutdown, process management, and troubleshooting
+│   ├── CONTRIBUTING.md                # Development standards, CI gates, and test requirements
+│   ├── HOW_TO_USE.md                  # Page-by-page UI operational guide
+│   └── PROVIDERS.md                   # External service setup instructions
+├── src/pipecat_voice_studio/          # Core Python application package
+│   ├── api/                           # FastAPI management surface
+│   │   └── app.py                     # Health and pipeline management endpoints
+│   ├── eval_scenarios/                # YAML test scenarios for behavioral evaluations
+│   ├── integrations/                  # Provider adapters
+│   │   ├── google_calendar.py         # Google Calendar OAuth and REST adapter
+│   │   ├── hubspot.py                 # Consent-gated HubSpot CRM adapter
+│   │   ├── readiness.py               # Provider readiness checks without secret leakage
+│   │   └── telephony.py               # Twilio and Vonage REST and handoff clients
+│   ├── ui/                            # Streamlit user interface
+│   │   ├── app_pages/                 # Streamlit page modules (Command center, Studio, Live, etc.)
+│   │   ├── components.py              # Streamlit Components v2 bridge
+│   │   ├── frontend/                  # React 19 / Vite / TypeScript voice client component
+│   │   └── streamlit_app.py           # Streamlit entrypoint and page navigation
+│   ├── voice/                         # Real-time voice pipeline implementation
+│   │   ├── appointment_flow.py        # Pipecat Flow for appointment booking
+│   │   ├── bot.py                     # Standalone Pipecat runner and pipeline builder
+│   │   ├── business_flow.py           # Specialist routing, CRM, and handoff Flow
+│   │   ├── healthcare_flow.py         # Consent-gated encrypted healthcare intake Flow
+│   │   └── timeline.py                # Semantic frame observer (excluding raw audio)
+│   ├── appointments.py                # Booking policy, business hours, and collision logic
+│   ├── calendar_worker.py             # Background Google Calendar sync process
+│   ├── config.py                      # Pydantic Settings configuration definitions
+│   ├── diagnostics.py                 # Runtime readiness and CUDA/GPU detection
+│   ├── evaluations.py                 # Isolated subprocess evaluation runner
+│   ├── graph.py                       # Pipeline schema validation and compilation
+│   ├── security.py                    # E.164 parsing, webhook verification, AES-256-GCM cipher
+│   ├── seeds.py                       # Pre-configured starter pipeline definitions
+│   ├── storage.py                     # SQLite persistence layer and repository operations
+│   └── telephony_gateway.py           # FastAPI ASGI app for Twilio/Vonage webhooks and media
+├── launch.cmd                         # Double-clickable Windows launch wrapper
+├── launch.ps1                         # PowerShell launch and process supervisor script
+├── launch.sh                          # Bash launch script for Linux
+├── pyproject.toml                     # Python package metadata, dependencies, and tool settings
+└── uv.lock                            # Deterministic dependency lockfile
+```
 
-```powershell
+## How to run tests
+
+Python tests and linters are defined in [pyproject.toml](file:///D:/AI/Github/pipecat-voice-studio/pyproject.toml) and executed in CI via [.github/workflows/quality.yml](file:///D:/AI/Github/pipecat-voice-studio/.github/workflows/quality.yml).
+
+### Quality checks
+
+Verify the dependency lockfile:
+```bash
 uv lock --check
+```
+
+Run static linting with Ruff:
+```bash
 uv run ruff check .
+```
+
+Run static type checking with ty:
+```bash
 uv run ty check
+```
+
+Run automated tests with coverage enforcement:
+```bash
 uv run pytest
+```
+The test suite requires a minimum coverage of 80% on non-omitted modules (configured in `[tool.pytest.ini_options]`).
+
+Run frontend type checking and compilation:
+```bash
+cd src/pipecat_voice_studio/ui/frontend
+npm ci
+npm run build
+cd ../../../..
+```
+
+Validate launcher scripts in dry-run mode:
+- On Windows (PowerShell):
+  ```powershell
+  .\launch.ps1 -SetupOnly
+  ```
+- On Linux (Bash):
+  ```bash
+  bash -n launch.sh
+  ./launch.sh --setup-only
+  ```
+
+Build the Python distribution package:
+```bash
 uv build
 ```
 
-Python coverage must remain at or above 80%. Model-backed live evaluations are opt-in and are never executed by the normal pull-request test run.
-The Quality workflow runs on native Windows and Ubuntu and validates each platform's launcher in setup-only mode.
+### Live model evaluations
 
-After changing the browser component:
+Live evaluations execute end-to-end conversations against real model APIs using [evaluations.py](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/evaluations.py) and YAML scenarios under [eval_scenarios/](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/eval_scenarios):
 
-```powershell
-Set-Location src\pipecat_voice_studio\ui\frontend
-npm ci
-npm run build
+```bash
+uv run pytest -m live_eval tests/test_live_evaluations.py --no-cov -q
 ```
+*Note: Live evaluations incur model API usage costs and require `OPENAI_API_KEY` to be set.*
 
-The repository does not document a custom branching model. Keep changes focused, include relevant tests, and ensure the Quality workflow passes before submitting a pull request.
+### Working tree status
 
-## Project structure
+In the local working copy, tests are tracked in git history under `tests/`, but test files are currently unstaged deletions. Automated runs of `uv run pytest` expect the `tests/` directory to be present on disk.
 
-```text
-.
-├── .github/workflows/              # Quality and manual live-evaluation workflows
-├── docs/                           # Technical and codebase documentation
-├── launch.cmd                      # Double-clickable Windows launcher
-├── launch.ps1                      # Native Windows setup and launcher
-├── launch.sh                       # Native Linux setup and launcher
-├── src/pipecat_voice_studio/
-│   ├── api/                        # FastAPI management surface
-│   ├── eval_scenarios/             # Allowlisted evaluation scenarios
-│   ├── integrations/               # Google, HubSpot, telephone, and readiness adapters
-│   ├── ui/                         # Streamlit pages and React component bridge
-│   ├── voice/                      # Pipecat worker, specialist/intake Flows, and timeline observer
-│   ├── appointments.py             # Booking policy
-│   ├── calendar_worker.py          # Google incremental sync process
-│   ├── evaluations.py              # Isolated evaluation runner
-│   ├── graph.py                    # Pipeline schema and compiler
-│   ├── security.py                 # Signatures, tokens, redaction, and encryption
-│   ├── telephony_gateway.py        # Twilio/Vonage callback and media ASGI app
-│   └── storage.py                  # SQLite repository
-├── tests/                          # Unit, integration, UI smoke, and live tests
-├── .env.example                    # Configuration template
-└── pyproject.toml                  # Package, dependencies, and quality configuration
-```
+## Known limitations
 
-## Documentation
-
-| Document | Description |
-|---|---|
-| [How to use](docs/HOW_TO_USE.md) | Installation, configuration, processes, studio workflows, evaluations, development checks, and troubleshooting |
-| [Technical guide](docs/TECHNICAL.md) | Runtime architecture, pipelines, storage, API, security, operations, and troubleshooting |
-| [Provider runbook](docs/PROVIDERS.md) | Twilio, Vonage, Google Calendar, HubSpot, Simli, healthcare setup, operations, and troubleshooting |
-| [Architecture diagrams](docs/diagrams/README.md) | System architecture, live-session sequence, semantic data flow, module dependencies, and SQLite relationships |
-| [Technology stack](docs/codebase/STACK.md) | Runtime versions, dependencies, tools, commands, and configuration |
-| [Codebase structure](docs/codebase/STRUCTURE.md) | Directory map, entry points, and module boundaries |
-| [Architecture](docs/codebase/ARCHITECTURE.md) | System flow, responsibilities, patterns, and architectural risks |
-| [Coding conventions](docs/codebase/CONVENTIONS.md) | Naming, imports, error handling, logging, and testing conventions |
-| [External integrations](docs/codebase/INTEGRATIONS.md) | Provider, WebRTC, persistence, secrets, reliability, and observability boundaries |
-| [Testing patterns](docs/codebase/TESTING.md) | Test stack, layout, isolation, coverage, and CI behavior |
-| [Codebase concerns](docs/codebase/CONCERNS.md) | Prioritized security, scaling, maintenance, and intent questions |
-
-## Project scope
-
-Implemented today: browser and telephone voice sessions, realtime and cascaded OpenAI pipelines, local and Google-backed appointments, HubSpot lead capture, human transfer, business-specialist routing, Simli avatar video, encrypted healthcare intake, semantic persistence, analytics, management API, and behavioral evaluation infrastructure.
-
-This remains a local operator application. Internet-scale hosting, user authentication/RBAC, regulated healthcare certification, arbitrary custom provider loading, and high-availability deployment are not included.
-
-## References
-
-- [Pipecat repository](https://github.com/pipecat-ai/pipecat)
-- [Pipecat documentation](https://docs.pipecat.ai/)
-- [Pipecat pipelines and frame processing](https://docs.pipecat.ai/pipecat/learn/pipeline)
-- [Pipecat supported services](https://docs.pipecat.ai/api-reference/server/services/supported-services)
-- [Streamlit documentation](https://docs.streamlit.io/)
-- [uv documentation](https://docs.astral.sh/uv/)
-- [PyTorch](https://pytorch.org/)
-- [Twilio Voice](https://www.twilio.com/docs/voice)
-- [Vonage Voice API](https://developer.vonage.com/en/voice/voice-api/overview)
-- [Daily](https://docs.daily.co/)
-- [LiveKit](https://docs.livekit.io/)
-
-## License
-
-Pipecat Voice Studio is available under the [MIT License](LICENSE).
+1. **Localhost single-tenant architecture**: The FastAPI management API (`api/app.py`) includes no authentication or role-based access control. The application is intended for local execution or trusted private networks.
+2. **Platform limitations**: Only 64-bit Windows AMD64 and Linux x86_64 (glibc >= 2.34) are supported. macOS, Apple Silicon, and ARM64 architectures are unsupported due to PyTorch CUDA wheel requirements.
+3. **Linear pipeline compilation**: The graph compiler ([compile_graph](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/graph.py#L247-L290)) only permits a single, unbranching, connected acyclic chain. Graph nodes cannot fork or merge frame streams. Multi-specialist routing is implemented through state transitions in Pipecat Flow rather than topology branches.
+4. **Appointment scheduling rules**: Appointments are strictly restricted to 30-minute intervals, aligned to half-hour marks (`:00`, `:30`), between 09:00 and 17:00, Monday through Friday, evaluated in the studio's configured timezone.
+5. **Outbound telephone destination restrictions**: Outbound calls require exact string matching in `PVS_OUTBOUND_ALLOWLIST`. Prefix or wildcard matching is not supported.
+6. **Public webhook ingress**: Telephony webhooks from Twilio and Vonage require an external HTTPS tunnel (such as ngrok or Cloudflare Tunnel) forwarding to local port 8080. Plain HTTP URLs are rejected by `pvs_public_base_url` validation.
+7. **Single-file SQLite concurrency**: All concurrent processes (worker, gateway, calendar worker, API, Streamlit) read and write to a single SQLite file. Concurrency is managed via WAL mode and a 5-second busy timeout; high-throughput distributed database clustering is not supported.
+8. **Healthcare privacy constraints**: When healthcare intake is active, raw user and assistant turns are suppressed from SQLite event logs (`persist_conversation=False`). Intake data is encrypted with AES-256-GCM. Automated encryption key rotation is not implemented.
