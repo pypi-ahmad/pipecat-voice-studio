@@ -1,6 +1,6 @@
-# Technology Stack
+# Technology stack
 
-## Runtime Summary
+## Runtime summary
 
 | Area | Value | Evidence |
 |---|---|---|
@@ -9,7 +9,7 @@
 | Package manager | uv for Python; npm for the frontend | `uv.lock`; frontend `package-lock.json` |
 | Build system | `uv_build` for Python; Vite for the component | `pyproject.toml`; frontend `vite.config.ts` |
 
-## Production Frameworks and Dependencies
+## Production frameworks and dependencies
 
 | Dependency | Version | Role | Evidence |
 |---|---:|---|---|
@@ -28,7 +28,7 @@
 
 SQLite is supplied by Python's standard library; it is not a separately managed dependency.
 
-## Development Toolchain
+## Development toolchain
 
 | Tool | Purpose | Evidence |
 |---|---|---|
@@ -39,7 +39,7 @@ SQLite is supplied by Python's standard library; it is not a separately managed 
 | Vite 8+ | Frontend production build | frontend `package.json` |
 | GitHub Actions | Windows/Linux quality jobs and a Windows-only manual live-evaluation job | `.github/workflows/` |
 
-## Key Commands
+## Key commands
 
 ```powershell
 .\launch.cmd
@@ -60,10 +60,11 @@ On Windows, `launch.cmd` is the double-clickable entry point and forwards argume
 `launch.ps1`. On Linux, `./launch.sh` performs the equivalent setup and launch. The PowerShell
 and Bash scripts support setup-only, custom ports, and optional management-API modes.
 
-Frontend changes additionally require `npm ci` and `npm run build` in
+Frontend changes also require `npm ci` and `npm run build` in
 `src/pipecat_voice_studio/ui/frontend`.
 
-## Environment and Config
+## Environment and config
+
 
 - Sources: process environment and project-root `.env`; `.env.example` is the committed template.
 - `OPENAI_API_KEY` is required for voice pipelines and paid evaluations. `OPENAI_BASE_URL` is optional.

@@ -1,6 +1,6 @@
-# Codebase Concerns
+# Codebase concerns
 
-## Top Risks
+## Top risks
 
 | Severity | Concern | Evidence | Impact | Suggested action |
 |---|---|---|---|---|
@@ -12,7 +12,7 @@
 | Medium | No app-level model retry/fallback policy | `voice/bot.py` | Transient provider failures terminate sessions | Define timeout/retry policy around idempotent operations and surface failures |
 | Medium | Broad exception handling at runtime/evaluation boundaries | `voice/bot.py`; `evaluations.py` | Failure categories can be obscured | Preserve cleanup but classify expected provider/transport errors |
 
-## Technical Debt
+## Technical debt
 
 | Debt item | Why it exists | Where | Risk if ignored | Suggested fix |
 |---|---|---|---|---|
@@ -22,9 +22,9 @@
 | Provider clients create a fresh HTTP client per request | Simple local adapter design | `integrations/` | Extra connection setup under sustained load | Reuse lifecycle-managed clients if profiling shows material cost |
 | No generalized provider retry/idempotency layer | Fail-closed local scope | `integrations/`; `calendar_worker.py` | Transient failures require operator retry; CRM duplicates depend on provider semantics | Add operation-specific retry and idempotency keys before production use |
 
-The production-code scan found no TODO/FIXME/HACK markers; the items above are evidence-based limitations, not comments copied from tests.
+The items above are evidence-based limitations from code inspection.
 
-## Security Concerns
+## Security concerns
 
 | Risk | OWASP | Evidence | Current mitigation | Gap |
 |---|---|---|---|---|
@@ -34,9 +34,9 @@ The production-code scan found no TODO/FIXME/HACK markers; the items above are e
 | Telephone callback exposure | A07/A08 | `telephony_gateway.py` | Twilio/Vonage signatures, TLS requirement, short-lived media tokens | No rate limiter or centralized abuse alerting |
 | Diagnostic details exposed to operators | A09 | evaluations and records UI | Local operator surface; bounded logs | No role-based redaction policy |
 
-No credential is embedded in the inspected source. This is not a substitute for secret scanning in CI.
+No credential is embedded in the inspected source. This does not replace automated secret scanning in CI.
 
-## Performance and Scaling Concerns
+## Performance and scaling concerns
 
 | Concern | Evidence | Current symptom | Scaling risk | Suggested improvement |
 |---|---|---|---|---|
@@ -45,7 +45,7 @@ No credential is embedded in the inspected source. This is not a substitute for 
 | Streamlit probes worker synchronously on rerun | `live_session.py` | Up to one-second page delay when unavailable | Repeated latency under reruns | Cache briefly or make health status asynchronous if observed |
 | Evaluation starts a worker process per run | `evaluations.py` | Deliberate startup overhead | Slow suites at large scenario counts | Retain isolation until profiling justifies pooling |
 
-## Fragile and High-Churn Areas
+## Fragile and high-churn areas
 
 The repository has a short history: the top 90-day churn count is only two changes per file. Current signals therefore show active surfaces, not statistically strong fragility.
 
@@ -56,12 +56,12 @@ The repository has a short history: the top 90-day churn count is only two chang
 | Frontend build artifacts | Source and generated bundle must agree | Active frontend changes in worktree/history | Use `npm run build`; do not hand-edit build output |
 | Voice worker | Async lifecycle and provider integrations | Active current work | Exercise graph tests plus an opt-in live scenario |
 
-## `[ASK USER]` Questions
+## Open questions
 
-1. [ASK USER] Is the management API intended to remain localhost-only, or should authentication be a near-term requirement?
-2. [ASK USER] What retention period and deletion/audit requirements apply to transcripts, encrypted
+1. Is the management API intended to remain localhost-only, or should authentication be a near-term requirement?
+2. What retention period and deletion/audit requirements apply to transcripts, encrypted
    intake, call/handoff records, appointments, and evaluation diagnostics?
-3. [ASK USER] Beyond supported native Windows/Linux local hosts, is the eventual deployment target a trusted LAN or public multi-instance service?
+3. Beyond supported native Windows/Linux local hosts, is the eventual deployment target a trusted LAN or public multi-instance service?
 
 ## Evidence
 

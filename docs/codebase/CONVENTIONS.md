@@ -1,6 +1,6 @@
-# Coding Conventions
+# Coding conventions
 
-## Naming Rules
+## Naming rules
 
 | Item | Rule | Example | Evidence |
 |---|---|---|---|
@@ -10,7 +10,7 @@
 | Constants/env vars | `UPPER_SNAKE_CASE`; settings fields are lower-case env names | `SCHEMA_VERSION`, `PVS_DATABASE_PATH` | `storage.py`; `.env.example` |
 | React components | `PascalCase` files/functions | `StudioComponent` | frontend source |
 
-## Formatting and Linting
+## Formatting and linting
 
 - Ruff is configured for Python 3.14, 100-character lines, and all rules except explicit repository ignores.
 - ty checks Python 3.14 and treats warnings as errors.
@@ -18,14 +18,14 @@
 - Commands: `uv run ruff check .`, `uv run ty check`, and frontend `npm run build`.
 - Several complex runtime modules have narrow Ruff exceptions recorded in `pyproject.toml`; do not generalize those exceptions to new files.
 
-## Import and Module Conventions
+## Import and module conventions
 
 - Standard-library imports precede third-party and project imports, as enforced by Ruff.
 - Cross-module Python imports are absolute (`pipecat_voice_studio.*`). Relative imports are not the established pattern.
 - Type-only imports are guarded with `TYPE_CHECKING` where useful.
 - Public behavior is imported from defining modules; no broad re-export layer exists.
 
-## Error and Logging Conventions
+## Error and logging conventions
 
 - Contract violations use boundary-specific `ValueError`/`PermissionError` subclasses, `KeyError`,
   HTTP status errors, or Pydantic validation errors at the responsible layer.
@@ -34,7 +34,7 @@
 - Operational output uses Pipecat/loguru logging in the worker and bounded subprocess logs in evaluations. There is no repository-wide structured logging schema.
 - Secrets use Pydantic `SecretStr`; graphs cannot contain credentials; browser component data excludes API keys. Raw audio persistence is explicitly rejected.
 
-## Testing Conventions
+## Testing conventions
 
 - Tests live in `tests/` and use `test_*.py` plus plain `assert`.
 - pytest fixtures and `monkeypatch` isolate files, environment, subprocesses, and model-backed execution.

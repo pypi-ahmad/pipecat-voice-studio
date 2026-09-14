@@ -1,9 +1,9 @@
-# External Integrations
+# External integrations
 
 Operator setup and recovery procedures are documented in
 [Provider setup and operations](../PROVIDERS.md).
 
-## Integration Inventory
+## Integration inventory
 
 | System | Type | Purpose | Auth model | Criticality | Evidence |
 |---|---|---|---|---|---|
@@ -22,7 +22,7 @@ Operator setup and recovery procedures are documented in
 Healthcare intake is an internal governance boundary: explicit consent, transcript suppression,
 AES-256-GCM structured storage, metadata-only UI, audit events, and mandatory service approval.
 
-## Data Stores
+## Data stores
 
 | Store | Role | Access layer | Key risk | Evidence |
 |---|---|---|---|---|
@@ -34,16 +34,16 @@ Raw audio is not a supported persistent data type.
 Full telephone numbers are not persisted. Healthcare ciphertext is durable, but its decryption key
 is environment-owned and has no built-in rotation workflow.
 
-## Secrets and Credentials Handling
+## Secrets and credentials handling
 
 - Credentials come from environment variables or an uncommitted `.env` file.
 - API keys, tokens, private keys, and healthcare encryption material use `SecretStr` and remain server-side.
 - The live component receives worker/pipeline metadata, not provider credentials.
 - GitHub live evaluations use protected environment secrets.
 - No hardcoded credential was found by the repository scan.
-- [TODO] Credential rotation and revocation policy is not documented in code or repository policy.
+- Credential rotation and revocation policies are not documented in repository configuration.
 
-## Reliability and Failure Behavior
+## Reliability and failure behavior
 
 - The live page probes worker `/status` with a one-second timeout and reports unavailability.
 - Evaluation worker startup has a readiness timeout, bounded logs, terminate-then-kill cleanup, and a disposable database.
@@ -52,7 +52,7 @@ is environment-owned and has no built-in rotation workflow.
   generalized retries, circuit breakers, and alternate-provider fallback are not implemented.
 - SmallWebRTC default ICE servers are enabled; production TURN/failover topology is not configured here.
 
-## Observability for Integrations
+## Observability for integrations
 
 - Pipecat metrics and selected frame events are persisted through `SemanticTimelineObserver`.
 - Evaluation results retain duration, failures, observed events, and bounded diagnostics.

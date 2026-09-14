@@ -1,6 +1,6 @@
-# Codebase Structure
+# Codebase structure
 
-## Top-Level Map
+## Top-level map
 
 | Path | Purpose | Evidence |
 |---|---|---|
@@ -19,7 +19,7 @@
 
 Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; they are not source architecture.
 
-## Entry Points
+## Entry points
 
 - Streamlit UI: `src/pipecat_voice_studio/ui/streamlit_app.py`.
 - Voice worker: module `pipecat_voice_studio.voice.bot`, whose `bot()` callback is run by Pipecat's CLI runner.
@@ -32,7 +32,7 @@ Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; 
   PowerShell launcher for File Explorer; native launchers prepare `.venv` and supervise the browser
   worker, callback gateway, optional calendar/API workers, and Streamlit.
 
-## Module Boundaries
+## Module boundaries
 
 | Boundary | Owns | Must not own |
 |---|---|---|
@@ -48,7 +48,7 @@ Generated directories include `.venv/`, `dist/`, caches, and frontend `build/`; 
 | `api/` | HTTP contracts and dependency wiring | Duplicate persistence rules |
 | `evaluations.py` | Scenario catalog and isolated runner lifecycle | Normal unit-test model calls |
 
-## Naming and Organization Rules
+## Naming and organization rules
 
 - Python files, functions, and variables use `snake_case`; classes use `PascalCase`.
 - React component files use `PascalCase`; TypeScript variables/functions use `camelCase`.

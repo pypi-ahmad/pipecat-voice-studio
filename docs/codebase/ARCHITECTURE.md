@@ -1,13 +1,13 @@
 # Architecture
 
-## Architectural Style
+## Architectural style
 
 - Primary style: local-first, layered application with event-driven Pipecat frame processing.
 - Classification: Streamlit/FastAPI are presentation surfaces; validated graph and appointment modules hold policy; `StudioStore` is the persistence boundary; a separate worker builds asynchronous Pipecat pipelines.
 - Constraints: graphs are an allowlist rather than executable code; credentials stay server-side;
   media remains in WebRTC/provider WebSockets; SQLite is the shared local store.
 
-## System Flow
+## System flow
 
 ```text
 Browser/telephone -> Pipecat runtime -> model services/Flow tools -> observer/provider adapters -> SQLite/UI
@@ -27,7 +27,7 @@ Browser/telephone -> Pipecat runtime -> model services/Flow tools -> observer/pr
 
 Evaluations follow a separate branch: copy one graph into a temporary database, launch a localhost worker subprocess with `EvalTransport`, execute an allowlisted scenario, persist the bounded result in the main store, and delete temporary resources.
 
-## Layer and Module Responsibilities
+## Layer and module responsibilities
 
 | Module | Owns | Must not own | Evidence |
 |---|---|---|---|
@@ -46,7 +46,7 @@ Evaluations follow a separate branch: copy one graph into a temporary database, 
 | `security.py` | Cryptographic and redaction primitives | Provider workflow policy | source file |
 | `evaluations.py` | Isolated scenario execution | Automatic production scheduling | source file |
 
-## Reused Patterns
+## Reused patterns
 
 | Pattern | Where | Purpose |
 |---|---|---|
@@ -59,7 +59,7 @@ Evaluations follow a separate branch: copy one graph into a temporary database, 
 | Compensating transaction | Google-backed appointment creation | Delete external event if local insertion fails |
 | Consent/policy gate | CRM and healthcare Flow functions | Prevent external or sensitive writes before explicit approval |
 
-## Initialization Order
+## Initialization order
 
 Settings are loaded first. Each surface initializes `StudioStore`, which creates/version-checks
 schema v2, migrates v1 with a backup, and inserts any missing built-in graphs by name. The launcher
@@ -67,7 +67,7 @@ starts the browser worker and callback gateway, conditionally starts Calendar sy
 optional API and foreground Streamlit. A voice runtime loads an active graph and creates the session
 before model services process frames. Frontend assets must already be built.
 
-## Known Architectural Risks
+## Known architectural risks
 
 - Streamlit, API, worker, and evaluation subprocesses share a local SQLite file; WAL and busy timeout help, but this is not a distributed persistence design.
 - The management API has no authentication or authorization.
