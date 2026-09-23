@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Session Lifecycle: Conversation and Finish", "output": "docs/diagrams/archify/live-session-conversation.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "user", "type": "external", "label": "User / Caller", "sublabel": "browser / phone" },
+    { "id": "client", "type": "frontend", "label": "Browser / Carrier", "sublabel": "SmallWebRTC / provider" },
+    { "id": "entry", "type": "backend", "label": "Worker / Gateway", "sublabel": "session entry" },
+    { "id": "store", "type": "database", "label": "SQLite Store", "sublabel": "graph + session" },
+    { "id": "models", "type": "external", "label": "OpenAI / Simli", "sublabel": "models + optional avatar" },
+    { "id": "tools", "type": "backend", "label": "Flows + Adapters", "sublabel": "tool actions" }
+  ],
+  "segments": [
+    { "from": 150, "to": 460, "label": "Conversation turns" },
+    { "from": 470, "to": 530, "label": "Finish" }
+  ],
+  "messages": [
+    { "from": "client", "to": "entry", "y": 180, "label": "Stream audio frames" },
+    { "from": "entry", "to": "models", "y": 226, "label": "STT / LLM / TTS or Realtime" },
+    { "from": "models", "to": "tools", "y": 272, "label": "Confirmed function call (when needed)" },
+    { "from": "tools", "to": "store", "y": 318, "label": "Persist governed result" },
+    { "from": "tools", "to": "models", "y": 364, "label": "Structured status", "variant": "return" },
+    { "from": "models", "to": "client", "y": 410, "label": "Audio + optional avatar video", "variant": "return" },
+    { "from": "entry", "to": "store", "y": 456, "label": "Append allowed semantic events" },
+    { "from": "entry", "to": "store", "y": 490, "label": "Complete or fail session", "variant": "emphasis" }
+  ]
+}

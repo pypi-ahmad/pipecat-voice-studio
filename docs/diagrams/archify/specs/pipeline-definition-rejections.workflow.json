@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": { "title": "Pipeline Definition: Rejected Paths", "output": "docs/diagrams/archify/pipeline-definition-rejections.html", "quality_profile": "showcase", "viewBox": [980, 548] },
+  "lanes": [
+    { "id": "author", "label": "Operator / API" },
+    { "id": "compiler", "label": "Graph Compiler" },
+    { "id": "failure", "label": "Rejected Definition", "variant": "exception" }
+  ],
+  "mainPath": ["input", "topology", "chain"],
+  "nodes": [
+    { "id": "input", "lane": "author", "col": 0, "width": 64, "height": 48, "type": "frontend", "label": "Input", "sublabel": "graph" },
+    { "id": "topology", "lane": "compiler", "col": 2, "width": 88, "height": 48, "type": "security", "label": "Check", "sublabel": "unique • triad" },
+    { "id": "chain", "lane": "compiler", "col": 4, "width": 88, "height": 48, "type": "backend", "label": "Chain", "sublabel": "linear" },
+    { "id": "reject", "lane": "failure", "col": 2, "width": 88, "height": 48, "type": "security", "label": "Reject", "sublabel": "ValueError" }
+  ],
+  "edges": [
+    { "from": "input", "to": "topology" },
+    { "from": "topology", "to": "chain" },
+    { "from": "topology", "to": "reject", "label": "invalid topology", "variant": "security", "role": "error" },
+    { "from": "chain", "to": "reject", "label": "branching", "variant": "security", "role": "error" }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Telephony Gateway Module Dependencies", "output": "docs/diagrams/archify/module-dependencies-telephony.html", "quality_profile": "showcase", "viewBox": [900, 480] },
+  "components": [
+    { "id": "gateway", "type": "security", "label": "Telephony Gateway", "sublabel": "public callbacks", "pos": [40, 190], "size": [210, 72] },
+    { "id": "voice", "type": "backend", "label": "Voice Runtime", "sublabel": "Pipecat + Flows", "pos": [560, 60], "size": [210, 72] },
+    { "id": "security", "type": "security", "label": "Security", "sublabel": "signatures + tokens", "pos": [560, 190], "size": [210, 72] },
+    { "id": "storage", "type": "database", "label": "Storage", "sublabel": "SQLite repository", "pos": [560, 320], "size": [210, 72] }
+  ],
+  "connections": [
+    { "from": "gateway", "to": "voice", "fromSide": "top", "toSide": "left", "via": [[145, 150], [500, 150], [500, 96]] },
+    { "from": "gateway", "to": "security", "fromSide": "right", "toSide": "left" },
+    { "from": "gateway", "to": "storage", "fromSide": "bottom", "toSide": "left", "via": [[145, 300], [500, 300], [500, 356]] }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Isolated Evaluation Run", "output": "docs/diagrams/archify/evaluation-run.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "ui", "type": "frontend", "label": "Evaluation Runner", "sublabel": "evaluations.py" },
+    { "id": "tempdb", "type": "database", "label": "Temporary SQLite", "sublabel": "isolated test state" },
+    { "id": "worker", "type": "backend", "label": "Worker Subprocess", "sublabel": "transport: eval" },
+    { "id": "harness", "type": "backend", "label": "EvalSession", "sublabel": "evaluation harness" },
+    { "id": "main", "type": "database", "label": "StudioStore", "sublabel": "main database" }
+  ],
+  "segments": [
+    { "from": 150, "to": 270, "label": "Isolate" },
+    { "from": 290, "to": 390, "label": "Execute scenario" },
+    { "from": 430, "to": 520, "label": "Record result" }
+  ],
+  "messages": [
+    { "from": "ui", "to": "tempdb", "y": 180, "label": "Initialize temporary database" },
+    { "from": "ui", "to": "worker", "y": 220, "label": "Spawn with PVS_DATABASE_PATH=temp.db", "variant": "emphasis" },
+    { "from": "worker", "to": "ui", "y": 260, "label": "Drain logs until Bot ready!", "variant": "return" },
+    { "from": "ui", "to": "harness", "y": 300, "label": "Connect EvalSession" },
+    { "from": "harness", "to": "worker", "y": 340, "label": "Synthetic audio + scripted turns" },
+    { "from": "worker", "to": "harness", "y": 380, "label": "Process turns + scenario assertions", "variant": "return" },
+    { "from": "ui", "to": "worker", "y": 420, "label": "Terminate subprocess" },
+    { "from": "ui", "to": "tempdb", "y": 460, "label": "Verify mutations (for example, appointments)" },
+    { "from": "ui", "to": "main", "y": 490, "label": "record_eval_run(scenario, outcome, metrics)", "variant": "emphasis" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": { "title": "Instantiate a Persisted Pipeline", "output": "docs/diagrams/archify/pipeline-runtime.html", "quality_profile": "showcase", "viewBox": [900, 404] },
+  "lanes": [
+    { "id": "stored", "label": "Studio Store" },
+    { "id": "runtime", "label": "Pipecat Runtime" }
+  ],
+  "mainPath": ["saved", "runtime"],
+  "nodes": [
+    { "id": "saved", "lane": "stored", "col": 1, "width": 150, "height": 52, "type": "database", "label": "Saved Definition", "sublabel": "SQLite graph_json" },
+    { "id": "runtime", "lane": "runtime", "col": 4, "width": 130, "height": 52, "type": "backend", "label": "Pipecat Worker", "sublabel": "instantiate processors" }
+  ],
+  "edges": [
+    { "from": "saved", "to": "runtime" }
+  ]
+}

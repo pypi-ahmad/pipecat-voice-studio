@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Management API Module Dependencies", "output": "docs/diagrams/archify/module-dependencies-api.html", "quality_profile": "showcase", "viewBox": [900, 480] },
+  "components": [
+    { "id": "api", "type": "backend", "label": "Management API", "sublabel": "FastAPI surface", "pos": [40, 190], "size": [210, 72] },
+    { "id": "storage", "type": "database", "label": "Storage", "sublabel": "SQLite repository", "pos": [560, 80], "size": [210, 72] },
+    { "id": "graph", "type": "backend", "label": "Graph + Seeds", "sublabel": "contracts", "pos": [560, 320], "size": [210, 72] }
+  ],
+  "connections": [
+    { "from": "api", "to": "storage", "fromSide": "top", "toSide": "left", "via": [[145, 150], [500, 150], [500, 116]] },
+    { "from": "api", "to": "graph", "fromSide": "bottom", "toSide": "left", "via": [[145, 300], [500, 300], [500, 356]] }
+  ]
+}

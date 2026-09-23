@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": { "title": "Consent-Governed Healthcare Intake", "output": "docs/diagrams/archify/healthcare-intake.html", "quality_profile": "showcase", "viewBox": [760, 360] },
+  "stages": [
+    { "label": "Voice flow" },
+    { "label": "Consent boundary" },
+    { "label": "Protected storage" }
+  ],
+  "nodes": [
+    { "id": "tools", "type": "backend", "label": "Governed Flow Tools", "sublabel": "confirmation + consent", "stage": 0, "row": 0, "width": 150 },
+    { "id": "intake", "type": "security", "label": "Protected Intake", "sublabel": "healthcare boundary", "stage": 1, "row": 0, "width": 150 },
+    { "id": "store", "type": "database", "label": "SQLite Schema v2", "sublabel": "ciphertext + nonce", "stage": 2, "row": 0, "width": 150 }
+  ],
+  "flows": [
+    { "from": "tools", "to": "intake", "label": "approved intake", "classification": "explicit consent", "variant": "security", "route": "straight", "labelAt": [208, 215] },
+    { "from": "intake", "to": "store", "label": "encrypted payload", "classification": "ciphertext + nonce • AES-GCM", "variant": "security", "route": "straight", "labelAt": [423, 215] }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Evaluation Harness Runtime Dependencies", "output": "docs/diagrams/archify/module-dependencies-evaluation-runtime.html", "quality_profile": "showcase", "viewBox": [900, 480] },
+  "components": [
+    { "id": "evals", "type": "backend", "label": "Evaluations", "sublabel": "isolated harness", "pos": [40, 190], "size": [210, 72] },
+    { "id": "config", "type": "backend", "label": "Config", "sublabel": "environment settings", "pos": [560, 80], "size": [210, 72] },
+    { "id": "pipecat", "type": "external", "label": "Pipecat", "sublabel": "runner + transports", "pos": [560, 320], "size": [210, 72] }
+  ],
+  "connections": [
+    { "from": "evals", "to": "config", "fromSide": "top", "toSide": "left", "via": [[145, 150], [500, 150], [500, 116]] },
+    { "from": "evals", "to": "pipecat", "fromSide": "bottom", "toSide": "left", "via": [[145, 300], [500, 300], [500, 356]] }
+  ]
+}

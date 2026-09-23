@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Voice Studio System Architecture", "output": "docs/diagrams/archify/system-architecture.html", "quality_profile": "showcase", "viewBox": [1370, 700] },
+  "components": [
+    { "id": "clients", "type": "frontend", "label": "Voice Clients", "sublabel": "Browser / React • Twilio / Vonage", "pos": [40, 260], "size": [190, 72] },
+    { "id": "gateway", "type": "security", "label": "Telephony Gateway", "sublabel": "signed callbacks", "pos": [40, 420], "size": [190, 72] },
+    { "id": "management", "type": "frontend", "label": "Streamlit + FastAPI", "sublabel": "studio and management API", "pos": [40, 100], "size": [210, 72] },
+    { "id": "worker", "type": "backend", "label": "Pipecat Worker", "sublabel": "validated runtime + Flows", "pos": [340, 260], "size": [200, 72] },
+    { "id": "compiler", "type": "backend", "label": "Graph Compiler", "sublabel": "closed schema", "pos": [340, 100], "size": [190, 72] },
+    { "id": "services", "type": "external", "label": "Model + Provider APIs", "sublabel": "OpenAI • Calendar • HubSpot • Simli", "pos": [650, 100], "size": [240, 78] },
+    { "id": "timeline", "type": "backend", "label": "Semantic Timeline", "sublabel": "event observer", "pos": [650, 260], "size": [200, 72] },
+    { "id": "db", "type": "database", "label": "SQLite", "sublabel": "schema v2", "pos": [900, 570], "size": [160, 72] }
+  ],
+  "connections": [
+    { "from": "clients", "to": "worker", "label": "SmallWebRTC", "labelAt": [248, 350] },
+    { "from": "clients", "to": "gateway", "label": "provider media WS", "labelAt": [350, 390] },
+    { "from": "gateway", "to": "worker", "label": "verified call session" },
+    { "from": "management", "to": "worker", "label": "start browser session" },
+    { "from": "management", "to": "db", "label": "definitions + records", "fromSide": "top", "toSide": "top", "via": [[145, 30], [980, 30]] },
+    { "from": "management", "to": "compiler", "label": "validate graph" },
+    { "from": "worker", "to": "compiler", "label": "compile graph", "fromSide": "top", "toSide": "bottom", "via": [[440, 220], [400, 220], [400, 200], [435, 200]] },
+    { "from": "worker", "to": "services", "label": "model + provider calls", "fromSide": "right", "toSide": "bottom", "via": [[600, 296], [600, 220], [770, 220]] },
+    { "from": "worker", "to": "timeline", "label": "semantic events", "labelAt": [595, 350] },
+    { "from": "timeline", "to": "db", "label": "allowed events" }
+  ]
+}

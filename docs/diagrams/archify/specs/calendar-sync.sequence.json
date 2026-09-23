@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Incremental Calendar Sync", "output": "docs/diagrams/archify/calendar-sync.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "worker", "type": "backend", "label": "Calendar Worker", "sublabel": "poll every 60s" },
+    { "id": "db", "type": "database", "label": "StudioStore", "sublabel": "calendar sync state" },
+    { "id": "google", "type": "external", "label": "Google API", "sublabel": "Calendar REST v3" }
+  ],
+  "messages": [
+    { "from": "worker", "to": "db", "y": 180, "label": "get_calendar_sync() → sync_token" },
+    { "from": "worker", "to": "google", "y": 222, "label": "GET /events?syncToken={token}" },
+    { "from": "google", "to": "worker", "y": 264, "label": "Event items + nextSyncToken", "variant": "return" },
+    { "from": "google", "to": "worker", "y": 306, "label": "HTTP 410: token expired", "variant": "security" },
+    { "from": "worker", "to": "google", "y": 348, "label": "GET /events (full sync without token)", "variant": "dashed" },
+    { "from": "google", "to": "worker", "y": 390, "label": "Full event list + nextSyncToken", "variant": "return" },
+    { "from": "worker", "to": "db", "y": 432, "label": "apply_calendar_changes(changes)", "variant": "emphasis" },
+    { "from": "worker", "to": "db", "y": 474, "label": "save_calendar_sync(next_token)", "variant": "emphasis" }
+  ]
+}

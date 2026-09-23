@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Shared Service Module Dependencies", "output": "docs/diagrams/archify/module-dependencies-shared.html", "quality_profile": "showcase", "viewBox": [920, 480] },
+  "components": [
+    { "id": "appointments", "type": "backend", "label": "Appointments", "sublabel": "booking policy", "pos": [40, 80], "size": [210, 72] },
+    { "id": "integrations", "type": "backend", "label": "Integrations", "sublabel": "provider adapters", "pos": [380, 260], "size": [210, 72] },
+    { "id": "storage", "type": "database", "label": "Storage", "sublabel": "SQLite repository", "pos": [700, 40], "size": [190, 72] },
+    { "id": "security", "type": "security", "label": "Security", "sublabel": "signatures + encryption", "pos": [700, 180], "size": [190, 72] },
+    { "id": "config", "type": "backend", "label": "Config", "sublabel": "environment settings", "pos": [700, 320], "size": [190, 72] }
+  ],
+  "connections": [
+    { "from": "appointments", "to": "integrations", "fromSide": "right", "toSide": "left", "via": [[320, 116], [320, 296]] },
+    { "from": "appointments", "to": "storage", "fromSide": "top", "toSide": "left", "via": [[145, 30], [650, 30], [650, 76]] },
+    { "from": "integrations", "to": "security", "fromSide": "top", "toSide": "left", "via": [[485, 240], [650, 240], [650, 216]] },
+    { "from": "integrations", "to": "config", "fromSide": "right", "toSide": "left", "via": [[640, 296], [640, 356]] }
+  ]
+}

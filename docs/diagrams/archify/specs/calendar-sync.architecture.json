@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Calendar Sync and Persistence", "output": "docs/diagrams/archify/calendar-sync-architecture.html", "quality_profile": "showcase", "viewBox": [1200, 550] },
+  "components": [
+    { "id": "sync", "type": "backend", "label": "Calendar Sync Worker", "sublabel": "incremental polling", "pos": [40, 250], "size": [220, 72] },
+    { "id": "provider", "type": "external", "label": "Calendar Provider", "sublabel": "OAuth-bound API", "pos": [430, 100], "size": [230, 72] },
+    { "id": "store", "type": "database", "label": "SQLite", "sublabel": "sync cursor + events", "pos": [430, 410], "size": [230, 72] }
+  ],
+  "connections": [
+    { "from": "sync", "to": "provider", "label": "incremental calendar sync", "fromSide": "right", "toSide": "left", "via": [[330, 286], [330, 136]], "labelAt": [365, 210] },
+    { "from": "sync", "to": "store", "label": "sync cursor + events", "fromSide": "right", "toSide": "left", "via": [[330, 286], [330, 446]], "labelAt": [330, 365] }
+  ]
+}

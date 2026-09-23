@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Evaluation Harness Data Dependencies", "output": "docs/diagrams/archify/module-dependencies-evaluations.html", "quality_profile": "showcase", "viewBox": [900, 480] },
+  "components": [
+    { "id": "evals", "type": "backend", "label": "Evaluations", "sublabel": "isolated harness", "pos": [40, 190], "size": [210, 72] },
+    { "id": "storage", "type": "database", "label": "Storage", "sublabel": "SQLite repository", "pos": [560, 80], "size": [210, 72] },
+    { "id": "appointments", "type": "backend", "label": "Appointments", "sublabel": "booking policy", "pos": [560, 320], "size": [210, 72] }
+  ],
+  "connections": [
+    { "from": "evals", "to": "storage", "fromSide": "top", "toSide": "left", "via": [[145, 150], [500, 150], [500, 116]] },
+    { "from": "evals", "to": "appointments", "fromSide": "bottom", "toSide": "left", "via": [[145, 300], [500, 300], [500, 356]] }
+  ]
+}

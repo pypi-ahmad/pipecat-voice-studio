@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": { "title": "Voice Session Semantic Data Flow", "output": "docs/diagrams/archify/semantic-data-flow.html", "quality_profile": "showcase", "viewBox": [1080, 550] },
+  "stages": [
+    { "label": "Input" }, { "label": "Voice runtime" }, { "label": "Governed processing" }, { "label": "Protected records" }, { "label": "Storage + review" }
+  ],
+  "nodes": [
+    { "id": "media", "type": "external", "label": "Voice Media", "sublabel": "live media", "stage": 0, "row": 1, "width": 120 },
+    { "id": "pipeline", "type": "backend", "label": "Pipecat Processors", "sublabel": "Realtime or cascade", "stage": 1, "row": 1, "width": 170 },
+    { "id": "tools", "type": "backend", "label": "Governed Flow Tools", "sublabel": "confirm / consent", "stage": 2, "row": 0, "width": 140 },
+    { "id": "events", "type": "database", "label": "Timeline + Normal Events", "sublabel": "turns / tools / metrics", "stage": 2, "row": 4, "yOffset": -250, "width": 190 },
+    { "id": "providers", "type": "external", "label": "External Providers", "sublabel": "provider adapters", "stage": 3, "row": 0, "width": 140 },
+    { "id": "store", "type": "database", "label": "SQLite Schema v2", "sublabel": "events + encrypted data", "stage": 4, "row": 2, "width": 180 },
+    { "id": "ui", "type": "frontend", "label": "Records + Analytics", "sublabel": "metadata only", "stage": 4, "row": 0, "width": 180 }
+  ],
+  "flows": [
+    { "from": "media", "to": "pipeline", "label": "audio" },
+    { "from": "pipeline", "to": "tools", "label": "confirmed tool call" },
+    { "from": "tools", "to": "providers", "label": "provider exchange", "classification": "requests + results", "channelY": 100, "labelAt": [640, 100] },
+    { "from": "pipeline", "to": "events", "label": "session events", "classification": "non-health", "labelAt": [455, 410] },
+    { "from": "events", "to": "store", "label": "session metadata" },
+    { "from": "store", "to": "ui", "label": "metadata view", "classification": "healthcare metadata only" }
+  ]
+}

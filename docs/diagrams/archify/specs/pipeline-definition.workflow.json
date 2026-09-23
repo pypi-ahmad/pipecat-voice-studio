@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": { "title": "Pipeline Definition: Compile and Persist", "output": "docs/diagrams/archify/pipeline-definition.html", "quality_profile": "showcase", "viewBox": [980, 548] },
+  "lanes": [
+    { "id": "author", "label": "Operator / API" },
+    { "id": "compiler", "label": "Graph Compiler" },
+    { "id": "storage", "label": "Studio Store" }
+  ],
+  "mainPath": ["input", "topology", "chain", "recipe", "save"],
+  "nodes": [
+    { "id": "input", "lane": "author", "col": 0, "width": 64, "height": 48, "type": "frontend", "label": "Input", "sublabel": "graph" },
+    { "id": "topology", "lane": "compiler", "col": 1, "width": 48, "height": 48, "type": "security", "label": "Check", "sublabel": "triad" },
+    { "id": "chain", "lane": "compiler", "col": 2, "width": 48, "height": 48, "type": "backend", "label": "Chain" },
+    { "id": "recipe", "lane": "compiler", "col": 4, "width": 48, "height": 48, "type": "backend", "label": "Recipe" },
+    { "id": "save", "lane": "storage", "col": 5, "width": 90, "height": 48, "type": "backend", "label": "Persist", "sublabel": "SQLite" }
+  ],
+  "edges": [
+    { "from": "input", "to": "topology" },
+    { "from": "topology", "to": "chain" },
+    { "from": "chain", "to": "recipe" },
+    { "from": "recipe", "to": "save" }
+  ]
+}

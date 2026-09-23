@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Telephone Voice Session: Runtime and Close", "output": "docs/diagrams/archify/telephone-session-runtime.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "caller", "type": "external", "label": "Caller", "sublabel": "telephone" },
+    { "id": "carrier", "type": "external", "label": "Carrier", "sublabel": "Twilio or Vonage" },
+    { "id": "gateway", "type": "backend", "label": "Telephony Gateway", "sublabel": "FastAPI :8080" },
+    { "id": "security", "type": "security", "label": "Security", "sublabel": "signature + token checks" },
+    { "id": "worker", "type": "backend", "label": "Pipecat Worker", "sublabel": "run_pipeline" },
+    { "id": "db", "type": "database", "label": "SQLite Store", "sublabel": "calls + sessions" }
+  ],
+  "messages": [
+    { "from": "gateway", "to": "worker", "y": 180, "label": "run_pipeline(FastAPIWebsocketTransport)" },
+    { "from": "worker", "to": "db", "y": 226, "label": "create_session(transport=telephony)" },
+    { "from": "carrier", "to": "worker", "y": 272, "label": "Bidirectional audio frames" },
+    { "from": "carrier", "to": "gateway", "y": 318, "label": "POST /status or /events" },
+    { "from": "gateway", "to": "db", "y": 364, "label": "update_call(status, ended)", "variant": "emphasis" }
+  ]
+}

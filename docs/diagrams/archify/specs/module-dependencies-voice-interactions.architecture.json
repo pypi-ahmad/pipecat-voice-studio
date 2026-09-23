@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "Voice Runtime Interaction Dependencies", "output": "docs/diagrams/archify/module-dependencies-voice-interactions.html", "quality_profile": "showcase", "viewBox": [900, 480] },
+  "components": [
+    { "id": "voice", "type": "backend", "label": "Voice Runtime", "sublabel": "Pipecat + Flows", "pos": [40, 190], "size": [210, 72] },
+    { "id": "appointments", "type": "backend", "label": "Appointments", "sublabel": "booking policy", "pos": [560, 80], "size": [210, 72] },
+    { "id": "integrations", "type": "backend", "label": "Integrations", "sublabel": "provider adapters", "pos": [560, 320], "size": [210, 72] }
+  ],
+  "connections": [
+    { "from": "voice", "to": "appointments", "fromSide": "top", "toSide": "left", "via": [[145, 150], [500, 150], [500, 116]] },
+    { "from": "voice", "to": "integrations", "fromSide": "bottom", "toSide": "left", "via": [[145, 300], [500, 300], [500, 356]] }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Browser Voice Session: Events and Finish", "output": "docs/diagrams/archify/browser-session-events.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "user", "type": "external", "label": "User", "sublabel": "mic + speaker" },
+    { "id": "client", "type": "frontend", "label": "Studio UI", "sublabel": "SmallWebRTC" },
+    { "id": "worker", "type": "backend", "label": "Pipecat Worker", "sublabel": "voice/bot.py :7860" },
+    { "id": "observer", "type": "backend", "label": "Timeline Observer", "sublabel": "timeline events" },
+    { "id": "flow", "type": "backend", "label": "Appointment Flow", "sublabel": "tool execution" },
+    { "id": "openai", "type": "external", "label": "OpenAI API", "sublabel": "Realtime or cascade" },
+    { "id": "db", "type": "database", "label": "SQLite Store", "sublabel": "sessions + events" }
+  ],
+  "messages": [
+    { "from": "worker", "to": "observer", "y": 180, "label": "TranscriptionFrame / LLMTextFrame" },
+    { "from": "observer", "to": "db", "y": 226, "label": "append turn.final (unless healthcare)", "variant": "security" },
+    { "from": "worker", "to": "flow", "y": 272, "label": "Tool calls / function execution" },
+    { "from": "flow", "to": "db", "y": 318, "label": "Mutate appointment or consent state" },
+    { "from": "worker", "to": "client", "y": 364, "label": "Synthesized TTS audio", "variant": "return" },
+    { "from": "client", "to": "user", "y": 410, "label": "Speaker playback", "variant": "return" },
+    { "from": "user", "to": "client", "y": 456, "label": "Disconnect" },
+    { "from": "worker", "to": "db", "y": 490, "label": "update_session(completed)", "variant": "emphasis" }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": { "title": "Browser Voice Session: Setup and Audio", "output": "docs/diagrams/archify/browser-session.html", "quality_profile": "showcase", "column_fit": "spread", "viewBox": [1080, 580] },
+  "participants": [
+    { "id": "user", "type": "external", "label": "User", "sublabel": "mic + speaker" },
+    { "id": "client", "type": "frontend", "label": "Studio UI", "sublabel": "SmallWebRTC" },
+    { "id": "worker", "type": "backend", "label": "Pipecat Worker", "sublabel": "voice/bot.py :7860" },
+    { "id": "observer", "type": "backend", "label": "Timeline Observer", "sublabel": "timeline events" },
+    { "id": "flow", "type": "backend", "label": "Appointment Flow", "sublabel": "tool execution" },
+    { "id": "openai", "type": "external", "label": "OpenAI API", "sublabel": "Realtime or cascade" },
+    { "id": "db", "type": "database", "label": "SQLite Store", "sublabel": "sessions + events" }
+  ],
+  "segments": [
+  ],
+  "messages": [
+    { "from": "user", "to": "client", "y": 180, "label": "Connect + grant microphone", "variant": "emphasis" },
+    { "from": "client", "to": "worker", "y": 226, "label": "WebRTC SDP offer + ICE (/api/offer)" },
+    { "from": "worker", "to": "client", "y": 272, "label": "SDP answer + connection", "variant": "return" },
+    { "from": "worker", "to": "db", "y": 318, "label": "create_session(transport=webrtc)", "variant": "emphasis" },
+    { "from": "user", "to": "client", "y": 364, "label": "Speech input" },
+    { "from": "client", "to": "worker", "y": 410, "label": "Audio frames over SmallWebRTC" },
+    { "from": "worker", "to": "openai", "y": 456, "label": "Audio / text frames" },
+    { "from": "openai", "to": "worker", "y": 490, "label": "Recognition + response frames", "variant": "return" }
+  ]
+}

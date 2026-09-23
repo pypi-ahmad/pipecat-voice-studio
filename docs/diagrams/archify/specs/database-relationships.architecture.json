@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": { "title": "SQLite Schema v2 Relationships", "output": "docs/diagrams/archify/database-relationships.html", "quality_profile": "showcase", "viewBox": [1370, 760] },
+  "components": [
+    { "id": "pipelines", "type": "database", "label": "PIPELINE_DEFINITIONS", "sublabel": "PK id • graph_json • revision", "pos": [40, 300], "size": [220, 76] },
+    { "id": "sessions", "type": "database", "label": "SESSIONS", "sublabel": "FK pipeline_id • status", "pos": [380, 300], "size": [190, 70] },
+    { "id": "evals", "type": "database", "label": "EVAL_RUNS", "sublabel": "FK pipeline_id • scenario", "pos": [380, 80], "size": [190, 70] },
+    { "id": "bindings", "type": "database", "label": "INTEGRATION_BINDINGS", "sublabel": "PK provider • FK pipeline_id", "pos": [380, 540], "size": [210, 70] },
+    { "id": "events", "type": "database", "label": "SESSION_EVENTS", "sublabel": "FK session_id • sequence", "pos": [900, 50], "size": [190, 68] },
+    { "id": "appointments", "type": "database", "label": "APPOINTMENTS", "sublabel": "FK session_id • starts_at", "pos": [900, 170], "size": [190, 68] },
+    { "id": "calls", "type": "database", "label": "CALLS", "sublabel": "FK session_id • provider call", "pos": [900, 290], "size": [190, 68] },
+    { "id": "crm", "type": "database", "label": "CRM_RECORDS", "sublabel": "FK session_id • contact / deal", "pos": [900, 410], "size": [190, 68] },
+    { "id": "consents", "type": "database", "label": "HEALTHCARE_CONSENTS", "sublabel": "FK session_id • accepted", "pos": [900, 530], "size": [210, 68] },
+    { "id": "intakes", "type": "database", "label": "HEALTHCARE_INTAKES", "sublabel": "FK session_id • ciphertext", "pos": [900, 650], "size": [210, 68] },
+    { "id": "handoffs", "type": "database", "label": "HANDOFFS", "sublabel": "FK call_id + session_id", "pos": [1160, 290], "size": [190, 68] },
+    { "id": "aux", "type": "database", "label": "Operational Tables", "sublabel": "CALENDAR_SYNC_STATE • AUDIT_EVENTS", "pos": [1120, 650], "size": [230, 68] }
+  ],
+  "connections": [
+    { "from": "pipelines", "to": "sessions", "label": "runs", "labelAt": [285, 382] },
+    { "from": "pipelines", "to": "evals", "label": "evaluates", "labelAt": [320, 160] },
+    { "from": "pipelines", "to": "bindings", "label": "binds", "labelAt": [320, 500] },
+    { "from": "sessions", "to": "events", "label": "contains", "labelAt": [820, 84] },
+    { "from": "sessions", "to": "appointments", "label": "books", "labelAt": [820, 204] },
+    { "from": "sessions", "to": "calls", "label": "handles", "labelAt": [820, 324] },
+    { "from": "calls", "to": "handoffs", "label": "transfers" },
+    { "from": "sessions", "to": "crm", "label": "produces", "labelAt": [820, 444] },
+    { "from": "sessions", "to": "consents", "label": "authorizes", "labelAt": [820, 564] },
+    { "from": "sessions", "to": "intakes", "label": "protects", "labelAt": [820, 684] }
+  ]
+}
