@@ -1,0 +1,14 @@
+{
+  "runs": [
+    {
+      "date": "2026-09-23T14:39:46.758106+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 75,
+      "semantic_status": "failed_invalid_google_api_key",
+      "code_only_graph": true
+    }
+  ],
+  "total_input_tokens": 0,
+  "total_output_tokens": 0
+}
