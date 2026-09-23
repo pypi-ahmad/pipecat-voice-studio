@@ -1,7 +1,5 @@
 # Runbook
 
-This runbook covers day-to-day operations, service startup and shutdown procedures, log locations, health verification, and troubleshooting guides for Pipecat Voice Studio.
-
 ## Service overview and port allocation
 
 Pipecat Voice Studio consists of multiple processes coordinating on localhost. By default, processes bind to the following loopback ports:
@@ -18,7 +16,7 @@ Pipecat Voice Studio consists of multiple processes coordinating on localhost. B
 
 ### Using launcher scripts
 
-The recommended method to run Pipecat Voice Studio is via the root launcher scripts, which validate prerequisites, manage dependencies, supervise child processes, and perform teardown on exit.
+Use a root launcher to start Pipecat Voice Studio. The scripts validate prerequisites, manage dependencies, supervise child processes, and clean them up on exit.
 
 #### Windows
 

@@ -1,7 +1,5 @@
 # Architecture
 
-This document describes the runtime architecture, request and data flows, data structures, and external integration boundaries of Pipecat Voice Studio.
-
 ## System overview
 
 Pipecat Voice Studio consists of five communicating subsystems operating on a single host:

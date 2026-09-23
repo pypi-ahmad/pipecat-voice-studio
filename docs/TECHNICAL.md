@@ -1,14 +1,12 @@
 # Technical guide
 
-This guide documents the technical design, architectural invariants, dependency choices, persistence models, and failure recovery mechanisms implemented in Pipecat Voice Studio.
-
 ## Purpose and scope
 
 Pipecat Voice Studio is a local application for developing, testing, and evaluating real-time conversational agents. It integrates a Streamlit control interface, a standalone Pipecat audio worker, a browser-based SmallWebRTC client, external telephony gateways (Twilio and Vonage), Google Calendar, HubSpot CRM, Simli avatar streaming, and an ACID SQLite storage engine.
 
 ## Technology stack and rationale
 
-The choice of each dependency is grounded directly in repository implementation requirements:
+These dependencies meet the application's runtime and interface requirements:
 
 - Python (`>=3.13,<3.15`) and [uv](https://docs.astral.sh/uv/): `uv` manages package resolution, virtual environments, and reproducible execution via [uv.lock](file:///D:/AI/Github/pipecat-voice-studio/uv.lock). Launcher scripts and GitHub Actions workflows run pinned Python versions (`3.14.7` with fallback to `3.13.13`).
 - Pipecat (`pipecat-ai[cli,evals,runner,simli,webrtc,websocket]==1.7.0`): Core runtime framework providing pipeline frame streaming, transport adapters (`SmallWebRTCTransport`, `FastAPIWebsocketTransport`, `EvalTransport`), audio/video serializers (`TwilioFrameSerializer`, `VonageFrameSerializer`), Silero VAD turn detection, OpenAI service integration, Flow state management, and the behavioral evaluation harness.

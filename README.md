@@ -20,7 +20,7 @@ The required runtime versions and environment constraints are defined in [pyproj
 
 ### Launchers
 
-The repository includes startup scripts that check system prerequisites, configure Python via `uv`, synchronize locked dependencies, build missing frontend assets, verify port availability, start background processes, and open Streamlit.
+Use a launcher to prepare and start the app. It checks prerequisites and port availability, configures Python with `uv`, synchronizes locked dependencies, and builds missing frontend assets when needed. It then starts background processes and opens Streamlit.
 
 On Windows (Command Prompt or PowerShell):
 
@@ -95,7 +95,7 @@ If running services individually without launcher supervision:
 
 ## Configuration
 
-Settings are parsed via [Settings](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/config.py#L21-L130) from environment variables or a [.env](file:///D:/AI/Github/pipecat-voice-studio/.env.example) file in the repository root.
+The [Settings](file:///D:/AI/Github/pipecat-voice-studio/src/pipecat_voice_studio/config.py#L21-L130) class loads values from environment variables or a [.env](file:///D:/AI/Github/pipecat-voice-studio/.env.example) file in the repository root.
 
 | Variable | Default | Description |
 |---|---|---|

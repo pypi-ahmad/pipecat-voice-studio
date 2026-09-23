@@ -1,8 +1,7 @@
 # Provider setup and operations
 
-This runbook covers the external services implemented by Pipecat Voice Studio. The application is
-local-first: server processes bind to `127.0.0.1`, and an operator-managed HTTPS tunnel exposes only
-the telephony callback gateway when telephone calls are enabled.
+The application is local-first: server processes bind to `127.0.0.1`, and an operator-managed HTTPS
+tunnel exposes only the telephony callback gateway when telephone calls are enabled.
 
 > [!WARNING]
 > Never commit `.env`, service-account JSON, private keys, API tokens, signature secrets, or the
@@ -138,7 +137,7 @@ PVS_HEALTHCARE_APPROVED_SERVICES=openai
 ```
 
 Healthcare sessions require explicit consent, suppress conversation-turn persistence, and encrypt
-the structured intake with AES-256-GCM using the session ID as associated data. Records exposes only
+the structured intake with AES-256-GCM using the session ID as associated data. The database stores only
 consent, review, and escalation metadata. This implementation is not diagnostic software and does
 not establish legal or regulatory compliance.
 

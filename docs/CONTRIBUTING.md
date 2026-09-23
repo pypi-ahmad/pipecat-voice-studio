@@ -1,7 +1,5 @@
 # Contributing
 
-This document outlines the development workflow, quality checks, continuous integration requirements, and testing standards for contributing to Pipecat Voice Studio.
-
 ## Prerequisites
 
 Development requires the following toolchains and environments defined in [pyproject.toml](file:///D:/AI/Github/pipecat-voice-studio/pyproject.toml) and [.github/workflows/quality.yml](file:///D:/AI/Github/pipecat-voice-studio/.github/workflows/quality.yml):

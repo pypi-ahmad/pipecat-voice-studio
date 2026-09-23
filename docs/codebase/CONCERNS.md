@@ -22,8 +22,6 @@
 | Provider clients create a fresh HTTP client per request | Simple local adapter design | `integrations/` | Extra connection setup under sustained load | Reuse lifecycle-managed clients if profiling shows material cost |
 | No generalized provider retry/idempotency layer | Fail-closed local scope | `integrations/`; `calendar_worker.py` | Transient failures require operator retry; CRM duplicates depend on provider semantics | Add operation-specific retry and idempotency keys before production use |
 
-The items above are evidence-based limitations from code inspection.
-
 ## Security concerns
 
 | Risk | OWASP | Evidence | Current mitigation | Gap |

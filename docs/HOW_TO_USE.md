@@ -177,7 +177,7 @@ Selected ports must be distinct and unused. The launcher stops when a port is un
 required service is not ready within 30 seconds. Use `-GatewayPort` on Windows or `--gateway-port`
 on Linux to change the callback port. Dependency and frontend repair behavior remains automatic.
 
-The following commands are the manual alternative when you want to manage each process yourself.
+To manage processes yourself, start each one in a separate terminal.
 
 ### 1. Start the Pipecat worker
 
