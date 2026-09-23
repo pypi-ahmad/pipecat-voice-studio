@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:01087a6144bb0aed2df11e83a991eeb3ca5fd06d53a62cc1c8d8778cac9d03a8",
+  "claims": [
+    {
+      "id": "claim_9d6c9700e8eb46288ac658c45766855c",
+      "statement": "The README documents Windows and Linux launchers, setup-only modes, optional management API startup, and port overrides.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L21-L52",
+          "version": "repo-lines-v1:sha256:27b8b8a7ad0ffc9df9ae51ed3e98c807ac4ac55264742796d75f450f62eb3a37:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4YWJkZDg2YzJkNmNiZjZkOGUxZDZlN2UzNGRhNzgxODBlNGE0ZWZjZTQ0MDM3M2NkZGY2ZGU0ZDk2M2M3ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyOWQ1NmMxMjE5MGNkNDhjMGFiNmJkMDIwYjU1MTY0Njg1YzIxZmZhZTQ5YWUyM2JkMWUxMmQ1ZmMwNjkzZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmMGMyYjA5YWQ2ZDJiNGMzZGZjNTI3ZDYzYjQ3OTZkODU4YWQyMWE3MzcxMjExNGIxMTJmMGEzNDk5ZDBjMzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE2NzUwZDc3OGRhODIxM2VlNTRiOTdmMTZmYjJlMWVhOWMzOGZjMjNiMGU1Y2QwYzExMWQ5YzhjY2U5OGY4MjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd031ed15ad74326b3a305cd3adf47d9",
+      "statement": "The OpenWiki update workflow supports manual dispatch and a daily schedule, runs OpenWiki in update mode, and opens an update pull request.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/openwiki-update.yml#L29-L36",
+          "version": "repo-lines-v1:sha256:cbedcaec05b4bb72b4dcf70dd245a4769c51a139db576af3546d0f56992dddff:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODZjZTBiMGQzYjM4MTIyYmMyNzUxNWE4ZDk2OTYxNWQ5ZTEwZTI4MDY0NGY3NjEyMjFkMDQ0NzlhZDI1MzkzYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQxYzYwZDgzNTk3Yzc2Y2NhNjk2YWFjNzRkZmI3YWM1ZGMzMzYyZmU2NTFmOGNhYjVhMzA0OTk2MzAxN2Q0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjNmM2I4ODAyYjMxMGZmMmFkZDAwMjZiODJlZTJlOWU1NzE1OTEyZWFmMDgxYWY4NmNlMTEwZGQ2NDJmYzFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzkyNDc3MjE0NGE2Y2E1MWEyOWM2OWNiODQ5NThlZjUyZmM4ZDRhOGYzN2Y4YTE1OTllNWQ3NGY5OTk0ZjYwNSJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/openwiki-update.yml#L3-L6",
+          "version": "repo-lines-v1:sha256:ae3cfd11fbd2aec9ba8022f9055a23900230776141f0fd80f6908edd097fed23:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTk2ZGM0ODE0OWY1YTgzZDFlZDZkYmIzOWJiYzdlMmI5MDJhYTNkMzRkNmJkNWFlNGIyOTFiNjhkZjBjYTc5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTNhZWQ1MDJhNWFkZWU3YmIwY2FkZDQ2Y2Q3NDYzYjUzMjBjNmNjZWU0NDgwZDY2ODU0ODg0MzEwNjM3NjExOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjIsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzViMWYyNGU2MTgwNWVlMWE5YmM3ODA0N2UxZTRiM2Q4NjE1N2Q2ZTM3ZDhhYzBiY2JlYmQ1ZTY1ZTVlZjFhYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzk0NjJkNWYyYzIwN2U2YjRmODI4NDNkOTE1NGZmMGJiYWQwMzQzOTI0YjJjM2M0YmFiZDk5Yjg3Y2NkNGI4MiJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/openwiki-update.yml#L54-L64",
+          "version": "repo-lines-v1:sha256:9a73c94923e0095d265e6dc663d6b7fc9447ea64cc0aceb6370fcfdf0e6ee115:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxY2ZmNGFkMzNiYTkxYjE0OGUxYjFiODI5MGI4ZmZmMjdiMjAzZmFiZmVlNTg3MDI4MmRlMzY3MzgzYjFiZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5YTdiOTgxMzVjYWFmNWEyMThhNjAyNmNkZWZlY2I4MzJkNDliOWM4MzE0NGQxMWM5MDU4ODZlZGNhYmQ2MjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmZTVjYTdmYmJkMTk5YTZhZDgyZGU1MmY0ZWE2NDMxODVmNjM1MGE4MGJhNTJkNWFkN2VlYTMyNTY3NzUwYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJhMWMxNDE3MjUzOTkxMTdiZDEwYTliYTBkNzMwYWMxMTY5MDNiOTk5ZmUzNjYwOGI2MjA2YjZlYzZjMWZiY2MifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:57:58.894Z"
+  }
+}

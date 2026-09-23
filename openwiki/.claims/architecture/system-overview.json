@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3ba0b99ff0b34fa65e1750cae670199f01dfe97ae82061c5632fba07dafc9da1",
+  "claims": [
+    {
+      "id": "claim_9876d7f8a42b4ace8159b53c611da9b7",
+      "statement": "The Streamlit entry point routes to operator dashboards, while its custom React component handles the graph view and browser-side voice-session interface.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/ui/components.py#L1-L7",
+          "version": "repo-lines-v1:sha256:10b11fcf8ef2cca424faa741d01c943d95bf6992555a9e0d6d44d6d7a13fe817:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzdhMTM0ZjA1ZWNiNDFmM2JkYTgzMzU4NmJkOWRiNjBmZWVjNDNkMjQxMmVlZTc4MjNhMTU1ZmM4ZTVhOWJhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTNlNWU1MzExMzYyMThmMWUxZWY3MzYwNWMzZWFmODdiMmViNDdmZTMwMjNlMjY1MTI3NTIxZWQzYzJlOGM4ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGE3ZGRiZDZmOWE4MTA2NmU1ZjYzM2EzZDcyYTA3YmI0Y2U4ZWJlODg0YzU2ZDdhMjU3NjYwYTUzMzhjYmUyOCJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/ui/streamlit_app.py#L1-L6",
+          "version": "repo-lines-v1:sha256:e276f09adc2a5434b1af1a8845382e955ed14a9710ea5113cf725cfa9af0ede5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY0ODE1OWZkNDNkNWFmZjZjYzYwZDAwZjI5NTliOGJjNWFhM2YwMDQyMDQ1OTI0NGRmMjM2YmFlMGRmNjkxOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDY4MzZiODZlYTcwM2ZhZmExMjZlODRkNDBmYTA4YmI1YzE3OTI2MzZlYmZmYWQyN2Q5NTZjZTUwMTlhYTliNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDNjM2ZjMGVmYzhjNGZkZGFjOGQ2NWIyMTMzZjFhMTg3ZTgyNTMzYWRhNjkzNWY0MjVhZGRhNWViM2RiYTMyZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b8dd85456de41cb965243be2241df82",
+      "statement": "The FastAPI application exposes readiness and pipeline endpoints, compiling a submitted graph before persisting it as active.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/api/app.py#L34-L78",
+          "version": "repo-lines-v1:sha256:cb7525ecb7d200b18cb0610955aeccb16b2b0228ff3cf97f14544e34626face7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwMmQ5M2M4NDY1ZTg1MDJkODBiZDI4NjI2Y2Q5OTdmMDlmMmRhNDFjYzU3N2YyMjQ1MTJhZTczMjJlNGI5OGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhMWRlOWFmNWY1NjE3MjllZjMwNTE4MTkwYzI1NGUxYjE0ZWIyMzJiNjczZjNiOGU1NmY4M2E5N2YzYTI0NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ5MDIwZGQxNGVhNTE0OGQzMTI5YjE5ZjBkYzIxYjNiZjNlNzNhMTEwYzBjMTEwNzEzMTc3YWI5Y2JlZmQ4ZDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_95b1a73a7d8f4b9680fae3b603bbd205",
+      "statement": "The voice worker loads and recompiles the stored graph, builds realtime or cascaded processors, creates a session, and attaches a semantic timeline observer.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L193-L218",
+          "version": "repo-lines-v1:sha256:1241c9e4797817737a02547cb416bba36ed7c852e8d10277c93271b6a5b36753:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZjc5ZTBlODgwMjM0NmYxMzYyYzJiNGRmNmI3MzNhYzNiNDAwNzdmYmI1YjU2ODYwMjc1ZTEwN2VlODIxN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkMGNhNDBlNjIxZGQ5ODAwMDU5OTc1ZGYyZDc1MmU0Njg2Mjc1ZGY1YTQ2MWRiY2NiMDM0NTMwYjgyNWUwMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0MWMxM2UzZDI0MjNhMzEzM2UyYWU0NTYwMGY0MzBlNzU3ZGVmNmM4YzBlZDJmNjRlZDhmOWM3ZjYwZDYxNmEifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L221-L280",
+          "version": "repo-lines-v1:sha256:48d0544f1e8532400e7b853750fb64c3dde0c0ef08a9771f78bc12423af7824f:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwOWZiYzRiOWI0ZjcxNjllM2U0NjhiMDUwYjM5YTlhZWNmNDdjZDA2YmI5MTM1NjlhZDJhMjA2NDFiZTFkMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4ZDZmZTg4ODlkOGYxYWFjNWY3MjZmZjFlZjliY2Y2NTczNWQ1ZDk1MDcwYTdhNTFlNzgwMGNhNGJlODM4NWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxZTc5NTlhYzU4MzZiZmU3MDczNDZjNGNjNjRhZWRjODEyMGI2MjQxMTZmNGE5MTA2MWRhOGFkOTJjZDA1ZDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4aa257ae97104fe2bc446a0f36e666a8",
+      "statement": "The Twilio and Vonage gateway verifies provider callbacks, selects the provider-bound pipeline, and routes media WebSockets to the shared pipeline runner.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L112-L186",
+          "version": "repo-lines-v1:sha256:2cc6952325a482ea0ab14e5f5e4f28ebd35330e4cce9c8d56b0da66c4b1957d6:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlNDJhMTNiN2I4YTkxMjNjZGQ4ZGFhNDJjZmZjYzE2NzMzNTJhMDE3NTBlYjAyZDRiNjU4ZGQ3MTMwMmM5MDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YzQyZTc3MTMyOTZmZjcyY2Y2ODZjYWNlNDFhZGY0N2E3MjM2NzA2ODBmMTA3ZmMzZWQ3M2IzYjU5ZjFlMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2ZWU4ZDZiNzQzNTJiY2M4YzU1YTUwZmQ2ZjMyZWJjODE0Y2JjZGYzMGIyZTNmYWJiZTBlZTdkYTg3ZjBmNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlOWNkNDdmYWIyZDJkMjRmNDdjYWM1M2EyYjE1ZmY4YWMzY2MxZDAzOWRmOWM4ZmJhOTIzNDA2MTQwMzRhMjgifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L205-L284",
+          "version": "repo-lines-v1:sha256:5d16a50f31f8e29d9810be4b98e9bfd95f98bf39e5ae8b56e3d63041ac09b4c5:eyJzZWxlY3RlZExpbmVDb3VudCI6ODAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5ZDM3ZTQzM2RhZTBhODRmNjAwMWE3NDc0MDk3MTA2NmIzZTY2Zjk4ODM5ZWIxMzIzYjk4NmYzNDViYTc2ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YzQyZTc3MTMyOTZmZjcyY2Y2ODZjYWNlNDFhZGY0N2E3MjM2NzA2ODBmMTA3ZmMzZWQ3M2IzYjU5ZjFlMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyZjRkNDI0MDFjNDg4YmNhOWVkYTJkZThhYzVhYjllZTFiYzRhMjA3ZDcwNTlhYmE2ZWFhYWQwNzNlNzc0N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxYTkzYzAxZTJhMGU5ZDA1MjdjNzVmNDVhYWM2NWJhZWU2ZTYxNjA4YzMyYTA1NjRiOTBjZTk3YmMyNWRjZjMifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L35-L54",
+          "version": "repo-lines-v1:sha256:2806e5077e87dd2cb92a916e8ac60c8cadbca3193a6cd6a67ccfd0eedcfef0ad:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYjkyNzczY2FmZmUxMzdjNTIxMzc4OTQ5MWM4OTE0OGNjNjI1NWQ1MTY5MWQ5NGRlM2FkNjI0MjEyMWMxMzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNmE0NzhjYjM2ZTcyZmFjZGI3ZWJiNjdkZjdhY2ZjM2JmYjdkY2ZlYzE0OWI5ODllNjJmYTBjNjk0NTcxMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmN2ZlYzYxODU2OTk4N2E2MDQ0YzFlMmJhMGI0NTk0Zjk2NjgzMTQ1MWRjMzkyNzEzYzJlZWQyOTAxMDFlZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdhMzFhYjI1MDM1Y2IwMzlmNTU4OTE1MzFhNDI4Mzg5MmVjNTFhZGRiNDVmMWVjOGJhMWFjMWYzNzk4NjFlZGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c13598770234c26b07887ed767cb135",
+      "statement": "StudioStore is the local SQLite repository used across UI, gateway, and worker processes, with foreign-key enforcement and WAL mode configured on connections.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L37-L56",
+          "version": "repo-lines-v1:sha256:b46042faaa4a13031a211063e8699b3c87eafa5355d0554e18b8db5166a2f485:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5MjRhYmU5MjgyMjM0NjdlNjQ5NWY5Y2VmMDBjMDM5Y2NlY2UzN2E4YjY1ZTcxNjI3NTIyYjFlNzQ0NTZlZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ODkzZjYyYzk3MTAxNDAwNGM2Mzc0MmUwM2Q3MDQ5M2I1MTE1YmQyYzM3MDE4M2JkOTY3ZDFkMjliMzRmMjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzNmJkMTIxNTMzYWM4Njg5N2FiYzA2MjdhMzhjZGZlNWU5ZDU4ZmE3ZTc2NjViM2NjZGRmOTJjYzc4Nzk3MDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMwMjA2YThmY2RmMTlmMzlmNzJiMjljYzViNzBhMTgzODRlOGRlMmM0YTFmMDdmNTYyYjI4YTA0ZjM1MTQwMDQifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L40-L44",
+          "version": "repo-lines-v1:sha256:00125776bd9658898bf3b09f4cb08ab8dc581584489a8e0bd7cd0fced1c014a5:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzNjMDZjYWM2OGM5YWY0MmJkZGJiODA0YjRlNGM4YTc2NmRiNjNhMjU1MjJhZTQ2ZGYxNTk0ZWNiODE2MDUwMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2NlMDZhMjIwNGYzZDhiNDJiODNlNTYzZTA1ZWFjMTk1NDZmM2MxYWM2OTdkNTcxNDgzOGI4MjZkMmFmNmViNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjFlN2U3Zjk0ZWEzMTk1ODJlNGEzZTYwYmFhOTg3YzM4ZWM5MmMyYWFmZmY5ZTk5YjQ2M2M4OWMzMzIxZmJlMiJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/ui/store.py#L1-L15",
+          "version": "repo-lines-v1:sha256:7e932adb81d9e54ab760337c5de23edda1b6406ebcf6984d6babc32a620be02e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZWY2YWEyYjY1NWFmZjdjODQ1OTIxYmI5YjYzNjMxMTRjZmY5OTM1OTBjYmE2Y2RlYmM2NWYwZWVlYmNiOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4YWMyYTEwM2U0NDIxMjk0NzM3NWY3YjMxZDBmNmY2OTQ1ZTg5MTgyOTcyNGViNzFhZDU5ZGIwYzc0OTRjZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2NmEzY2Y5NjYwYjc3Y2Y4OGZkMGYzZjhiZmZmZmNmM2M2MmYyOGUzOGQwYmQ4Mzc0Zjk3Y2IzZDIxMDU1ZTQifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L195-L198",
+          "version": "repo-lines-v1:sha256:91968c11fa984fd10eb739ec08c26e2a91da8ccbe76262db492b5bb3563e1cac:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ4NmM5OTgwZDRlZTJkOGNjYWU4ZGE5NGM4NjM3Njg4ZWNlODRkMDkzOWUzODRkYzU4M2VhZjkxYzgwOTljMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzkyZjNhNWM2NTg2Yjc2MGMzYWM3MWU3Nzc2NThlOTE0ZTNlMzAyODQ1YjFhZDUzOWE0MzAwMzBlNjM0MmQ3OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmYyNDVkOWFjMjY4OGVlNDdjM2I3NGY2Y2NiM2RmOTM0OWUzNjA2MzZmNmE0NGU0M2ZmNmRkNjk1NDEyYzE2NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjVkNGZlZmNkOTE3MWVmZTFhMjgzZTc3NWZlNzUxY2RjYTA1OWRhOWI2ZmY2NWEwNDAxMmZhY2M4NDljMTQwNyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

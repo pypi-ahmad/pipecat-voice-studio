@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a066c041f75ec0d373d1843f5425f0e8684818617f1c64dabd493c4e702139b5",
+  "claims": [
+    {
+      "id": "claim_2cea84e141884302bc7334190ae0a264",
+      "statement": "The standard bot runner obtains a pipeline ID from runner arguments, reloads and compiles the stored graph, checks evaluation-mode compatibility, creates its transport, and delegates to run_pipeline.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L193-L218",
+          "version": "repo-lines-v1:sha256:1241c9e4797817737a02547cb416bba36ed7c852e8d10277c93271b6a5b36753:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZjc5ZTBlODgwMjM0NmYxMzYyYzJiNGRmNmI3MzNhYzNiNDAwNzdmYmI1YjU2ODYwMjc1ZTEwN2VlODIxN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkMGNhNDBlNjIxZGQ5ODAwMDU5OTc1ZGYyZDc1MmU0Njg2Mjc1ZGY1YTQ2MWRiY2NiMDM0NTMwYjgyNWUwMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0MWMxM2UzZDI0MjNhMzEzM2UyYWU0NTYwMGY0MzBlNzU3ZGVmNmM4YzBlZDJmNjRlZDhmOWM3ZjYwZDYxNmEifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L72-L77",
+          "version": "repo-lines-v1:sha256:37f763ce01eb3b3867a8c9dfd69d95501504f52be81c4243b3d62e73c4caccf2:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTFkY2YwN2VhM2Y4NDIzMzUxZWRjZmYzNWZlNWZiZTdhMGY4ODk5NTRhYWRhNDBiYzI0ODE0Y2FiN2JkNzhmYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTYxNmViN2YyNzEyNjFhOTY4ZDVkMGU3NTdiZjExZTNjY2Y1NzkxODQyMTM1YzIzNzgyYzYwODcyMjk1NDAwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGI5NzRkYTQwODYzMmE0YWE3ZTJhZTgwYjg2MDM5MWEzZGNkODIxMWM3OWVjYWQ3Y2E4ZTk1MTI4YjAwMTgzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWM0ODlhNzRkOWI0ZDE0YTIwNTA0MDZhZWZlZWQzMzRkYWZlZDE5MTJjZDQ1NTBiMzRmZjkwZDgwNGI5NzZmOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9058b8e3cce34ae1b52299c272b878f7",
+      "statement": "run_pipeline recompiles the graph, creates a session snapshot with model metadata, links an optional call, and assembles realtime or cascaded processors under a PipelineWorker with metrics and a semantic timeline observer.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L221-L266",
+          "version": "repo-lines-v1:sha256:34e1c2b12435abd36932f17b2c1985b099a4bfb67158581d0951d203c44fc3da:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwOWZiYzRiOWI0ZjcxNjllM2U0NjhiMDUwYjM5YTlhZWNmNDdjZDA2YmI5MTM1NjlhZDJhMjA2NDFiZTFkMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4ZDZmZTg4ODlkOGYxYWFjNWY3MjZmZjFlZjliY2Y2NTczNWQ1ZDk1MDcwYTdhNTFlNzgwMGNhNGJlODM4NWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYzMGU1M2NlOWEyNDk2ODk1ZjUzNmQxMjU0OTE4MmQ2MWEzYWMyZDA0ZTM0ZGVkMzkyNDlkMWY2YWEwYzNlODEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc8f2d3587a9426c9d480a237ef100b5",
+      "statement": "FlowManager and its initial appointment, business, or healthcare flow are configured from graph node kinds; Google Calendar is attached to the appointment flow only when the required calendar settings are present.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L267-L310",
+          "version": "repo-lines-v1:sha256:6c678eb87dfea2dd50f3d9a315b8331959ad553d406bbd5a4174f797e3589d68:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkN2FhOWMzMTg2ODc0OTkyZWNkZTE5ZDI2ZDYxMDk0ODZhOWM1MmM1MDgwNDYxYTFmZDBiZjMwNjc4ZWE4NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjNmNlNjIyOTA1NDAyOTUwMzgyMzJmZmNkZDI0NjRhZWRkNDA3ZjA5NWQ4MmE1MDU3ZmE5ZGMxMmFiOGNkNmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkOTI5OTZhMmI5ZTg3NTJiMDI2ZWIyNTVkYWU2NjNiZjUyZTAwYWYyZDVmNGE2OGJmNGIwYzhlMWIyNDAyYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMmZmNWMwMzg2NWE1OWJhZDJiZDFkMDIxNGUxNzZhNTQzOTk3ODNkNDVlMzQzMjVhYWQzZjgwZjc2MGEwMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f1c05c2d429489eb98048dab9754a3e",
+      "statement": "WorkerRunner exceptions finalize the session and optional call as failed, while normal return finalizes them as completed; this explicit finalization block follows flow setup.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L289-L322",
+          "version": "repo-lines-v1:sha256:8dfb76876050bcc798f56a7eb90b28cd8abe54ec527a09052a6e4bdbbce0ce4a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhYWUyYmU5MWQxOTk5YWFiYzEyNTA3ZDMxNjY2MGUyMzVlNjFkYzFlNDA1MTYzMmQxODI2ZjcxZTljZTI3YjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExYmQzYTdhZDRjZjZiNzc2OGQ2MmU1NGYwNDQ4MzcwZjAyNDAxMGVkN2MwOTI4N2YwN2FkMWRiZjcxMzA3YzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxOWVlZGNjOTI4ODc0OTE0NzA2ZTgyMWY1NzdiZTk0MGYyNzhhOTBlNTI1MjcwODA2YWRhYTMwOGYzMDVlYjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5ZjdmN2FhMTYzMDU2N2MxYjVlNjY0NGUyMWNiZWM4M2E0MzkzM2RjNWIwZGEwZDkwY2Q1M2JhNDhlOTEwZDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_42884d90457a4b998f879d62b59876ef",
+      "statement": "SemanticTimelineObserver stores selected semantic events without audio and can suppress conversation-turn persistence for sensitive sessions.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L32-L45",
+          "version": "repo-lines-v1:sha256:6f6707ba55873b8f21dfc3d01ed39cb72c9f14aa68cd34468898ba6cac7b48b9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5NTJlYTM1MzU2NGE5ZjliZWQ2YjM0ZmIwZjU2MzkwZDY4MjJlNzRmMWU1ODNkMzE3OWRmNzMzYWU0NzE5N2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5ZTUyMTc5MDcxZDBhOGY0Zjc3YTAyMTM0OTJkOTJiZTNhNDQ5MDM4YTA2ZWE2YWVkMWNlNGQ1YjY5MDdjNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0OTM5NzJjNzQ0ZTA3NmE5MDY3ZmE0MjgzYzg5MDAzNWRmZjc2ZGNiOGUzMTkzMWZkOGVjYmRmODFhNDVhYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhYzRmMjMwYzE3MmRiZmVjYjE1YTYzZGZjMzc0ODRlNDIzOTJkYWU2NGFmODA1NTlkYjVhODY5N2E5ZGY1NWIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L61-L84",
+          "version": "repo-lines-v1:sha256:64a12246a60ce09ca3d7a5c113fa3188c4f05a8b9fbf0eeb9ab4fbf6786e7f71:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjlkMmY4NjZmMzE2NjU0MGU4Zjk0MGQ2YjQ2ZGJmYWUwMjQ0NDVmZDA3YTQ5YTlhMTU4YjM0NWYxMWRmZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5Y2U4NDUxMzIxZjk4MjZmNWQ2OTczZTQ1OTA4ZTc2ZDczNjk0N2M1MTU5NTc0ZGMwMmIyZjZmMTdmNTUyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMDliYjI0OGYxZWE3MzkxNzc4ZjU3MTExMWIzNzhhOGEzMzE3YWJjNjRjY2UxMDZhYjQ3YzYwZDI2MjgwOTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxNTYzZDdjODkzOTkxYjhlMDAwNGIyNDAwOWY3MTc5ZmFhYjdjZWEwY2NlOTI1YWQxMTQ3MWVkNjY2YjM3NzUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

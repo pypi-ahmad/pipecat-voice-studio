@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ad85fa827777f9ef67e70fee523613cd507ccedeaa2c2c50bdc7c3a0063a1e69",
+  "claims": [
+    {
+      "id": "claim_2ec4bca6547944919cdb45fc467b1f03",
+      "statement": "The telephony gateway verifies Twilio form signatures and Vonage signed webhooks, requires each provider to be bound to a saved pipeline, and rejects calls when provider configuration or the binding is missing.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L112-L131",
+          "version": "repo-lines-v1:sha256:01b1a1088cdd19dda3abd8a6743c81b166a7da9c154825a6878894626f71ba26:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJlNDJhMTNiN2I4YTkxMjNjZGQ4ZGFhNDJjZmZjYzE2NzMzNTJhMDE3NTBlYjAyZDRiNjU4ZGQ3MTMwMmM5MDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkZDU5MTY4YzE3YTgyMTgyZWMwMTJkOTE2MzQ1MjBkZDI2ZmQ5Y2NmOGVhOTYyNzdiOTUzNTk2MDkyMDllYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg2ZWU4ZDZiNzQzNTJiY2M4YzU1YTUwZmQ2ZjMyZWJjODE0Y2JjZGYzMGIyZTNmYWJiZTBlZTdkYTg3ZjBmNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2NmE3NjQxOGNhYTRjMWJiNDZjN2VkMTU5NGEyNjA3OWMyOTk1Y2ZkOTU4Y2IxNDk0NGM0ZGEyYjRkZmYzMjgifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L205-L225",
+          "version": "repo-lines-v1:sha256:8100f9c91b82ebdfd63fda5c4dcdcc8c7e8af02930f26442504d79d38b12adcf:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5ZDM3ZTQzM2RhZTBhODRmNjAwMWE3NDc0MDk3MTA2NmIzZTY2Zjk4ODM5ZWIxMzIzYjk4NmYzNDViYTc2ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlMGE0NzZmMzU5ZWYzOGYwZjc2ZWNlOWY1M2VlZjNkZWU4NWIwMjhiZDU0YmY1Yjc3OGEzZDVkZmI4ZTU0YmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyZjRkNDI0MDFjNDg4YmNhOWVkYTJkZThhYzVhYjllZTFiYzRhMjA3ZDcwNTlhYmE2ZWFhYWQwNzNlNzc0N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkZmE5MGQxMTU5NGI0ZjhlNTRjZmEwZGRlOTA4MWJiMjY4OTNiZTY5ZDAyOTgwYzBmNTg5MmM0ZWVjODU0OGIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L46-L82",
+          "version": "repo-lines-v1:sha256:e7b6e7a011e0807b1e51d626003da13f95991e8ef352ae21add2c56d72006309:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmYmJlMWU5Y2FlYzIxMjdmZjZhOTg5Yzg3ZWEyNDZlNTdmOTZiNGMyYjY3MzE4Yjk4OTUyNjYwOWU4ZTAyMzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3MjZkYmY1Y2VkZjFlMzA4MTQ5MjdhNzhjMDRjY2ZkZjZmMTQyNjdkMjYwZjQ5ZDY1MDRlNGJkNGEzMjZjODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwMmJlZTFlYTI5ZGM2YzliMmVlOWMzYWMzNjYzOWIwYWZlMjNiNjZmMWJlY2U3YTQzYmMwYzdkNGNhNWNiMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0db20a50827a4d3980e42d8658648dcf",
+      "statement": "Answer callbacks mint HMAC media tokens bound to an internal call ID; media endpoints verify tokens before accepting WebSockets, with a 300-second default maximum age.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/security.py#L89-L120",
+          "version": "repo-lines-v1:sha256:c2596dc261279d90065aa0ae2c976952baf4e1c7542a110f7b13caa650d29bf7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4MmJmYzZkMWRlZDhiYTIxNzc3NmE0ZGI5ZDVlNjczZWFlOGVmZThjMmQ1Y2Y5ZTJhYWJkYWMzYzE4ZGNhN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYzA3NjFkZTE5ZTVkZjRiMWY3NDYwYzc0OTlmYzg0NjQxZWEwODMzYWU0MTFmMmU1MWViYjgxYmE0ZWM4ZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2ZDJmZWMyOWEwMTJiMzc3MGQxOTA5ZjVlMjY5MWI3MGJiYTI5YzNiMTUzMWYwNmIxZmNjZGQwNjQ5Y2MwOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmNmIwYjg1YjNmNGNhMzljMjE4NzY2NGUyNDg3ODFkMWNiMTkzZWUwNzYxYmUyZTNlZGJlYWM5MWQzYTQ0MTYifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L126-L186",
+          "version": "repo-lines-v1:sha256:3ffeb54499bfbc7e2a571b90c209801a4a3d7ff78b08d205ee0c97fcd4923a6d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMTk3NzBhMzZkOTE3ZDJiNGIwZmJmYjVhNGIzZjYwMDgzYTdhMmYyOWUzMGM3NTE3NTQxNDYwMzgxODA3ZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YzQyZTc3MTMyOTZmZjcyY2Y2ODZjYWNlNDFhZGY0N2E3MjM2NzA2ODBmMTA3ZmMzZWQ3M2IzYjU5ZjFlMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3YWE2OTc2ZTRlYTZmODAxY2U0NzNkZjYyYzg5ODA5NzUxYTI3MTU3MWZhNWFlM2JjMzM3M2VkZTFkNzA0YTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlOWNkNDdmYWIyZDJkMjRmNDdjYWM1M2EyYjE1ZmY4YWMzY2MxZDAzOWRmOWM4ZmJhOTIzNDA2MTQwMzRhMjgifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L225-L284",
+          "version": "repo-lines-v1:sha256:c8912cf933036cd75ef801d9a0a3e1f441477189126c7ecefa1ccd05958fda1b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlMGE0NzZmMzU5ZWYzOGYwZjc2ZWNlOWY1M2VlZjNkZWU4NWIwMjhiZDU0YmY1Yjc3OGEzZDVkZmI4ZTU0YmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5YzQyZTc3MTMyOTZmZjcyY2Y2ODZjYWNlNDFhZGY0N2E3MjM2NzA2ODBmMTA3ZmMzZWQ3M2IzYjU5ZjFlMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwMTFkYTIyZDg0NDcyOGE0ZjkyMzE1NDNkZGRmYWRkZWUzMWE3ZTY5M2IzMmEwODE4MDEyYmYwMjdiZjFhNmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxYTkzYzAxZTJhMGU5ZDA1MjdjNzVmNDVhYWM2NWJhZWU2ZTYxNjA4YzMyYTA1NjRiOTBjZTk3YmMyNWRjZjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2e98a240b5354b83a21131620e5ef9d7",
+      "statement": "Call persistence stores only the remote number’s final four digits and a keyed digest, while call records retain provider and lifecycle metadata.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/security.py#L41-L55",
+          "version": "repo-lines-v1:sha256:697cd32feb64a451e92e42d0c54adbdcd4a6ac0402eb9cce9939c646fbf1dc20:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNmY2YTBjMmZjYTNjMWEzOTYyMGFiNjYzZTJkZTRkYzFmYjE5OTU0OTQ0ZDhkMjFmYWUzMmFiNTRiMDM1ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmZjlhNmUyYTZlMmE5NjAxZGU5OGU0NTZhYTYxY2U0MmMyNjY3YmVhYjU0ZWRmMjRkYTA1ZDFkMTZjM2M1NmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzNDRlZWY3NGFlZTUyNDNhZjVlODkyNWY3OTgxZWIzNzRmM2U5ODU3MjVkYjZhMmZkY2QzYWU3OGYxNzhjMzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4MzYwYThlNDVjNjU2OWJkMWIzNGNhNmZkNmQyYzFkNjVhMzgyNWY0Njg3MzRjNzBlNDdmNWEyNzRkOWU4NjQifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L363-L388",
+          "version": "repo-lines-v1:sha256:fd1020470652b0089c29b46e77506bb62ba167b0da1dd8e5ecf0012ceaa27c09:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3Y2Q1NDk2YmI1YzJlNDRhYWU1MzZkMjNhMzVkNDE0MTJiYWFkOWNiZWIwZDA4NGI1NjE1MDBjZWVjZDM1M2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxNzdjNWU5MzYzMzQyMmQ5NmFmMmUzZDJiYzIxYWZkNDUyNmUxYTU0Mzg4NzBmM2Q2NDEwNGQwOWZlZDkzOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzYjBmZjJhZDJkNTQ0ZTBlY2MwNTUwOTYxNjRiOTkyNDI0YzUyOGQwNTM1MDdmMWU5NzY3N2VhOGI2YWE2ZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwMTZjZmRjZmE3N2FmZWUxMDQwNTM1YWM1YWI2OGU1ODg1Nzg1YjM3ZjViNGMyY2Y5NTdiYWMyNjNkYzg4M2YifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L84-L103",
+          "version": "repo-lines-v1:sha256:6b57cbc3e6f76272bc57330183840f9df3d5ff5c94948ad150808c868ff4a644:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjM2U4ODcyZWEyMGJkYjdkMGMyYWFmZmU4MjQ5NTQ4Y2I5NjcyMjY1MzFjOWEwMjhiYTliYjNjMTc3OGUwYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhOWY4YzJiYzdhMTQxYTAyMmFmM2ZlYjhhYjUwMDhlYzI1NzU3ZWYyNGFjZDA0OWY1MDg5YTc0YjdjOWFlODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1YzdhZDhlYWRmMmFmZGVmYzBjMTY0MTZjMzUwMjQ4ZGUxYWIxZmNjYWM4ZDM4YzUxNTM2M2RiNTgzYTMxN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllOTY4ZjZhN2JkN2I4ZjllNDA3NWE4ZmQ0NWI4NWEyYzU3YzEwNjA2NjVlNDE5ZWY0YzUyZDMwMzhlN2I2ZDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8609c6ec7e134273807a674904376ee9",
+      "statement": "Known provider status and event callbacks update local call status and mark terminal statuses as ended.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L137-L156",
+          "version": "repo-lines-v1:sha256:5af992932cbd1f577d17da098e5ca8fd147e49b6e4dab8bb5d18676181f71d65:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1ZTk5MTI0ZGVjMDI4YmQ3MDhhNWU2N2E1M2QwOTdjOWY1OWViODBlOWYzZTliM2YyYmQ1NTZlNmZkZTJjMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyZjRkNDI0MDFjNDg4YmNhOWVkYTJkZThhYzVhYjllZTFiYzRhMjA3ZDcwNTlhYmE2ZWFhYWQwNzNlNzc0N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxMjU5MDBiMDU1YTk4NDIxZWM2YzcwM2Y1ZWY5YWZkYjdjNDE1NjIzNDBlNGNhZDlmYzQzMTg3MWI4MmE2OTUifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L240-L260",
+          "version": "repo-lines-v1:sha256:3af8e095f08aa832cf26ed6aeab527e4b2c5b721da6fbd564ffd55ee4b9b9265:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNzYxMjdmN2Q1MTk4N2UzNWU3ODU2OTQ3YTRmMzI5YTJiN2NiMjA5ZTFlNjk5NTVkYmQwMmFlZWRmNGMzYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjMzg2NGQ1NzRjMDE3ZmNlMzI0OTliMjU2ZWQ2ZjM2YjkzODUzYTQ0ZTdlODA1MzMxZTM5OWNkZjdhZjIwNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViYjJlNGI4ZTAxYmJkOTNiYzY3NjY5YTJlYjEwZTliYTBmMDljYTZkNjJkYzgzMjEyNjI2MjQyODVhYWM4MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_96e9a7adadd94cb3b1199b743011c4c8",
+      "statement": "Twilio and Vonage outbound clients require an E.164 destination that exactly matches the configured allowlist before creating a call.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/telephony.py#L137-L150",
+          "version": "repo-lines-v1:sha256:9dff652a7e688b7afce31607fbc453cd59201ab7f3258ea34ed444cee8a91e79:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZTU3OWFlMTY3YThjODA3YWY1YWYxOTg2NzI4NGIzNzQzNTZiZTUyOTFhZWNlOWU4OGY1OGNkZGNiMDU5ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3ZjlhZmEzMDRmY2I1YmZhYzgwZmE0ZjFhYWY4MGM0MmZlMTRiNDc4NjhlODE2MTViNjkzMDdkNDI0NDA2MzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYjVlYmIzMjkxYmYxMGZlZjE3YjM4YzE5MmNiY2Q3MzYwM2JiNDRhNjYyYzMyODBlMmU4YTkxOTUzOWViMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4ZDc2ZWE4ZTQ4YTQ0MGQyMmM0ZDllNzYyZDdhMzVkMTIxNDBkOTIwNWU5ZGQ2NjdkNjQzMmYwZTM1YzhiODYifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/telephony.py#L32-L38",
+          "version": "repo-lines-v1:sha256:7906b2c45209914491956a38e5d02d823d3a31d5baa32d4d2fd5d41b571376d5:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg4NGNlMzI1MjM1NzZiMTc2MWQ5NTRhYmFkNzBlZmU4OGM5NzRkOTVjNjdlM2JlMjZhYmY2OThlOTZjMDE5NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTBiNTMxYmE4YjVlYWI5MTc0MGU4NjA1MWYyZGRjYzEzNjAyY2MzZDQ0ODZkZjkxYWI2NjM5YmQ0MWRlMjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTI3MTgzMjUyZTBmMDI0NTM3OGM2OTQ2ODdiMTkxMzkzZGU2NWQ4MWZmMWMxNDEzY2ExNWFiODIwYWRiNTYwNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzZhMWFiZmU0MmZjOWUzYzJjYzc5YTVlZDQ2MjcwZjdhYjkwYzdhYmI4NjE2ZThiMGNhMDlkOGFiN2FkZGVkMyJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/telephony.py#L61-L77",
+          "version": "repo-lines-v1:sha256:9e3e8ecd37aa1361095f23f1018de0b0437c12cd6aa3720eeb421fc5cda3edb8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZTU3OWFlMTY3YThjODA3YWY1YWYxOTg2NzI4NGIzNzQzNTZiZTUyOTFhZWNlOWU4OGY1OGNkZGNiMDU5ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MjIxYjc0MGY2NTk0Yjc0NzQ1NzIwMWFhZjkxZGJiYjljMTFiNjU4ZDE4ZDRlMzJiNzU5NTYyNzQwODYzNjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4M2RiMDE3MTcyMTFjNzUxMDYwNjg2YzU3NzgzZjg3ODNhNTlhMjI0ZTVlZDYzMTJhYzBkODc4NGFjM2I1N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4NDk3OGY3MTJlM2I3ZjE1MmM4ZWFjMjI0NjEzNDI0NDA3MzMwNzZiMzE1YmExYjg4ODFhMjViMmE5OTVkZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b7d276c42f249e985e5d613a75863a6",
+      "statement": "Authenticated provider handoff callbacks retrieve a stored briefing and return provider-specific instructions for the human leg.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L189-L204",
+          "version": "repo-lines-v1:sha256:8a00f66b189f7eb568cb4520839f522fcea74068f15c9886937d379f80bbe8ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxM2IyOGM5MjUzNmFiODA3MzFkODRjMjVjZTQ2OGRmZmVlNjI1MjFhNThkMWE0YmJlZWFjYzMzOWVjNjUwZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjOTJkYzEwNTkxYjdjYjBiNDJlNjRjODU2ODI3MDQ0MDMxZjZkODc5NTlhZjc5NjIxMDAwMGRhYjgzOTQ3OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg3MDRjMGUwNWEwZGE0ZTdjOWQzZmY5YWQxZTc4MGIwYzczZTRjMDdlMGExN2JiN2JkN2E4ODQ3MmZhYzg0Y2MifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/telephony_gateway.py#L287-L299",
+          "version": "repo-lines-v1:sha256:ebf50c9b826ac6c3586a9c68927cf821946baae3b64088de7e20e65e11f185c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljZDkwNmVmMDI3ZjFjYWFhNWY3ZGI0MjMwMjBkYTM0MTRiZmE5NWQ5ZTljYTdmZDk0NzFlYzIzNjI2ZjI1ODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwY2ExNjgyZmU1Zjc1YjU3MmRmNWRjZGEwNTVlMWEwODJhNGNiODRlZjdhNmYxNTljMjQzNzY2ZGYwNDBlNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjOTJkYzEwNTkxYjdjYjBiNDJlNjRjODU2ODI3MDQ0MDMxZjZkODc5NTlhZjc5NjIxMDAwMGRhYjgzOTQ3OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

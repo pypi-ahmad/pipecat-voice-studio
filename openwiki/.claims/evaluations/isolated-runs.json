@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5bce21858664fbdf2c8d51d63bee01cea50f6dc017e926655065382d3af4c9c3",
+  "claims": [
+    {
+      "id": "claim_71465f20691c4b0c91be4ef65a7b1e45",
+      "statement": "Evaluations accept only five named, bundled scenarios, and unknown scenario names are rejected.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/evaluations.py#L282-L288",
+          "version": "repo-lines-v1:sha256:3febb36983ee08a8aea754ce261b5476fd14f0e0a59ae0d0dfc2bac2dcafe397:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAzMDlkNmJhNDMyMjk2NjVmZDRmNDk1NmMyN2IxMGVlMDI0NmE0NGUxNmM3Yzk0MzhhZjU1NWRhNjIwN2JkOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWFmNjc5MmUxZDRhMjM5ZTZmMTdjNzE2ZjgzODhiZDU5MzJlMzUzNDQ2YjJhMjA3MWEwNmRlNGFhNWFmYmMyMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjAyYjcxMTQxOGNhMjQ4MzIyY2ExYjNlZTk0MTM1ZDFmYzIwMDU5YzUwNzM3ZDFlOGNkYjExMGFkZTEwYjc5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjE2ZmQwODBhNzZhZjY3YzdmYTc4NjdmZjFmYzEwMmJiMGUxNTY4NjAxZWJlNWVlZmJiY2RlZjM1OTA5NjM2OCJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/evaluations.py#L47-L74",
+          "version": "repo-lines-v1:sha256:5a9fe07ebfb20885f113b006b377f8c593bc0d03c87e984137604e878e3d4774:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1Y2MxYzgyYzJjZGJkYTVhYzNlYzY4YjhlMzRjM2I0OGM0ZDgxMTQ3Y2M3YzFlYTkzMGQ2NDhiNDI4YWI0YWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlYjAxMjRhZjQ4ZTdjOTBkMGU4MjA0ODA2MDM0OTYwZmI5NDNmZjYyM2ZkYWZiMDdhY2YzNmE2Nzg1YmE1NWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2ZTkyM2E5MTc3ZmE0NjNjYWNlMmI2MTc5YjNmNzY3M2ZjMWJiYjYyMDgwNTQ2MzM3YjVhOGI1YjAwYWYwNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ0OTk3NzZkNDhmM2IzYzEwNmQxNGJkMDhhNWM0MDk2MGQwYTY5MzFjMmRiNzc5MWRmOWViOTE5ZjA1NWI0MmUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ad5b4f979c343ddb5243d10b74e2085",
+      "statement": "Each evaluation uses a temporary SQLite database containing a copy of the chosen graph and runs a child bot worker configured to use that database; the runner cleans up the worker and persists the outcome in the original store.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/evaluations.py#L164-L183",
+          "version": "repo-lines-v1:sha256:b66d5da32cf7f9ff562c9cebaa7d72de3525363d55a27546732e434e3129caae:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk2ZTg3NDQzYTY2YWJiNmNlNDhkMzdlZTgzMzNlMzZkY2E1NjE1ZDgxYzIyNWU2MGE4YTFlOGYwYTJjNzBkNGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjZjU5MGFkZjRlZTcyYzVmOGEzMzViODc4NjM3MzRiNzM5MzFlODAyZWUwMTFhMDhiNWExZjA5ODUyZGUwNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmZDY1YTM3NTlhYjIxODI1ZDU1M2M1ZDY0MWM4NDI1MDJmYjliYWIwMzc3MTMxNWVkOTlkMjBlODY1ZTcwMTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1MDRlYjcxNTY5OTBjODk5ODAwMzVlNGU0ODkzOGYwYTI4YmU5MjRhOWFkZGUzYmUzNmNlYmM4NTgxZjkzYjYifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/evaluations.py#L206-L279",
+          "version": "repo-lines-v1:sha256:28115fa99271f6b15f69efbd2cbd140e737d7a4ee2b523f71323951c19d724d3:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkYmQxMGU5MDZiZWRmZTU2ZGI3OTdkOGQ1Y2UwMTRhZjI4MTMzNjFmNDIzMDg3NTRlODMyOTAyZTcwOTUyNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjZWUwMjUyOGFlOGUxZWJhODRlY2I4MWNiOGZhZTg3ODJmYmQ3NDlmZmJhYTc5ZmMxZTM0NzBlMGE2NmE3NjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjOTQyZjhmMjI1YTNlZGNmZTk0MDI4MGYwOWYwMDQzOTAwMmU0YzA3YzQ0ZGRkNWEyMzIwMzNjMGUyOWI4OWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlNDA5MWYwM2YzMzVlYjI3MzE4OTY3YTFkZjk0YTJlZWZjNjVkYzllZDdlNzU3ZDY0YTg4MDFkNDk0YzJkMTMifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/evaluations.py#L95-L155",
+          "version": "repo-lines-v1:sha256:402f7b9349961e4f9fded1b87ab846a23f0c88241b70ffda09296fadfd998464:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmNWQyN2RiMWZjNzg3NDM2OGJlNjAzZjYzNThiZTBjYmE2MDliNDk4NGQxYjUzY2E1ZTlmOTJiNmY0MmNjNmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZjRlMjJiOTc5YjAwMGY1MDRmZDllOGFkZGY5N2U5OTdhM2IxYWQwMGU3MjdiOGVkYWY4ZjNmMDMzMzA2YmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5MWFjNTkxY2ZhYWY0YmZmZWQ1ODAwNmRiMzNmODkyZWMwNDA2OTg3N2I1NDVhOGQ1ZGViN2ZhYTllYzNmOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiOTQ0MWY4NWQwZDRkY2VhMDgwNDk1NGE2MjVlMjVmYjZmNjhjMWY3ZThjOTdlZGQyN2E2MzYwODYzMWEzZDUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

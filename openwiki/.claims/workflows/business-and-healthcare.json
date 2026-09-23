@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2c67106fc919ac3407c3d5b1506664c1239651395453d92ed308b44ce7f952c3",
+  "claims": [
+    {
+      "id": "claim_cbdc386bc50743d8b805d84b8182682f",
+      "statement": "The business receptionist routes to four allowlisted departments, and HubSpot lead creation is exposed only from the configured sales specialist and requires explicit caller consent.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/hubspot.py#L38-L60",
+          "version": "repo-lines-v1:sha256:bb8531cc2746afedb3dc8b7aa4d202ce0eb874508bc0ab8b422bda3960ac34fb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwODNiM2Y4MDNkNTdhOTY3OTdjZWYxZTM5NDFlNDM1NmQ4ZDBjNTc5Y2ZiNTRkZjAzNmU2Y2U1ZTE5MmM2YTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YjBkOTk3MmFmODVjMmZlY2JkOTdmMzZjMjk5OTA3YzkyODA5MzMyM2E5NTI5YjFjMDhlNjBmMjhjYmNmYTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYjVlYmIzMjkxYmYxMGZlZjE3YjM4YzE5MmNiY2Q3MzYwM2JiNDRhNjYyYzMyODBlMmU4YTkxOTUzOWViMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMjk0Njc4NzRkODhkODgzNjU0ZTM5NWJkM2UwNjFmOGM3ZGQ1NmJhYThhZWM0NzU5NjVlZjM2NDYzNjhjYjIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/business_flow.py#L36-L60",
+          "version": "repo-lines-v1:sha256:c1224db44cda2211dae94859c85cd54563c427985d8d079ba9f964047c9c8fc7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkZDYwNTEyOWRhOTZjMzY3NzgyODBiZGIxNzY4ZTFkNGM5ZDFjYmIyM2E4YjA5MWM4OWU0ZmQ0ZDM5NWY5YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MDIzYjQ4ZWIwMGYxZWE3MWE2MGUwOWYyNTU4YzNmODljMDllMGEwMWE2YjE3Njg3M2U5YTI4NzVkMmE4ODIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3OGYxMTEwZjQwMGUxMzM2YTYxMTdmNzkyZTdhZWZkN2IwNDg3ZGVlNTEzZjNiYWMyMGU0MDExZGIzNDVlZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliMDIzNTcwYTM5OWM1ZWNmNmIwODI4NzlmOTM1MTIxN2I2ODdlODE4OWJhNzM4MmNlZjdjYzQ5OWY5ZGQzMjAifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/business_flow.py#L62-L80",
+          "version": "repo-lines-v1:sha256:b611b7b2ec9010b5046e4b6d8493f78fec304788921bef421bd2e1adf79ca3bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyOTUzYzI1NzkzZDVlZDBlZWYwMDY3Mjk1NDQ3NGI0YTUzZDJmNjQyZGQ2MTU3ZjlhMTJiYzE1MmQ3NGJiMmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmYjFlMWUwMjE1ZTUwNjE0Y2RlYmVlNmY3ZTY0ZDJlNzljOTQzZjcxZTI1NzFhNmIwZmI0M2JiZTQ4Zjg2Y2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkNDIwZDE2ODgwMTBkNmU2NDcyZWY5YWIyMWYwYTczOGViMGEzYWRiYTRmNmJiY2NiNTRhNjlmYzc3M2RiNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRmMDZmODM1YTRjZjYxYTNlOGE4ODVkYjE0YThmZjQ0OGIyZGFjNjdjNDZiZDI4YjE4ZDhhNTBmNWIwNGMwNGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_708275358b104d6893291b2e764c67d5",
+      "statement": "CRM outcomes are recorded locally after success or failure with the phone number reduced to its final four digits.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/business_flow.py#L87-L106",
+          "version": "repo-lines-v1:sha256:ee295af293c4d417a2ba6b8e4e8c9fb602ebb1d130ef8471065f221d5e3566d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0OGY5MGNlZDg3ZTc4NTEzMWIwMDdlZGM4OTRiZWViYmI5YTBiYzkxYWI1YjUzNWU4OTZiNTBlZWZhMDgzNDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNjVkYzc5MGRjYTE1NzcxNjliNTQxYjY4YjhhYjc0NzNiMDljYTNiNWRlZGRhMGRlMmMxNzNjYTc4ZWU3YTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg4OWU4MjI3YTZjNzVjY2Y2NDVmMDBhMjlhOTMwYThjMTYxMWU5NjYxNzE1M2ExMjA4ODk4ZmI1NzdkMjFlODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQxMjcyOGMzYjRmNDcxNjAyNmM0YmY1ZDMyZWNmMjFjMjBmY2Y3YzMzYTVhNjdkZjNlNzAxMzU1MWZjMjg5NzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_68d5ef429856475f9bc7709edb2fc6eb",
+      "statement": "Human transfer requires an attached telephone call and configured provider destination; the flow records the handoff and updates its status after provider redirect.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/business_flow.py#L108-L141",
+          "version": "repo-lines-v1:sha256:0df749fd6ec5f82c1b4f652b20adde7427ab009d70fcd68892fe6eaca8280506:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NDk3NWZmOTE0YzZlMDgwMDA5ZmMyMWJlZjhkNDQ2ZTFhNjk4OTU4OGYzYTM3MTk4ZDZmMWMzNDNhMWZiMWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NGQzOWE2NWJiZDJhMTk2NmFiYmJlNWJmYTU3NTNhOTUzNmE0MjZlNmY1ZDhjODg3NmJiMDAyN2Q0ZTQwZTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3MTIzZDY3YmRkM2MyYWJiN2U2MDUwMjZjOGVkN2M5YmNmNzExNGE5OTUxNTRlNmUwNzNlZDM2MWU2ZGJhNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0OWExYmYwOWM4NThiM2U5MDM4ZTQwYzQ4NWYyMTdhYzhmNTQ5ZWI5M2MwYmIzZTc3N2ZmNzIxZGIyYTk0MGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4fa996bc361c4a8caae1d48e4801eef9",
+      "statement": "Healthcare flow initialization requires the feature toggle, encryption key, and explicit OpenAI service approval; graph validation forbids combining healthcare with CRM, calendar, appointments, or multi-agent routing.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L184-L190",
+          "version": "repo-lines-v1:sha256:5bc87dbac8ca11821c5c5b6afbde902e075668febd6ad0f1545a40051feffe40:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWIzYmExYzE5NTUyMDA5ZmUzMzdkNjRlMGNmNGIzZTYwNDNhYjE0NjBjMGMzMTdlZjMyZmU0ZTkzZDE1ZWVmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjExOTJkMDUzYjQwM2Y1NTE1MTJlZDM4OGIwNDRkZDE0YmYzNzI5MDRiNWVmZjQ5ZDUzN2JmNDc0NjhmNmZhNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODVkZWIyNmYzNTkzNGJiOTNiYTZiZjBmNjhkMGVhZGJmYmRhYjA4MDZmNTlkYjE0Y2NiYTE5Mjg4YTQyMWRjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmQ2MzNjMjYyNTk4OGMzMTZhZGFkZWE4NTcyYWFiYTNiYTU5OTcxOGJlMjk2MWQzZWMxNzFiZjNmODY0YWIxNiJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L281-L293",
+          "version": "repo-lines-v1:sha256:eeb2fa9a27adbd4be3b07f892769ac6c6149c76ef969366f71f6a2fecc917f42:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjM2Q2MmE2MzUyNWNiMzIyMzdmYWMwNDBhMmY0NmNiYWFlNTczYmY4OWZkYWI5NTViODczYWVkZWY5YjBhOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2OGRmM2Y1ZTViYzlhNjM4OWU1MGE4ZTNiMmYzNDcxNmJmNTFjYWQ4MzVjODZlOTFkNDhlMDQxYjAxMzkzMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5M2NkZTI5MzI3Y2U2ZjE1YjBlMWM3ZjA0ZTNhNTdlOWYzNTRjYWVmNjVmM2JlZWY2MTg0N2U1NDc5NzFhMjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_68e07c90f9df47f4987f4287e44120f6",
+      "statement": "Healthcare consent is stored with a policy version, and a declined consent ends intake before structured collection.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/healthcare_flow.py#L21-L38",
+          "version": "repo-lines-v1:sha256:18e3d9a213b5d29a2ea208eaf865876c7d70c23f48f213900683493440c9d45e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjYjEyYzVkOGZmZmQ1MDc2OWRmZjQwNjM4YzkxZTMyNDM1ZjFhZDZjYWRlMDE0NDU1OWY5YTY0NjJjM2E3ZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3YmYyMGNkMzhiNTc4YTY4YzhlNDIxODQxZDg3MDc1MDg5OWZkNjA4OWRiMzUxODZiM2YyN2NkODJmNGQ3MGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5NmQzMjQ0ZTIwZDc4YmY0MTc3ODEyM2Q3MTI4ZmE0ODcyOTNlZGYxMTc0YzU5NDRiOWIwOGU4YjNkYjQyNmEifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/healthcare_flow.py#L76-L91",
+          "version": "repo-lines-v1:sha256:535c5ebbd05eee832f32c67e09a0816099f606d8294855315098606adff45bcc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0ZTRlNzQ3ZGZjMmU1YmUyN2NkMTBkMjk0NzhjZTliZGQyNjg5NjZlYjg3MTRhOWM2MWZlNDA0N2NiZWEzNTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTFiZmFiY2ZiNmQ4OWZkOWY0ZTNiN2JjNGExNzRmZDkwYzk5ODE4NmU0ZmRlMmM4ZmEzNGU2ZDVjMjkzYWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyMDVlYjNkODRhZTI1ZmE1OTRiZDdiNWVmYjhhNjJiNGE4ZTQ0MjY0Nzg4YWFkZWMyNzViNmFlNzdlYmVjNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxZGMyZDkxY2MzYTY2ZDNiNmQ5N2I1ZTIwOGY1ZmFlYTNhMGEwOWQ4YWRhNDgyYzkyNzMyODJiZTYzMmI3MTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebfb96efb38149fd9e478ddc677747fa",
+      "statement": "Healthcare intake is limited to structured fields, encrypted with AES-GCM using the session ID as authenticated data, and stored with review/escalation state and an audit event.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/security.py#L58-L79",
+          "version": "repo-lines-v1:sha256:a471b2605f8e3f152b0436dec7a6a74aff3e45aa8cfa247e675f67e0ce5f1e3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkOWRmYTBiZmQxNGVmODI0ZGI2YzZmODY3NmI2Yjc5Zjg4Yjg3NzE0MzBlNDU1MGQyMzk5YTVmZWM2YWU3NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkZmMwYmI2Yjk2YmVhZDc3NDE3YjU3ZDUyNzQxMTgyODY3NGY2Y2ZhYzg0MWQ3OTIyMjgxMjliNmE0YzUxNWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1ZTA3NzYwOWNhOGJjNzA3ZTU5NmM4YjA4ZDM2OWNjZTdiN2RlMDE4NTNlM2MxNjRmODc5YzQxOTBiOWM1MmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmNzY5NDdmYWZkMzAwZjAzOTdmYmY1Njg3YTdlY2E1Yjk3MWU5MmEzZTg0OTA5NGM2MmRjMmNhMDhiZDdiMGUifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/healthcare_flow.py#L39-L74",
+          "version": "repo-lines-v1:sha256:0a76799fdb4ee75ec26b3989748edd9af24b33807546edc34740d942c56b42c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4ZmZkZWMyNjEwZTk4MDhmMmVmODM1NmMxZjIzNWQ2NjQwMmI4YmQ0MTA0MTE5NjRjYWQ2MDFiMWI0M2RkMDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZGMyMDkxMjhiYzcyNTAwODBlZmExYTc4MTY5OTc0OGRhODQyZjQwNDQ5MzFkNDYyZmRiZWI3M2IxZmEwZDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1M2UyMTAxMzA2ZWVkMTdiZjMwMmNjMjI2MGEyYWE2OWM4NDk3YTc3MWYyYTJhZjVjOWFmMWQxOWIyZjU1YjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1ZGIwMGQyMjAyNmY5YjA5ZTA4MWRmZWNjYzhjMzNkM2FiMWRlM2JmMDE5MmYyMWNkMTA1ZDkwMmQwNWQ5ZGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_364904467b30413a8fcc29836649cbbe",
+      "statement": "Healthcare sessions are marked sensitive and disable conversation-turn persistence in the semantic timeline observer.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L233-L246",
+          "version": "repo-lines-v1:sha256:37671ec48f251071f5dd98394d37c7d99ae78ddd7ab3aabed2daad959c156b89:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3NzBiMmY3MzA5ZTk5MzAxOWNiNDY2YmZmOTA5ZjI4OWVkYWVlMDM3OTlkZTEwNzY3YmI5ZGI0Y2Q1N2QwOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlNDdkNDQ0NmZiZDMwNWExY2MyODFkMGRkYWFjN2MyNTU1OGI5MTRjNGQwNjM0OTUxZGJmYzQ3NGEwYTRjYjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiN2E0MjYyOWVlNTE5NTNiYTA3OTU3M2JhZTQxN2E1YTQyZWUwNTljNmU3MjNiZDBiMDAzMDljNTAwY2I4MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiYTIzMmFiNjMwZDc0Y2E4ZTc0YjA1ZTM5ZGI2Y2NiNmQxM2UwMWI1NWEwOWU4ODY3NWRkYWU4ZGQwMmMxNzAifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L259-L265",
+          "version": "repo-lines-v1:sha256:fb54ad0ca6842ade5875eeef1d7572a447158c474b0751f07e1a81409962306a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTA0YzJlODZhOTZkNjExODY4OGM4YzYxNzU1YWFlYmU1YzI1MDJmMmZhMGRiZTIxMDI2ZmRlNDIzNGIyODdjNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQ4MDIxMGJkYjljYmVmNTI2ZDNhNGJmMWUyOTgxMTMxM2Q2YWUxNzJkNTUwMDkwMzUzYWI1ZWI4YmM1NDQ3NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTZjNmJhNjZkZDBiMzg2M2U5MjhjNTcxOWU3OWQ3ODFmZjdmNzhkZGNmZjY0MmRjOTkzMjAzNDRjYWQyOGZiMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTg3NTY0ZmQwNDNjZTE5ODY4MDA0NTNjNWU2Y2QzYzA0MDFkZjRjZmE4NDliNWMzZDU5YzIzZWY3NjI3YWRmYyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

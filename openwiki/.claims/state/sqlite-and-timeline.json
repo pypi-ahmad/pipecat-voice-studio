@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e94e545481b970cf5d19c70b2a24fed97600a0beb238c28fcd356e13ccbbb5b4",
+  "claims": [
+    {
+      "id": "claim_03f00cb696b74bd6a81cec451e22a11e",
+      "statement": "StudioStore creates versioned SQLite state, enables foreign keys and WAL mode on connections, and initializes missing starter pipeline graphs.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L182-L188",
+          "version": "repo-lines-v1:sha256:da9abdd8a246aadbd97676fb77c8a2ffc00ca13959034947ab0f7091143a68f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjkzMmNjZDI2NWFiNDQ1YmRjN2IxNDAyYjE1YWE1MmFmMDE4Y2FmNWQ5MTY0ZDRlYmNiMzdhOWE5ZmM1MzEyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWEyOTAzYzI2ZjJmZjZlN2JiN2Y1ZGQyNTEyYjM4ZjgwNzMxMzMyZTkxOWUzZDlhNzU2MGUyNTRiYjEwZmQ0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDRhOTMwNzQ5Y2NmZThiNjVhNmUwMzVkNWY0OGY1Y2JlZmQxODllNGNhYmRhYWE1MzA1Y2Y5NzMyYmMxYWIzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjFiN2NlODlhZTBmZjEwMDJiODJkMmJmNWM2ODA5NjZmZjRkYTkxYWNiMDEwMDE2M2JhMTUxZjAyMDc5ZmU4YyJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L37-L68",
+          "version": "repo-lines-v1:sha256:cdc0a3eb9dd3f6f55246937cd6813d5a9886394c82e33b871ad20920e4435f6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5MjRhYmU5MjgyMjM0NjdlNjQ5NWY5Y2VmMDBjMDM5Y2NlY2UzN2E4YjY1ZTcxNjI3NTIyYjFlNzQ0NTZlZDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlNWE1OTk3MDUzNDdlMjExYWY0ZDg3NzI3MGE0YjMyODhkNmVjYWE1ZjgzOGExMmFkOWU3MzFiYzA0ODAxZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzNmJkMTIxNTMzYWM4Njg5N2FiYzA2MjdhMzhjZGZlNWU5ZDU4ZmE3ZTc2NjViM2NjZGRmOTJjYzc4Nzk3MDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwZmMzZDZjY2JiNjk3NTIzMjFkMDQ5MThkMTRmNzJmMjA4ODJlMTE5Zjk3NGY4YTE0NmNlNTc1NjdiNGM1Y2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfaa96b308094b3a85438e4c83a35187",
+      "statement": "The version-1 to version-2 migration makes a .v1.bak copy before altering schema, and unsupported schema versions fail initialization.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L157-L181",
+          "version": "repo-lines-v1:sha256:029be30d12479cda767e2c114d68f9ea589602441e86df1cfd994e4f955a7a01:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyZTA3ZDk1NDJkMzQzZGM5MTc5NGMzYjkyY2U3OTgwZWJkZWMzMDM3YjA1ZjdhYTRjODRiODE0ZWFjNjA4OGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjOTdhYzE5YzA4OTgwMjlkM2Q2YTk3N2RkNGYxZGFmMmM4NzMwNTg5MmQxZTllM2U0OGEwNTAxNzZjMjI2NWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyMmIyZTJkYjJhY2Q1M2I5M2EwNjEyZTcxNDM5NzM2NDlhMmZkYjEzMzY4NTYxMDhiYWFjNzVhZWU3YWQ2MDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1ZjlhNDI5ZjgyYmFjZDUyOTc3Y2MyY2QxNTIyMzY5M2U5OWU0MDliZGU0YTcyZjRjMTQyZGM2NGJkZjg5ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_90327e26982a4e16ba44881d57cd784f",
+      "statement": "Sessions store graph and model snapshots; timeline events are assigned per-session sequence numbers, read in order, and the audio.raw event type is rejected.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L234-L279",
+          "version": "repo-lines-v1:sha256:e16b245b72472d9f4fb5941ec45a48eca8d49296ce1997192220bcb907b6ef8b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmNDI5MzFlMmI2NjdhZmQ3MDRkNWJmNDYwOWNlNmVkNTA2MzAzZTQ1MjhmMWE3MjY1MTQxZGUyYzJlNTQ3NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjZDU3OGUxZmIyYjgyMjJkOWFmMGMyN2NjOTBlMzYwY2I0ODI4MjZkNjQ0OTdlNTc3NmI5NTBiN2QxYzY1NDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyNDI0ODIzZmRjMzYzNTg4YmMzOGZmMzM4NGViZmQ5ZGU3ZGRkYTkxMmNjZjU2NjIzMTIzZGI0OTc4NzZmZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhZmIwOWUwNDY5NzhjNzhhODk3ZmRhZjA4MTUwMjM3Yjg4ZGJiNDc1MGY1ZmUxYTg1YzhlY2Q3MjEwNTM5ZmMifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L281-L289",
+          "version": "repo-lines-v1:sha256:89a00bf6c2b448483469bc24a487bc5ed741a194be7ed78f18a48e7565961f8c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTczZDUwYjBjNDBlODY1OWNiMTU0MzFlZjU0MGQ4ZmRmN2I1ODY1MDM1ZjBhOTVjYTcwYWE1Y2ZkNDBjZGQxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTBkOWNhNWJiNzhhYzE3YmZkNTM4MjFjYmQ2M2RiNWQ5MjZkOGNkMDY0MDNkMDI1NzZhODZjM2YwMzFhYmQxMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ1NTMyOGM5MmE1ZWIyZjVmZGUyZThkYzYxNTA5MjdhMWU1OTUyOWYzZTdmNjcyMWM0MjJkM2ZlM2FhOTc5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDY1Njk0ODQ2ZWFkN2E4YjkxNTI5ZTA0ZTQ4N2ZjNGI1YzUwYzA5ZjZiYjA4YWYyY2VkYzIxNmFlY2VmYzljYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_50874ff92f254451be1c75ed2a098fb5",
+      "statement": "SemanticTimelineObserver persists selected turn, interruption, tool-lifecycle, and metrics events without audio frames, and its conversation persistence can be disabled.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L119-L138",
+          "version": "repo-lines-v1:sha256:beab8c255beadbb07cbaaf9dfda0c76f7e9d1167ba28a222c2e7609c2e7c2d55:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0ZGZkMGRlNWExMDM2ODQzYzFiMDJkOWQ4YzQyNmM0YWQ5NzZmYzlmYWEwMmNhMWNjYWFkNjA1ZmZhZDk1MmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzODYzNTA2MjA5OGZmMjljODNiNjNhNTEwYTZjNWQ0N2Q4MjQ0ZjI1ZWY0M2M1NGZkNTllYTUxOWJjMWUxZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L32-L55",
+          "version": "repo-lines-v1:sha256:18c942e884b9e550c1b3d2200096bfee936beb2f878af7c69e6895686d7f0bff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5NTJlYTM1MzU2NGE5ZjliZWQ2YjM0ZmIwZjU2MzkwZDY4MjJlNzRmMWU1ODNkMzE3OWRmNzMzYWU0NzE5N2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzMThkZGNmYTc5MDNlZTA0OGVjNjg4MmU1NTBjZDg3NGIxMDM1ZGRjMmY5MjRkZDI1YjYwYmJiY2YwOTc2YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0OTM5NzJjNzQ0ZTA3NmE5MDY3ZmE0MjgzYzg5MDAzNWRmZjc2ZGNiOGUzMTkzMWZkOGVjYmRmODFhNDVhYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxYzdlMGZhM2IxZDM5OTg4Zjk4MDk1MTNjODE0Y2RkMzk1MDQ4ZTMyYmQ2OWE1NThlNTZjYmVjNzA0NGNjZjAifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L57-L84",
+          "version": "repo-lines-v1:sha256:e1c6c99dde3ac1fc90071582adcb720a9b2cfefa17258db0d1217d7580749b07:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ZDQ0ZGYwNmU4M2MzZmYyZjIyYzcyZjc5ZDc2ZDg1MWE1NGVjZDM5NGJiYjZhYzYwMzUyNTA0MThiOTBkMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5Y2U4NDUxMzIxZjk4MjZmNWQ2OTczZTQ1OTA4ZTc2ZDczNjk0N2M1MTU5NTc0ZGMwMmIyZjZmMTdmNTUyMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3N2VjODM4MWFlMzZjNTAyMDA0ZDNhM2U4NzU3NGJjNDQzNmY1ZTU5MWE3YzI5YWYyNGNkMmMzZDc3MTE3ZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxNTYzZDdjODkzOTkxYjhlMDAwNGIyNDAwOWY3MTc5ZmFhYjdjZWEwY2NlOTI1YWQxMTQ3MWVkNjY2YjM3NzUifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/timeline.py#L85-L118",
+          "version": "repo-lines-v1:sha256:f72cd1c47ac812e94c7f66e10e136a96898e4b0f8be1e8f44e5f48fa1f01a99d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMTI0ODkxODIxMDQ0MGMyMGI3NTU1MzZmOTFkZDdiODhmNWU0Yzc1YWI3NDM0ZjcxMjY3YTc0YzY3N2QzMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjYjVkMmZjNGUzNDEwZGI5ZTI4NmI5NDg1NGU3ODdhOWQwN2Y1NzdmNGQwYjU2ZTY3ODVjNTYxZWUwZWY4MmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkMzc2NjY5ZGYyZGRmZDkzNjcxNTJhMDMyY2I2MjQ2NjI2Y2MwNmIxMjVlYzIzYjM1ZDZmMzVhMmY0YTQ0OTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b2f8fa491ec7403a9f65f044e1328c4a",
+      "statement": "Deleting a session cascades its events and healthcare consent/intake, while appointment, call, handoff, and CRM rows use nullable session references with ON DELETE SET NULL.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L109-L147",
+          "version": "repo-lines-v1:sha256:fd135a9f6035e7c0dbd20d39291fc994fa9cd8bf46be09925eac0c8aa5a3cbe4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0MjU1MjNlMWZkZmUyMDViNDFiM2QxYzYwMjg0YzQ4Y2UzZjE4ZTFlZTRhMjMyMjE4NGQ0NjlhMjQ1MjQwNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxOGQwZmIzYzgxMzBmOTljNGY4ODVmNjU2MDQxN2QzYTJiYTE3YjgxMTEzNzE1OWQ3YTc5YTdmNDE2YWUzMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkxYjRmZWM5OGJhYmZmMjAyZmE4YmQxN2Y0ZWRjOTA5NjU1ZDRhODY5YzZiN2YzZDQyMzNhZGVjNTVlMzI1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4OGY2MzJmOTc3NDAwNzM0ODJiNzU3NDdjNWQzMzRjNDA0OGZkODA0N2JlNzZjMjFjNmY5ODU1YTBmN2FhMGYifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L291-L295",
+          "version": "repo-lines-v1:sha256:095597d6694626dca4a57dc190e47b24753fc028d0c6567eb539f0dcd2415e40:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzBjYzhmOTJmODU2MTkwYzhlYjkyMDg5ZTI5MGQxZDQ3MzY5ZmU2MjU0ZjMzZGFiMTdhMTQ1OGQ2OWFmMDljMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ViNzAyNTc1OTNkYTA2ZjY4MmEzZGRkYTU0YTlkMjYwZDRmYzUxNGY2NDUyMzdmNWNhNzRiMDhmOGRhNjFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDk1Nzc0NWM5YmZjYTUwMWFiZTIyZGE5ZmE4ZGFhZTI1ZGE1ODA1OWJlOTE4YmU1YWQzZWIxYzViNzkyZGFjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjMyMTEyNTY2MzdkYmVkOGY4Nzk0ZjlmZDcyZGM0NzU5NWI1YWZiOTU3NDk3ZDc2NDZkMzY1ODMzMzg1YmVhYiJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L83-L98",
+          "version": "repo-lines-v1:sha256:5fc01e367393e9505f93ef5422f0d5d7ad6076a4e54011b676401261e3e78c78:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZDY2NDFkNzc2M2MyYzFjNWRlNjZhZjZhNDk1NDJkZWM5N2UyODkyNmEzN2EzNjM3YzE2NGQ0MjYxOWMyMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliZDAwODlkY2Q4OThiMmQ5YTc1MzQ5Y2E5MTJmYjhjMjYzNzg4MDVlZjllOTlkZjI4ODY5ZGYzNmMwODIzZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmOGU0MjA0ZmI4ZTkyM2Y4NDJmMTU3ZDJkMjBhZGJkZmQ0NDYxODc4ODlhZDUyMTUzMmYwZDc1ODQ2OTkyY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViYmJhMWQ1ZDkyZTUwMGQ1ZDMxYzI1MmU2OGNhYzVjZmVlNWFmMjU5ZTc4ZDhiMmQwMzU2ZjhhZjY4Mjc2NmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4480f9567a96460c9a46c8dcb3af3158",
+      "statement": "Healthcare intake storage accepts ciphertext and nonce, and its metadata query does not select those protected fields.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L594-L625",
+          "version": "repo-lines-v1:sha256:66e6566dd57790f7d09bfb91777c7b662b5826f99d9be514b16182961937f19a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjMWFlNTA3ZjMyNjFlMTk2NTJkODRhY2U2NzQ4ZjgxYTZlYzJkYjhiYmIyYzE5NGM5NWI5OGVmYzg5YmViNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMDU4MWQ3Njk1MDQ5ZjdkYzg4NjcxYTFhZjE4NWFmOTcyMTY2NWU3MmI5YzhmOTVjMWMxNzRjZjAwNmUwMGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiNmEwNjhiMzI4ZTMwYzg4Zjc0YzA1MjhkZWRjYTEzZTgwYWZiNDQwYjgyNGE5YWVkZjEwY2E3YjFlY2U4YmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwZWIzN2M0ZjJkYjU4MjNmMGQwMmIzOTU3YjA1ODE4NzVmMmYyZjY2N2E1OWNhNTMzYjc0MjY3NzE3NTIyMDgifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L627-L640",
+          "version": "repo-lines-v1:sha256:3453f20ad965caea93e9f314cda97143831e6f15281b2f16dd7b7138d2db694a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmYWFlZTQ0ZGY0NjQ0N2Q1MzlmMjA3MzJkMTIzZGYxMzZkZGY2MTA3NTA4ZTNiNWU3MmFjNTBkZjQ1NWMyZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MjlhN2U3ZWRiMmM1MTNhZjViMTcwODFiYzQ2NDA0NTZhZTQwNGZmMjJlZTI4ZGEwYTcxNTYyYjFiZTQxMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5NTA4NDA5ZGU1MzgyZGU3ZWUyMWM1OTU1MTE5OGQ3YjU5ODZmYzI3NTg2ZGE1YTM3OGMyZWMwZWQzNGY0YWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyZjMzNjc0OTJjMDM5NjI1NWRkNmFkOTRjM2MyYjhjYjE4MmNjZDgzNTJkZTdiNjY3ODE4MzVjYjk4MDVlOWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dca7fe93f34144b8a161ef6d018d5dec",
+      "statement": "Evaluation runs store a pending status and later persist a terminal status and serialized result in SQLite.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L306-L340",
+          "version": "repo-lines-v1:sha256:b664fe71c93526137c84c31cd02b6e6032c07933539e31141519f4a0a5a18ece:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkZDg4ZTcxYmNlODMxYWQyZWYyYTA4ZWZjMTA3Y2U1YTZiZTYzYzU5MTc2YmRlOTZkMDk3ODBlZDQ5YThhNGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwMDM4Yzg4NTAyNGU2ZTllZTM3OTM0MGQ3MTUxNTcxZjJiMzE1YWJiZjdmNWQ3NGMzODgxOTY4ZDM0MTMxNDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjMjQxYWFhYWE2YjZiOTY3MGJhZTM2OWYzZGYxODQ4ZjIyY2I4MTcwZTZjMGY4NjUwOGIxNThlMGJlNDgxOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjODdhYzkxYTAyYmUxYTI2MGZiNDFjODc1YWYwMzg5OTQyNTg5MzExODc5YTQzMmI2MDY5MGVjYjE5Y2M0YmUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pages": {
+    "/openwiki/architecture/system-overview.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:3ba0b99ff0b34fa65e1750cae670199f01dfe97ae82061c5632fba07dafc9da1",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/evaluations/isolated-runs.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:5bce21858664fbdf2c8d51d63bee01cea50f6dc017e926655065382d3af4c9c3",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/operations/configuration-and-launch.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:f28c9ddc0203f37c2d757b4c42e7d40aa7ac05f1cb8f6783ddfe493fc1536653",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/pipelines/graph-contract-and-compilation.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:ecfb004d1b61affb4765c035d5045d83f2c7e8012d305089636bb3101445a2f4",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/quickstart.md": {
+      "pageVersion": "sha256:01087a6144bb0aed2df11e83a991eeb3ca5fd06d53a62cc1c8d8778cac9d03a8",
+      "completedBy": "codex",
+      "completedRunId": "dee62e74-c7db-4a92-b765-35d7b5717350",
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620"
+    },
+    "/openwiki/runtime/session-lifecycle.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:a066c041f75ec0d373d1843f5425f0e8684818617f1c64dabd493c4e702139b5",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/runtime/telephony-gateway.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:ad85fa827777f9ef67e70fee523613cd507ccedeaa2c2c50bdc7c3a0063a1e69",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/state/sqlite-and-timeline.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:e94e545481b970cf5d19c70b2a24fed97600a0beb238c28fcd356e13ccbbb5b4",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/testing/test-contracts.md": {
+      "pageVersion": "sha256:06eff4dc8a1482b3faf2ca33c2dff3f5d6165408616e132fc90051d69de330f1",
+      "completedBy": "codex",
+      "completedRunId": "dee62e74-c7db-4a92-b765-35d7b5717350",
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620"
+    },
+    "/openwiki/workflows/appointments-and-calendar.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:5e72d56522eadb27489dd3833ed8516616a285262ff9d2f99d85b34376474b89",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    },
+    "/openwiki/workflows/business-and-healthcare.md": {
+      "gitHead": "2e12beddefb5b81a217ff08a5c60c8ac79923566",
+      "sourceFingerprint": "sha256:d201ba2fd0964ff35d05e740992b4f85f4c5afc240bbeabc0f2e4f5d53a9c620",
+      "pageVersion": "sha256:2c67106fc919ac3407c3d5b1506664c1239651395453d92ed308b44ce7f952c3",
+      "completedBy": "codex",
+      "completedRunId": "348114d5-7dff-4f94-9cf0-3a039936b9fd"
+    }
+  }
+}

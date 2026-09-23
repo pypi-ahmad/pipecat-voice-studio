@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5e72d56522eadb27489dd3833ed8516616a285262ff9d2f99d85b34376474b89",
+  "claims": [
+    {
+      "id": "claim_b90e5c0f436b47b6b89bdff3c2e74dc8",
+      "statement": "AppointmentBook normalizes timezone-aware requests to the configured timezone and permits only weekday half-hour slots between 09:00 and 17:00, checking confirmed local bookings for collisions.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/appointments.py#L25-L71",
+          "version": "repo-lines-v1:sha256:2dd38c01a3829e1027c64382d2b892e41d9f3966b55d4365d4c0bb0f57ee8962:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3NGNiZjFkMzlmMGFhZTFhOTMzOWQ2NmRhOWM1MzFlZjZhZjUyNmNiNTFkZDQ4NzliMTdmZmFmYjc0NjUzMDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwZTdiNTMyNzRmMTNhOGVhOTVjZmE0MWQ3NWU1MmUxOThmODNjODNlMmNmNDYzMTgxZDFjOThlMDQ4YzQxZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlMGZlMWFmNWU2YzgzOGFhMjZlYTM4NWNhYmIyNDQ0MGNmODA1MjM3MjVhNzNiMTA2ZWNlY2FmMTM3MGYwZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3NmY5ZDk3MDVhYTM2OGM3ZGI0N2MxNDMyZmQwMTcxODk1ZDM1MjE0MjkwZWI0MmIxNGQ5Zjc5MTI3ZmM1NGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06f150b770df4451880143416b1e863b",
+      "statement": "Local booking writes require both an affirmative confirmation flag and the confirmation flow node, recheck availability, and translate a unique-slot race into an unavailable-slot error.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/appointments.py#L83-L124",
+          "version": "repo-lines-v1:sha256:5ede6da30ebd30550400a4416b7a652a8f9c8dc1a89d943a63e1f0444375d63a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMjRjNDZhNjNiNDE3NGZhMmNiMDBlNjRhNzA3NWJiYTg2ZTI1OWI4N2ExN2M1NGIzY2ExNTdhMjQxYTAwYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzNmFkMDI2MzEwNDFkNGNmMjA2MjMwYjIxOWRkNTgxOGE0ZTU5YTk5NDJiZDFmNzlhM2ZjMzQ1NmE0YzU2ZGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2ZDMxOTIxY2U5N2YyNmI2MzI4MTFhY2EyODBmYzE0YWZhZGJmYTE4ZGQ5NzYzZWQ5ZjE0MjQ0MDQ5OTgwNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNhNmRhYTBiNzc1ODYzOTdlNTU4ZjliNzgwOWIwOTM3OTllM2RhOGNkY2E5ZDFhNjBmZmUwOWIyOTQwMGJiMTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7702ecbe3cac4b388983de5d0a0a1bc9",
+      "statement": "When Google Calendar is configured, availability checks local and external state; confirmed creation writes the external event before the local row and attempts to cancel the external event if the local write fails.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/appointments.py#L126-L172",
+          "version": "repo-lines-v1:sha256:59d92dee6c3f89164119e1153f478316a954be88a15c3b310f8fafc4e21998ca:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNzk5MTAyNTk4NzA5MDkwMWM1YjVkNjhkNDRhYzYwYWMxNjkxNzc3NDBhNWNjMzkwZDcxMGE0ODkzMjA3ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMDAwNzg3NWRlOGY5MmQ5MmI3ODdhMDE4YzE2YzAwMDQxOGJkNWY5NDk5MjNiOTBmNGQ2M2M3ZWMxNmQ4M2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzOGEwZDYxZDY5NjZmODAxNDU1YTg4MDI3YjY5OTkyMTE0NzBlZTNjMzNjZWY5Y2NlMDRhNjk2YzA1YWEzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzNmFkMDI2MzEwNDFkNGNmMjA2MjMwYjIxOWRkNTgxOGE0ZTU5YTk5NDJiZDFmNzlhM2ZjMzQ1NmE0YzU2ZGEifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/google_calendar.py#L61-L93",
+          "version": "repo-lines-v1:sha256:e275b6f92975ca44b37f0deb61ddddc8b79158d3dce8eb2ed2e30433e61d668b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNzQ4ZjJhOTc5ZjkwMTdlMDU1NjZlNGMxM2Q1N2ZlN2QxZWEyNmU2MjYxYTFiZDk3NWFiN2M3NzI4Njg1YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1OGY3OTFhM2VhYWUxMjVmN2I2NWI0YWVlMTk3Y2YxM2NiZjZhNWVlNDJmYjliNjM1Yjc3NmI4YWU2MGIxMjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYjVlYmIzMjkxYmYxMGZlZjE3YjM4YzE5MmNiY2Q3MzYwM2JiNDRhNjYyYzMyODBlMmU4YTkxOTUzOWViMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmM2RmMTIyYWFhMDc3MmE3MzE1MjY2NzFhYzllYzQwYjg1YWQxOTZlNDM2Njg5YmJlMDJlMDUxZTU1NjNhMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_808171e5422f47aaa803059becb2ce4b",
+      "statement": "The calendar worker polls only when credentials and a calendar ID are configured, persists the next sync token, retries HTTP 410 without a token, and records/retries other HTTP failures on a later loop.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/calendar_worker.py#L26-L57",
+          "version": "repo-lines-v1:sha256:15383cc8a1beca5f7851525c040a576edf2c6cfb41548772934e8d23cb5f12dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5NzA3YWFmNGNiN2I0N2MwNjMwZmRmMTU2YjA5ZWExNDFjYzUxNWQ2ZmZmN2Q2YjJjN2Y0YWMwNWJmM2YyODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkZDJjYmI4MmRjZjY3MjBkOTM0OTlhZDU0YzExZGU1NTJiMzMzMTA0MzZjMGNhOTRhODEzNTkzYWQ2MTI5NTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmYzA1MDJjYzQyNDE4N2M1YjllOWY4ZTczNmFjNzdkMjk5YTNlNzc5YmEzZjJhY2U2NzE4MGY2MmI0MDYyOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5ZjdmN2FhMTYzMDU2N2MxYjVlNjY0NGUyMWNiZWM4M2E0MzkzM2RjNWIwZGEwZDkwY2Q1M2JhNDhlOTEwZDIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/integrations/google_calendar.py#L95-L107",
+          "version": "repo-lines-v1:sha256:c25c97de65aa3c1d84e7ee4f03d64a4aeb3164a5736cd07bbaef9139afcc4caa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBlMGVkZDk5OTkxODllNWY5M2M1ZDJkZGM3NmY2Njk1NzA5Yzg0YWFjNjI3YTQzNDlmOTdhZDY0MDc5Y2JhOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1YzZmOWZjZDI2ZGQ5MDMyYzY0NzNmOTFmM2ZhNjk1MTg3NTExN2NkZGEwNTk5YjA4YWY5YTY2N2EwNDI2NzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwOWZhNjI4MDgxZjRkODNlY2U0YTA2OWJlMmQ5MmY0MWNkODZmMmYwZDAyMGQwYjlmNTc2ZjdlOGQ4NmY1MDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_875039ccd882481c9d861bdcca857d26",
+      "statement": "Calendar synchronization applies external cancellations to local appointment status while storing non-cancellation provider status separately.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L520-L540",
+          "version": "repo-lines-v1:sha256:73a1212db606cca646f07a2e63fe6165486cf52868f547d24687d510ea90c9df:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ZTc0NGMzYWQ5ZGJmNjFlYWFjNjg1MWJlNDcyMzViOTU1ZDI5YzhkYWViNzk5YTYwNDMyNzhjNjFhYmI1MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkMzI2ZDY3Yzg2ZjA4MzY4NzFkYTAwY2E0NWIxODgzZmUyMzRiYmFjMTA3Y2FiNGE3NzI0ODBjYzIwYTFlZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiODIyZWIwYzkyZTA0OWU1ZWNlZDMwYzg1OTE0ODg2ZjdkMjlmYjNjODJkMzFmMWFlZGE1Yzc2ODVhNGJmN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4ZGIxNDg1NDVmYTE3MTUyYzViOWE3MzI3ZmUxNzMxOGJmNDY5M2M3NzZkNjUyYTRmZjlmMTRkNDMwZDhmODYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}

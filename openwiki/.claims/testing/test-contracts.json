@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:06eff4dc8a1482b3faf2ca33c2dff3f5d6165408616e132fc90051d69de330f1",
+  "claims": [
+    {
+      "id": "claim_5c3da407f9284d1c8a0d7b5f91d5c522",
+      "statement": "The current pytest configuration discovers tests/ and enables coverage with an 80% minimum, while registering a marker for paid live evaluations.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L58-L61",
+          "version": "repo-lines-v1:sha256:ebf4f5342dc8cd28e081d41d9236eedad809425e732f9d21e557d5b470a5b7b6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODY3NmU2NDE0NjVhNjU1MWU5ZTljZmZkN2ZhYTFlNmE0MmY5YjcyNDgwOTgxM2M5MDNkN2VkY2I1MmYzMDA2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWFhNWE0ODY5MWIzNDZmYjI2MmE4YTFhYzgzOGQ4YTE1MTA0ZDRkYmJmNmU1MzUwZjdiZjcwMmE3NDcyNjU1ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWNkMTI5MTNjNzUyYTY3ZDg1NmU5ODVlMjZlMDMxYzY2ZTY0ZjI3N2FjOGMwY2Y0ZWJkYWNkYTZiZWE3ODBjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDNhMzY2OTNlNzRlZGJmOTk2M2I5NTM0MTk2ODI0NGFhYmRiYTcwNzE3MmU5YmJhNjg0ZGY5NzkwN2JhMzk1NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_53e75f9e8a6b4b5ab7de073fcbe70494",
+      "statement": "The standard quality workflow runs uv run pytest, while a separate live-evaluation workflow selects the live_eval marker and disables coverage for that command.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/live-evaluations.yml#L45-L45",
+          "version": "repo-lines-v1:sha256:2d9d00ba46b7d2f4ab37147702740cf8a77ee95bd0e8b11943acc135ada664eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQ5ZDAwYmE0NmI3ZDJmNGFiMzcxNDc3MDI3NDBjZjhhNzdlZTk1YmQwZThiMTE5NDNhY2MxMzVhZGE2NjRlYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQ5ZDAwYmE0NmI3ZDJmNGFiMzcxNDc3MDI3NDBjZjhhNzdlZTk1YmQwZThiMTE5NDNhY2MxMzVhZGE2NjRlYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTlmY2U3MTBlZDMyYWEzMDUwMjU4OGQzOWEzMDk1YmMwZTMxNDc2Y2Q5NzEwYTU3OTE0NmJkODIxZjE3ZWZmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzk2YTJjZjdiODhiODE1OTFkYmI3OWNjMGEyMWM2OTU1OGExZWNhMzAwNThkMTkzNjNmNGNmODk3ZTBmNzUwNyJ9"
+        },
+        {
+          "resource": "repo://.github/workflows/quality.yml#L34-L37",
+          "version": "repo-lines-v1:sha256:41097b0c73e91e3919f5d23c3b38cd61c22cd09d0fe901306ba63836d260f74d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTI4NmYzNjUxYjg0N2M2OTYzZGRmZTEzMWI1MDgzNzIxODdlNjkwYjI3NTEwMTgwMWM1ZjJjZDc4ZjQ0MjU1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDA3NzhmZDVkODcwOGJiZmI0ZDBmZmVjOTYyNWE4ZjYzOTVhNWI0NTc1MzRlMTg4NmYxNDMwNDk4NjZlYWQyMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWMwOTNmNDEwNTM3MTc3ZWIxMzQ2NTJmMTBiOTE4YzY2MmMwYjVlM2RkZWM3MGFmMzAwOTg2MDkwYjUyZGIwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzYxNzc0MWQwYTVjOWIzMGFjYmUwZDdiYWE3MTA1ZGM5MmNhYTVlODUxMTY0Zjk3NzNkMjk4ZGY4ZGQxMmMxMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae950017170f422a8d5f9e74a42614d9",
+      "statement": "The current worktree’s source-level storage API explicitly rejects the audio.raw event type and stores timeline events in sequence order.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/storage.py#L260-L289",
+          "version": "repo-lines-v1:sha256:73054a1c06c13c05725ea35d90b49a0e5fd58443e9019e90d5f7a557b25387a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkNGU2ZGM0ZjRiOWJlNGNjMDRlMzQ2YTdmOTUxYzUyOTdjYmRhNzhhM2ZjYzNmMjE0ZjljYTExZGVjNmQ5ZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZDljYTViYjc4YWMxN2JmZDUzODIxY2JkNjNkYjVkOTI2ZDhjZDA2NDAzZDAyNTc2YTg2YzNmMDMxYWJkMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFhNDI4OWFiOWU2ZjQ3MjBlYmI2ZWNlY2ExZWU0NjMyZjA3M2JiNTZiMGI4ZjhlNzJiZWYzMjk4MWJlMTBkYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2NTY5NDg0NmVhZDdhOGI5MTUyOWUwNGU0ODdmYzRiNWM1MGMwOWY2YmIwOGFmMmNlZGMyMTZhZWNlZmM5Y2MifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:57:58.894Z"
+  }
+}

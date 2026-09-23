@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ecfb004d1b61affb4765c035d5045d83f2c7e8012d305089636bb3101445a2f4",
+  "claims": [
+    {
+      "id": "claim_797f50fb789248eea74cc72ebb97435d",
+      "statement": "Pipeline graphs use a closed mode and node-kind vocabulary, and each node’s config is restricted to the explicit allowlist rather than arbitrary settings.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L21-L52",
+          "version": "repo-lines-v1:sha256:696ae519ced45e8cfdcd94190eb1c078ac8cd9544147298e71fa9dcb0f08a0ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MzljMzY4ZmIwNDI2NDk0NTNjY2UyODhiNGVjYzUzNGQyZTJkNjk2Njc3NDRhMTQ3ZTc0ZTI4ODQ2ZWM1NjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjcwMjU3NTkzZGEwNmY2ODJhM2RkZGE1NGE5ZDI2MGQ0ZmM1MTRmNjQ1MjM3ZjVjYTc0YjA4ZjhkYTYxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjNGM0ZDVmMmUyNjdlMWEzNzYwOGEzMDY0ODM5Njg5Y2ZmYjA4ZWEyYjQ3MTBlNjc3YzA3NzE0MTc5Y2Y2MWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyZDcyYjYzZmNkZTgzMGIwZjZlODM2NDEyNzg3OWZhYWQzNWQ5NWE3NjA4ZjQzZjc1MDQwZDVhYWI2ZGZkMTIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L54-L95",
+          "version": "repo-lines-v1:sha256:621fdef280332b99f8136dd46fdd8b1895cdddff844856e8d1b73453cd1ab464:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzOTE4ZGEwNmFlYjUwMDIyOWVkZDU2MmQzM2JmY2Q5ZmY4MmFkNWJhNmQxMThjZmJhYWVhYjRmZTkwMmM2YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjNTQxN2M1NGQxZjliZjhlMDIzY2ZmYWJkZWQwNWJiYmJlZjU1MDA5Y2I4MDQ4N2U1YmZhNzA4ZGVhNWY4YzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0NTEwZWQxYzQ5MjA4NmQ4ODQ5NGRjNzQ2MWNjMTRiYzk3YTE4ODhlYzQ0ODAwM2IwZmVlMTYxZmZiNWFjODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5MDhiMzMxMGUzYTZlY2E5MjJlZmExMjJhZDE0ZGIxYjE4ZDAzNjBiYTc0MThmNTBmMjJlZDUyM2ZhOGU0MWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_27ee7e4e7e014c29899d08fc945d566c",
+      "statement": "Graph validation requires unique node IDs, valid non-self edges, the timeline/metrics/persistence triad, and exactly one transport consistent with the graph mode, with additional constraints for realtime, cascade, telephony, avatar, and healthcare nodes.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L107-L153",
+          "version": "repo-lines-v1:sha256:50f1044cb2cbca3eb23eb0cab84bae9aba8c564fbe603342e8758a62fb8aecb8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwM2ZmMjNmYmViOGM1YTkxZjM0NTAzNDg0NmMyODI2Y2Q5OTlmYmQ0OTY4ZDYyNDJmMTZhN2RiNjE2ODUxMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmNTMyOWI1MTYwYmRlYjNlYTVjMWE0MDU1NjQzM2Y0NTM0YTQ4YjE5YzcyNDI2ODkwN2ViYjQ0NmFkZGEzMDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwZTRkNTYyYTc3ZWI1OGI1NDdlZWM3NmJkN2ZhYTgxOGJlMTVhZTcwMmE1ZTUwZTQ2MTQ4YTM5MTFkNDBiYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4NzY1ZDIzNDc5OTFjZjM0N2JkMjMwOGU4Yzg4ZmRkZmRjMzVkMGNjMDA4MjE3ODIwYmJkNmZkYjAyZjg4MzIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L155-L190",
+          "version": "repo-lines-v1:sha256:10d4a70d2fc707d35bb73f03a88ced821612b215fabb53aab4081235bde6f3b8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3ODUxZTc0MmM2ZDMxM2RkMjRjNWRlYmEzNWM0YzVjMmY2MjRkZTVlYWQ4OGM1MjUxZmQ4NzJmZTUwNWQzZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxMTkyZDA1M2I0MDNmNTUxNTEyZWQzODhiMDQ0ZGQxNGJmMzcyOTA0YjVlZmY0OWQ1MzdiZjQ3NDY4ZjZmYTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzM2ViYjRkY2IwOGIzZDUyMTk1ZTFmMGU3ZjQxMmZkNGZlMzg4NmVkMzJhNDNlMDI1Mjk2N2I4YTVhMDE5NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkNjMzYzI2MjU5ODhjMzE2YWRhZGVhODU3MmFhYmEzYmE1OTk3MThiZTI5NjFkM2VjMTcxYmYzZjg2NGFiMTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea982ae0b8434163acc4a933912f62f8",
+      "statement": "Validation checks the executable path for acyclicity and connectivity, while compilation adds the stricter single-chain rule and returns ordered nodes, safe settings, mode, and transport.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L192-L235",
+          "version": "repo-lines-v1:sha256:a037cdefcfdbc249cb12616aedd78a2f1b61499961ec8a76079a7d64b08c2482:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmYjUzODFjOTFhMzFhZjVjMDY4MmFhMjViYzU1NmYwZDg4YWU4ZGRiOTNiNzcyMmM4YTI5ZWJkYzNiMDVhZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjNTQxN2M1NGQxZjliZjhlMDIzY2ZmYWJkZWQwNWJiYmJlZjU1MDA5Y2I4MDQ4N2U1YmZhNzA4ZGVhNWY4YzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwNTQ4OTU5MGIwZDViZDIzYmM3ODMyZDZlMTgxZGMzZTVmOTBlZmNmYTljMDVkZmVhOThkMDBhMzIzYmM0MTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3NGExY2Q5NDA3ZDI0OTk5OWM2M2QyZDlkZDBhMzRhYWZkMjRiNjcyNmY2Yjk5YTdjM2Y4Mjc5MWM5ZDc2NzIifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/graph.py#L247-L288",
+          "version": "repo-lines-v1:sha256:d3f640950bb7984e45aa6f64b9a9e96f96de881d5a8cef14bfc3e56c051a813b:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4MGFhM2I4MWU5Mzg5NjA3MmM3Y2RkZWEzYTQzZTRmZmQzOWMwNjc4ZGUxNjk1MzlkZGM0ZTVmZjMyODUyZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZmFlNWYwY2UxMjRlZDU0Y2EwYzE3N2MwYjNhMzRlZjlhOTU4YzdlZjMwNWNiOWQxMTBhMGRiMjA2YWExYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhZmM4N2IxZGFiYTdhZTY3MTAzMmI2NjUzZjZjZjFmYTY4ZmRlNzEzMmFmNTRjOWM0YTRhYzMwOGRhNDAxMGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5MjIwNGM2NWY1MDJkYzE2NDU0YjYyNDA4NTZhOWFiN2FkZTAwM2E4ZTlmODYzMzNlYzBiN2M5ZTQwOTQ5MWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad0c936b52784e83809dba72e35c609c",
+      "statement": "The API and Agent Studio compile graphs before saving, and the voice worker reloads and recompiles a stored graph before execution.",
+      "evidence": [
+        {
+          "resource": "repo://src/pipecat_voice_studio/api/app.py#L72-L78",
+          "version": "repo-lines-v1:sha256:7d8cddf328e1f90081291203dd184764ff0e13435575246afffff0d4c4e07cec:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDgyMDgxOGIyYjFkMmZkY2UyNGRkZTVjYTYxZmI0ZWNkNzdiODlhNDE5Mjc1OTI5YjkzMDU4NTA1MDFhOGYyNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWExZGU5YWY1ZjU2MTcyOWVmMzA1MTgxOTBjMjU0ZTFiMTRlYjIzMmI2NzNmM2I4ZTU2ZjgzYTk3ZjNhMjQ2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjNkMTMzNzcyNTcxZjZmODU3NGE4ZGQzMDczNzg1OGNjNjhiMTFmNDFjMmM4NjJmZDNlYzY2MzBhNzZjYzQxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/ui/app_pages/agent_studio.py#L47-L52",
+          "version": "repo-lines-v1:sha256:82cfa8c3028b0d2b1adb8984d36fcafc68faa4d6b9a1d52d786a3c57e9df7b58:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWE1NTVhN2ZhNTczNTQ0ZWY3ODFmY2YyZjIxOTRkMzQzNTBlMGZiYzcyOWMyZjFkNDZmYTAxNDc2ZDc0YzA0MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGJlYTcwMmQ0MjVjNGExOTk4M2E5NThjM2E5ZWVlMGI3YzZkNjM1MTUyZjFlZTNiNzM0OTEwZTkzNDk1MTY3MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmRjOTY3MjU5ODQ0Njc2Njk3Mjk5MWNjMmY4ZWI1YzVlNTliMTZkMzQ2NTI3OTYzZDU2NGVjN2U2NmE0YzIzZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2NmMTA5ZTkwYzM4YzJjNTc5OTMxMDRkZjhmNTZmZjYwZDAwZmE0OTAzYTVkMTU0ZDlkMzk5ZTdhMDU4YjU4NCJ9"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L193-L204",
+          "version": "repo-lines-v1:sha256:3e89217cdf225d97a9f88543c46552b94c302ea584255af0a12e0860d135db42:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZjc5ZTBlODgwMjM0NmYxMzYyYzJiNGRmNmI3MzNhYzNiNDAwNzdmYmI1YjU2ODYwMjc1ZTEwN2VlODIxN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxOGM2MGM5MWUxN2I3ODcwZmM4MDA0MmM5MTg2M2E0YjkyNjRjM2MzY2M1NDZkYjA3YTFhZmI3ZDMxZDEwYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOTc0ZGE0MDg2MzJhNGFhN2UyYWU4MGI4NjAzOTFhM2RjZDgyMTFjNzllY2FkN2NhOGU5NTEyOGIwMDE4MzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjllOGVmNWY4ZjVmNTI0YzIyZDg3YmFkNGFlMWY3NTI0ZmJmZDdmYzA1NmQyOTZlODc5MDhhN2MyMTQ0N2UxODAifQ"
+        },
+        {
+          "resource": "repo://src/pipecat_voice_studio/voice/bot.py#L221-L235",
+          "version": "repo-lines-v1:sha256:7a2b2a17cb38a326fb4bbeb62721e924283ef0845e10b0acc73851925b6bde5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwOWZiYzRiOWI0ZjcxNjllM2U0NjhiMDUwYjM5YTlhZWNmNDdjZDA2YmI5MTM1NjlhZDJhMjA2NDFiZTFkMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3MDljMWYwOTkyMjJiZjcwY2Q3NGZjOGUyNDI3YWMzM2UyNmNiYmRkNGMyZjYyNDM0MDg3YjljZmYxMGZmYzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4ZDZmZTg4ODlkOGYxYWFjNWY3MjZmZjFlZjliY2Y2NTczNWQ1ZDk1MDcwYTdhNTFlNzgwMGNhNGJlODM4NWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlNDdhMWY4NWRhODRmYTdiYzhjM2Q4MDMyMTcyNGU1MTRmNmM3NzExYWY4MTg0ZmZkZmI0ZWQ2ZDVlNjg4ZjIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-23T15:44:25.460Z"
+  }
+}
